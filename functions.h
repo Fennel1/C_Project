@@ -12,6 +12,18 @@ void Append_Text(PText t, wchar_t c);			//修改文本
 void Draw_Text(PText t);		//绘制文本
 void Empty_Text(PText t);
 
+void Run_MainMenu();
+void Run_AdminLoginMenu();
+void Run_AdminMainMenu();
+void Run_ClientLoginMenu();
+void Run_ClientRegisterMenu();
+void Run_ClientMainMenu(PClient client);
+void Commit_Order(PClient client);
+void Delete_Order(PClient client);
+void Show_Order(PClient client);
+void Draw_Fps(PText t);
+void Exit();
+
 bool Login(wchar_t id[], wchar_t password[]);
 bool Register();
 bool Search_Room(Time start_t, Time end_t, PClient client, Room_Type type);

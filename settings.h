@@ -46,7 +46,7 @@ typedef struct client {
 	wchar_t password[30];
 	wchar_t name[30];
 	wchar_t phone[15];
-	bool gender;
+	bool gender;		//true为男	false为女
 	int VIP;
 	int num_bill;
 	int pay;
@@ -65,6 +65,9 @@ typedef struct room {
 	Time start, end;
 	struct room *next;
 }Room, * PRoom;
+
+
+extern MOUSEMSG M_msg;				// 鼠标消息\
 
 extern PClient P_Head_Client;		//用户链表
 extern PClient P_Now_Client;

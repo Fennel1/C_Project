@@ -24,6 +24,12 @@
     <ClCompile Include="string.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ClientMenu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AdminMenu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="settings.h">

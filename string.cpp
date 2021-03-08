@@ -67,6 +67,22 @@ void Draw_Text(PText t)
 	}
 }
 
+void Draw_Fps(PText t)
+{
+	static int fps = 0;
+	fps++;
+	if (fps < (t->fps / 4))
+	{
+		setlinecolor(WHITE);
+		int lx = t->x1 + 5 + textwidth(t->text);
+		line(lx, t->y1 + (t->y2 - t->y1 - 19) / 2, lx, t->y1 + (t->y2 - t->y1 - 19) / 2 + 20);
+	}
+	else if (fps > (t->fps / 2))
+	{
+		fps = 0;
+	}
+}
+
 void Empty_Text(PText t)
 {
 	t->len = 0;
