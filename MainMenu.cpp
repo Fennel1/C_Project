@@ -1,7 +1,16 @@
 
 #include "functions.h"
 
-MOUSEMSG M_msg;				// 鼠标消息
+MOUSEMSG M_msg;				// 鼠标消息\
+
+PClient P_Head_Client;		//用户链表
+PClient P_Now_Client;
+
+POrder P_Head_Order;		//以时间排序的订单
+POrder P_Now_Order;
+
+PRoom P_Head_Room;
+PRoom P_Now_Room;
 
 void Init()
 {
@@ -11,6 +20,16 @@ void Init()
 	cleardevice();
 
 	setbkmode(TRANSPARENT);
+
+	P_Head_Client = NULL;		//用户链表
+	P_Now_Client = NULL;
+
+	P_Head_Order = NULL;		//以时间排序的订单
+	P_Now_Order = NULL;
+
+	P_Head_Room = NULL;
+	P_Now_Room = NULL;
+
 }
 
 bool Button(int a, int b, const wchar_t str[])
