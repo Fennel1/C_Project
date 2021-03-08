@@ -1,0 +1,75 @@
+#pragma once
+
+#include "functions.h"
+
+void Init_text(PText t, int x1, int x2, int y1, int y2, int fps)
+{
+	t->x1 = x1;
+	t->x2 = x2;
+	t->y1 = y1;
+	t->y2 = y2;
+	t->text[0] = '\0';
+	t->len = 0;
+	t->fps = fps;
+}
+
+wchar_t Input_Text()
+{
+	wchar_t c = 0;
+
+	if (_kbhit())
+	{
+		c = _getch();
+	}
+	return c;
+}
+
+void Append_Text(PText t, wchar_t c)
+{
+	if (c != 8)
+	{
+		if (t->len < 29)
+		{
+			t->text[t->len] = c;
+			t->text[t->len + 1] = '\0';
+			t->len++;
+		}
+	}
+	else
+	{
+		if (t->len > 0)
+		{
+			t->len--;
+			t->text[t->len] = '\0';
+		}
+	}
+}
+
+void Draw_Text(PText t)
+{
+	settextstyle(20, 0, L"Verdana");
+
+	setlinecolor(WHITE);
+	rectangle(t->x1, t->y1, t->x2, t->y2);
+
+	outtextxy(t->x1 + 5, t->y1 + (t->y2 - t->y1 - 19) / 2, t->text);
+
+	static int fps = 0;
+	fps++;
+	if (fps < (t->fps / 4))
+	{
+		setlinecolor(WHITE);
+		int lx = t->x1 + 5 + textwidth(t->text);
+		line(lx, t->y1 + (t->y2 - t->y1 - 19) / 2, lx, t->y1 + (t->y2 - t->y1 - 19) / 2 + 20);
+	}
+	else if (fps > (t->fps / 2))
+	{
+		fps = 0;
+	}
+}
+
+void Empty_Text(PText t)
+{
+	t->len = 0;
+	t->text[0] = '\0';
+}
