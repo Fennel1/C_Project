@@ -22,8 +22,12 @@ void Init()			//程序初始化
 	setbkmode(TRANSPARENT);			//设置背景为透明
 
 	Room_Init();
-	Client_Init();
-	Order_Init();
+	P_Head_Client = (PClient)malloc(sizeof(Client));
+	P_Head_Client->next = NULL;
+	P_Now_Client = P_Head_Client;
+	
+	//Client_Init();
+	//Order_Init();
 
 }
 
@@ -51,31 +55,54 @@ void out_Room(Room* head)
 	return;
 }
 
-PRoom Room_Init()//目前只能读取房间id
+PRoom Room_Init()
 {
+	//创建读入所需的临时变量
 	char temp_id[10];
-
+	int temp_Is_Use;
+	Room_Type temp_type;
+	double temp_price;
+	double temp_discount;
+	PClient temp_client;
+	Time temp_start, temp_end;
+	//创建链表
 	Room* P_Head_Room = (Room*)malloc(sizeof(Room));//头节点
 	Room* P_Now_Room = P_Head_Room;
 	Room* P_Temp_Room = P_Head_Room;
-	FILE* r = fopen("room_data.txt", "r");
+	FILE* r = fopen("room.txt", "r");
 	if (r == NULL)
 	{
 		printf("打开文件失败");
 		return NULL;
 	}
-	while (fscanf(r, "%s", temp_id) != EOF)
+	while (fscanf(r, "%s %d %d %lf %lf %d %d %d %d %d %d %d %d %d %d", temp_id, &temp_Is_Use, &temp_type, &temp_price, &temp_discount, &temp_start.year, &temp_start.month, &temp_start.day, &temp_start.weekday, &temp_start.hour, &temp_end.year, &temp_end.month, &temp_end.day, &temp_end.weekday, &temp_end.hour) != EOF)
 	{
 		P_Now_Room = (Room*)malloc(sizeof(Room));
+		//把临时变量存储的值放进链表中
 		strcpy(P_Now_Room->id, temp_id);
+		P_Now_Room->Is_Use = temp_Is_Use;
+		P_Now_Room->type = temp_type;
+		P_Now_Room->price = temp_price;
+		P_Now_Room->discount = temp_discount;
+		P_Now_Room->start.year = temp_start.year;
+		P_Now_Room->start.month = temp_start.month;
+		P_Now_Room->start.day = temp_start.day;
+		P_Now_Room->start.weekday = temp_start.weekday;
+		P_Now_Room->start.hour = temp_start.hour;
+		P_Now_Room->end.year = temp_end.year;
+		P_Now_Room->end.month = temp_end.month;
+		P_Now_Room->end.day = temp_end.day;
+		P_Now_Room->end.weekday = temp_end.weekday;
+		P_Now_Room->end.hour = temp_end.hour;
+		//进入下一个节点
 		P_Temp_Room->next = P_Now_Room;
 		P_Temp_Room = P_Now_Room;
 	}
-	P_Now_Room->next = NULL;
+	P_Temp_Room->next = NULL;
 	return P_Head_Room;
 }
 
-PClient Client_Init()
+/*PClient Client_Init()
 {
 
 }
@@ -84,3 +111,4 @@ POrder Order_Init()
 {
 
 }
+*/

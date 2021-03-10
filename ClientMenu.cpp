@@ -169,7 +169,8 @@ void Run_ClientRegisterMenu()			//用户注册界面
 
 			if (key != 0)
 			{
-				if (key == 9) {
+				if (key == 9) 
+				{
 					choose++;
 					if (choose == 5) {
 						choose = 1;
@@ -251,7 +252,10 @@ void Run_ClientRegisterMenu()			//用户注册界面
 		{
 			FlushBatchDraw();
 			cleardevice();
-			Run_ClientMainMenu(client);
+			PClient client = Register(id->text, password->text, name->text, phone->text);
+			if (client != NULL) {
+				Run_ClientMainMenu(client);
+			}
 			return;
 		}
 
@@ -282,7 +286,7 @@ void Run_ClientMainMenu(PClient client)			//用户个人界面
 		t.lfQuality = ANTIALIASED_QUALITY;
 		settextstyle(&t);
 		settextcolor(WHITE);
-		outtextxy(310, 70, "用户主界面");
+		outtextxy(310, 70, client->name);
 
 		if (Button(350, 200, "我要住房"))
 		{
@@ -330,10 +334,14 @@ void Commit_Order(PClient client)		//用户申请住房界面
 
 	int year = 1900 + p->tm_year, month = 1 + p->tm_mon, day = p->tm_mday;
 
+	int choose = 0;
+
 	while (true)
 	{
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
+
+		cleardevice();
 
 		LOGFONT t;			//绘制文字
 		gettextstyle(&t);
@@ -342,9 +350,55 @@ void Commit_Order(PClient client)		//用户申请住房界面
 		t.lfQuality = ANTIALIASED_QUALITY;
 		settextstyle(&t);
 		settextcolor(WHITE);
-		outtextxy(310, 70, "用户申请住房界面");
+		outtextxy(200, 70, "请选择入住时间");
 
-		Draw_Calendar(&year, &month);
+		if (Button(240, 150, "<<")) {
+			(year)--;
+		}
+
+		if (Button(300, 150, "<")) {
+			if (month > 1) {
+				(month)--;
+			}
+			else {
+				(year)--;
+				month = 12;
+			}
+		}
+
+		char str[10];
+		sprintf(str, "%4d.%2d", year, month);
+		gettextstyle(&t);
+		t.lfHeight = 22;
+		strcpy(t.lfFaceName, "微软雅黑 Light");
+		t.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&t);
+		settextcolor(WHITE);
+		outtextxy(395, 155, str);
+
+		if (Button(520, 150, ">")) {
+			if (month < 12) {
+				(month)++;
+			}
+			else {
+				(year)++;
+				month = 1;
+			}
+		}
+
+		if (Button(570, 150, ">>")) {
+			(year)++;
+		}
+
+		Draw_Calendar(year, month, choose);		
+
+		if (Button(600, 500, "返回"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_ClientMainMenu(client);
+			return;
+		}
 
 		FlushBatchDraw();			// 执行未完成的绘制任务
 		Sleep(10);

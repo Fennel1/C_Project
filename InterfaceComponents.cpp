@@ -111,68 +111,58 @@ bool Button_Input(int a, int b, const char str[])			//输入按钮模组
 	return false;
 }
 
-void Draw_Calendar(int *year, int *month)
+void Draw_Calendar(int year, int month, int choose)
 {	
 	int LeapYear[] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	int NoLeapYear[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 	int days = 0;
 
-	for (int i = YEAR; i < *year; i++) {
-		for (int j = MONTH; j < *month; j++) {
-			if ((i % 400 == 0) || (i % 4 == 0 && i % 100 != 0)) {
-				days += LeapYear[j];
-			}
-			else{
-				days += NoLeapYear[j];
-			}
-		}
+	if (month == 1 || month == 2) 
+	{
+		month += 12;
+		year--;
 	}
 
-	if (Button(170, 150, "<<")) {
-		(*year)--;
+	bool flag = false;
+	int weekday = (1 + 2 * month + 3 * (month + 1) / 5 + year + year / 4 - year / 100 + year / 400) % 7;
+	int x = 205, y = 200;
+	int cnt = 0;
+
+	if (month == 13 || month == 14)
+	{
+		month -= 12;
+		year++;
 	}
 
-	if (Button(230, 150, "<")) {
-		if (*month > 1) {
-			(*month)--;
-		}
-		else {
-			(*year)--;
-			*month = 12;
-		}
-	}
-
-	if (Button(450, 150, ">")) {
-		if (*month < 11) {
-			(*month)++;
-		}
-		else {
-			(*year)++;
-			*month = 1;
-		}
-	}
-
-	if (Button(500, 150, ">>")) {
-		(*year)++;
-	}
-
-	int x = 200, y = 150;
 	for (int week = 0; week <= 5; week++) {
 		for (int day = 0; day <= 6; day++) {
-			days++;
-			if ((*year % 400 == 0) || (*year % 4 == 0 && *year % 100 != 0))
-			{
-				if (Button_Calendar(y + day * 60, x + week * 60, days % LeapYear[*month]))
-				{
-
-				}
+			if (day == weekday) {
+				flag = true;
 			}
-			else
+			if (flag)
 			{
-				if (Button_Calendar(y + day * 60, x + week * 60, days % NoLeapYear[*month]))
+				cnt++;
+				days++;
+				if ((year % 400 == 0) || (year % 4 == 0 && year % 100 != 0))
 				{
+					if (cnt == LeapYear[month]+1) {
+						return;
+					}
+					if (Button_Calendar(x + day * 60, y + week * 60, days % (LeapYear[month] + 1)))
+					{
+						
+					}
+				}
+				else
+				{
+					if (cnt == NoLeapYear[month]+1) {
+						return;
+					}
+					if (Button_Calendar(x + day * 60, y + week * 60, days % (NoLeapYear[month] + 1)))
+					{
 
+					}
 				}
 			}
 		}

@@ -19,6 +19,8 @@ void Run_MainMenu()		//主界面
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
 
+		cleardevice();
+
 		LOGFONT t;			//绘制文字
 		gettextstyle(&t);
 		t.lfHeight = 75;
@@ -27,7 +29,6 @@ void Run_MainMenu()		//主界面
 		settextstyle(&t);
 		settextcolor(WHITE);
 		outtextxy(310, 70, "主菜单");
-
 		if (Button(350, 200, "我是管理员"))
 		{
 			FlushBatchDraw();
@@ -53,8 +54,3 @@ void Run_MainMenu()		//主界面
 		Sleep(10);
 	}
 }
-
-
-
-
-
