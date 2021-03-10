@@ -32,8 +32,10 @@ PRoom Room_Init();		//目前只能读取房间id
 //POrder Order_Init();
 void out_Room(Room* head);
 
-bool Login(char id[], char password[]);
+PClient Login(char id[], char password[]);
 PClient Register(char id[], char password[], char name[], char phone[]);
+PClient Misspw(char id[], char password[], char name[], char phone[]);
+void Setnpw(PClient client, char password[]);
 bool Search_Room(Time start_t, Time end_t, PClient client, Room_Type type);
 bool Delete_Order(PClient client, char room_id);
 

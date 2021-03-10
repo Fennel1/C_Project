@@ -102,7 +102,10 @@ void Run_ClientLoginMenu()			//用户登录界面
 		{
 			FlushBatchDraw();
 			cleardevice();
-			Run_ClientMainMenu(client);
+			PClient client = Login(id->text, password->text);
+			if (client != NULL) {
+				Run_ClientMainMenu(client);
+			}
 			return;
 		}
 

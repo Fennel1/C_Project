@@ -12,7 +12,7 @@ extern POrder P_Now_Order;
 extern PRoom P_Head_Room;
 extern PRoom P_Now_Room;
 
-PClient Register(char id[], char password[], char name[], char phone[])
+PClient Register(char id[], char password[], char name[], char phone[])		//用户注册
 {
 	PClient temp = P_Head_Client->next;
 	while (temp != NULL)
@@ -39,4 +39,37 @@ PClient Register(char id[], char password[], char name[], char phone[])
 	P_Now_Client = newtemp;
 
 	return P_Now_Client;
+}
+
+PClient Login(char id[], char password[])		//用户登录
+{
+	PClient temp = P_Head_Client->next;
+	while (temp != NULL)
+	{
+		if ((strcmp(temp->id, id) == 0)&&(strcmp(temp->password , password)==0))
+			return temp;
+		temp = temp->next;
+	}
+	return NULL;
+}
+
+PClient Misspw(char id[], char password[], char name[], char phone[])		//找回密码
+{
+	PClient temp = P_Head_Client->next;
+	while (temp != NULL)
+	{
+		if ((strcmp(temp->id, id) == 0) && (strcmp(temp->password, password) == 0) &&
+			(strcmp(temp->name, name) == 0) && (strcmp(temp->phone, phone) == 0))
+			return temp;
+		temp = temp->next;
+	}
+	return NULL;
+}
+
+void Setnpw(PClient client, char password[])			//设置新密码
+{
+	PClient temp = client;
+	strcpy(temp->password, " ");
+	strcpy(temp->password, password);
+
 }
