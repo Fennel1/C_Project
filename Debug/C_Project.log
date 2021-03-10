@@ -1,5 +1,14 @@
 ﻿  AdminMenu.cpp
+E:\VS\VS_code\C_Project\AdminMenu.cpp(62,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\AdminMenu.cpp(65,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
   ClientMenu.cpp
+E:\VS\VS_code\C_Project\ClientMenu.cpp(65,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(68,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(186,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(189,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(192,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(195,26): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+  InterfaceComponents.cpp
   MainMenu.cpp
   main.cpp
   string.cpp

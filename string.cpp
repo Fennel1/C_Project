@@ -23,7 +23,7 @@ wchar_t Input_Text()
 	return c;
 }
 
-void Append_Text(PText t, wchar_t c)
+void Append_Text(PText t, char c)
 {
 	if (c != 8)
 	{
@@ -46,7 +46,7 @@ void Append_Text(PText t, wchar_t c)
 
 void Draw_Text(PText t)
 {
-	settextstyle(20, 0, L"Verdana");
+	settextstyle(20, 0, "Verdana");
 
 	setlinecolor(WHITE);
 	rectangle(t->x1, t->y1, t->x2, t->y2);

@@ -3,12 +3,15 @@
 #include "settings.h"
 
 void Init();	//初始化程序
-bool Button(int a, int b, const wchar_t str[]);		//绘制按钮
+bool Button(int a, int b, const char str[]);		//绘制基本按钮
+bool Button_Input(int a, int b, const char str[]);	//绘制输入按钮
+bool Button_Calendar(int a, int b, int day);
+void Draw_Calendar(int *year, int *month);
 
 
 void Init_text(PText t, int x1, int x2, int y1, int y2, int fps);	//初始化文本
 wchar_t Input_Text();
-void Append_Text(PText t, wchar_t c);			//修改文本
+void Append_Text(PText t, char c);			//修改文本
 void Draw_Text(PText t);		//绘制文本
 void Empty_Text(PText t);
 
@@ -24,9 +27,14 @@ void Show_Order(PClient client);
 void Draw_Fps(PText t);
 void Exit();
 
-bool Login(wchar_t id[], wchar_t password[]);
+PRoom Room_Init();		//目前只能读取房间id
+PClient Client_Init();
+POrder Order_Init();
+void out_Room(Room* head);
+
+bool Login(char id[], char password[]);
 bool Register();
 bool Search_Room(Time start_t, Time end_t, PClient client, Room_Type type);
-bool Delete_Order(PClient client, wchar_t room_id);
+bool Delete_Order(PClient client, char room_id);
 
 bool Change_File();
