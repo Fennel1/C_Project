@@ -32,6 +32,8 @@ PRoom Room_Init();		//目前只能读取房间id
 //POrder Order_Init();
 void out_Room(Room* head);
 
+bool Checkid(char id[]);
+bool Checkphone(char phone[]);
 PClient Login(char id[], char password[]);
 PClient Register(char id[], char password[], char name[], char phone[]);
 PClient Misspw(char id[], char password[], char name[], char phone[]);

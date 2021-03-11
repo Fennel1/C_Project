@@ -12,15 +12,49 @@ extern POrder P_Now_Order;
 extern PRoom P_Head_Room;
 extern PRoom P_Now_Room;
 
-PClient Register(char id[], char password[], char name[], char phone[])		//用户注册
+
+bool Checkid(char id[])			//检查id
 {
+	if (id[17] != 'X' || id[17] < '0' || id[17]>'9')
+		return false;
+	for (int i = 0; i < 17; i++)
+	{
+		if (id[i] < '0' || id[i]>'9')
+			return false;
+
+	}
 	PClient temp = P_Head_Client->next;
 	while (temp != NULL)
 	{
 		if (strcmp(temp->id, id) == 0)
-			return NULL;
+			return false;
 		temp = temp->next;
 	}
+	
+	return true;
+}
+
+bool Checkphone(char phone[])		//检查电话
+{
+	for (int i = 0; i < 11; i++)
+	{
+		if (phone[i] < '0' || phone[i]>'9')
+			return false;
+
+	}
+	PClient temp = P_Head_Client->next;
+	while (temp != NULL)
+	{
+		if (strcmp(temp->phone, phone) == 0)
+			return false;
+		temp = temp->next;
+	}
+	return true;
+}
+
+PClient Register(char id[], char password[], char name[], char phone[])		//用户注册
+{
+	
 	PClient newtemp = (PClient)malloc(sizeof(Client));
 	strcpy(newtemp->id, id);
 	strcpy(newtemp->password, password);
