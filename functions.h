@@ -39,5 +39,7 @@ PClient Login(char id[], char password[]);
 PClient Register(char id[], char password[], char name[], char phone[]);
 PClient MissPassword(char id[], char password[], char name[], char phone[]);
 void SetNewPassword(PClient client, char password[]);
+bool Checkid(char id[]);
+bool Checkphone(char phone[]);
 
 bool Change_File();

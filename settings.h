@@ -42,6 +42,7 @@ typedef struct reamrk {
 }Remark, * PRemark;
 
 typedef struct order {
+	char client_id[20];
 	char order_id[10];
 	char room_id[10];
 	Room_Type type;

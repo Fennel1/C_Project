@@ -1,5 +1,20 @@
-﻿  InterfaceComponents.cpp
+﻿  AdminMenu.cpp
+E:\VS\VS_code\C_Project\AdminMenu.cpp(62,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\AdminMenu.cpp(65,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+  ClientFun.cpp
+  ClientMenu.cpp
+E:\VS\VS_code\C_Project\ClientMenu.cpp(65,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(68,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(192,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(195,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(198,31): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(201,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(204,26): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+  Init.cpp
+E:\VS\VS_code\C_Project\Init.cpp(62,10): warning C4101: “temp_client”: 未引用的局部变量
+  InterfaceComponents.cpp
   MainMenu.cpp
+  main.cpp
   string.cpp
   正在生成代码...
   C_Project.vcxproj -> E:\VS\VS_code\C_Project\Debug\C_Project.exe

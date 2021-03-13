@@ -21,11 +21,7 @@ void Init()			//程序初始化
 
 	setbkmode(TRANSPARENT);			//设置背景为透明
 
-	Room_Init();
-	P_Head_Client = (PClient)malloc(sizeof(Client));
-	P_Head_Client->next = NULL;
-	P_Now_Client = P_Head_Client;
-	
+	P_Head_Room=Room_Init();
 	//Client_Init();
 	//Order_Init();
 
@@ -75,7 +71,7 @@ PRoom Room_Init()
 		printf("打开文件失败");
 		return NULL;
 	}
-	while (fscanf(r, "%s %d %d %lf %lf %d %d %d %d %d %d %d %d %d %d", temp_id, &temp_Is_Use, &temp_type, &temp_price, &temp_discount, &temp_start.year, &temp_start.month, &temp_start.day, &temp_start.weekday, &temp_start.hour, &temp_end.year, &temp_end.month, &temp_end.day, &temp_end.weekday, &temp_end.hour) != EOF)
+	while (fscanf(r, "%s %d %d %lf %lf %d %d %d %d %d %d %d %d %d %d", temp_id,&temp_Is_Use,&temp_type,&temp_price,&temp_discount,&temp_start.year,&temp_start.month,&temp_start.day,&temp_start.weekday,&temp_start.hour, &temp_end.year, &temp_end.month, &temp_end.day, &temp_end.weekday, &temp_end.hour) != EOF)
 	{
 		P_Temp_Room = (Room*)malloc(sizeof(Room));
 		//把临时变量存储的值放进链表中
@@ -103,13 +99,90 @@ PRoom Room_Init()
 	return P_Head_Room;
 }
 
-/*PClient Client_Init()
+PClient Client_Init()
 {
-
+	//创建读入所需的临时变量
+	char temp_id[20];
+	char temp_password[30];
+	char temp_name[30];
+	char temp_phone[15];
+	int temp_gender;
+	int temp_VIP;
+	int temp_num_bill;
+	int temp_pay;
+	//创建链表
+	Client* P_Head_Client = (Client*)malloc(sizeof(Client));//头节点
+	Client* P_Now_Client = P_Head_Client;
+	Client* P_Temp_Client = P_Head_Client;
+	FILE* r = fopen("order.txt", "r");
+	if (r == NULL)
+	{
+		printf("打开文件失败");
+		return NULL;
+	}
+	while (fscanf(r, "%s %s %s %s %d %d %d %d", temp_id, temp_password, temp_name, temp_phone,&temp_gender,&temp_VIP,&temp_num_bill,&temp_pay) != EOF)
+	{
+		strcpy(P_Temp_Client->id, temp_id);
+		strcpy(P_Temp_Client->password, temp_password);
+		strcpy(P_Temp_Client->name, temp_name);
+		strcpy(P_Temp_Client->phone, temp_phone);
+		P_Temp_Client->gender = temp_gender;
+		P_Temp_Client->VIP = temp_VIP;
+		P_Temp_Client->num_bill = temp_num_bill;
+		P_Temp_Client->pay = temp_pay;
+		//进入下一个节点
+		P_Temp_Client->next = NULL;
+		P_Now_Client->next = P_Temp_Client;
+		P_Now_Client = P_Temp_Client;
+	}
+	P_Now_Client = NULL;
+	return P_Head_Client;
 }
 
 POrder Order_Init()
 {
-
+	//创建读入所需的临时变量
+	char temp_client_id[20];
+	char temp_order_id[10];
+	char temp_room_id[10];
+	Room_Type temp_type;
+	double temp_price;
+	Time temp_start, temp_end;
+	Remark temp_remark;
+	//创建链表
+	Order* P_Head_Order = (Order*)malloc(sizeof(Order));//头节点
+	Order* P_Now_Order = P_Head_Order;
+	Order* P_Temp_Order = P_Head_Order;
+	FILE* r = fopen("order.txt", "r");
+	if (r == NULL)
+	{
+		printf("打开文件失败");
+		return NULL;
+	}
+	while (fscanf(r, "%s %s %s %d %lf %d %d %d %d %d %d %d %d %d %d %s %d",temp_client_id, temp_order_id, temp_room_id,&temp_type,&temp_price, &temp_start.year, &temp_start.month, &temp_start.day, &temp_start.weekday, &temp_start.hour, &temp_end.year, &temp_end.month, &temp_end.day, &temp_end.weekday, &temp_end.hour,temp_remark.message,&temp_remark.star) != EOF)
+	{
+		strcpy(P_Temp_Order->client_id, temp_client_id);
+		strcpy(P_Temp_Order->order_id, temp_order_id);
+		strcpy(P_Temp_Order->room_id, temp_room_id);
+		P_Temp_Order->type = temp_type;
+		P_Temp_Order->price = temp_price;
+		P_Temp_Order->start.year = temp_start.year;
+		P_Temp_Order->start.month = temp_start.month;
+		P_Temp_Order->start.day = temp_start.day;
+		P_Temp_Order->start.weekday = temp_start.weekday;
+		P_Temp_Order->start.hour = temp_start.hour;
+		P_Temp_Order->end.year = temp_end.year;
+		P_Temp_Order->end.month = temp_end.month;
+		P_Temp_Order->end.day = temp_end.day;
+		P_Temp_Order->end.weekday = temp_end.weekday;
+		P_Temp_Order->end.hour = temp_end.hour;
+		strcpy(P_Temp_Order->remark.message, temp_remark.message);
+		P_Temp_Order->remark.star = temp_remark.star;
+		//进入下一个节点
+		P_Temp_Order->next = NULL;
+		P_Now_Order->next = P_Temp_Order;
+		P_Now_Order = P_Temp_Order;
+	}
+	P_Now_Order->next = NULL;
+	return P_Head_Order;
 }
-*/
