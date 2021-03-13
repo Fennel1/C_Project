@@ -564,6 +564,7 @@ void Choose_room(PClient client, int *room_num, Time start, Time end)
 		{
 			FlushBatchDraw();
 			cleardevice();
+			order = Add_Order(client, A1, start, end);
 			Complete_Order(order, client, start, end);
 		}
 
@@ -576,6 +577,7 @@ void Choose_room(PClient client, int *room_num, Time start, Time end)
 		{
 			FlushBatchDraw();
 			cleardevice();
+			order = Add_Order(client, A2, start, end);
 			Complete_Order(order, client, start, end);
 		}
 
@@ -588,6 +590,7 @@ void Choose_room(PClient client, int *room_num, Time start, Time end)
 		{
 			FlushBatchDraw();
 			cleardevice();
+			order = Add_Order(client, B1, start, end);
 			Complete_Order(order, client, start, end);
 
 		}
@@ -601,6 +604,7 @@ void Choose_room(PClient client, int *room_num, Time start, Time end)
 		{
 			FlushBatchDraw();
 			cleardevice();
+			order = Add_Order(client, B2, start, end);
 			Complete_Order(order, client, start, end);
 		}
 
@@ -624,7 +628,6 @@ void Choose_room(PClient client, int *room_num, Time start, Time end)
 
 void Complete_Order(POrder order, PClient client, Time start, Time end)
 {
-	/*
 	char title[] = "确认订单信息";
 	char text[7][50];
 	sprintf(text[0], "订单编号：%s", order->order_id);
@@ -633,15 +636,8 @@ void Complete_Order(POrder order, PClient client, Time start, Time end)
 	sprintf(text[3], "退房时间：%d年%d月%d日", end.year, end.month, end.day);
 	sprintf(text[4], "价格：%.2lf", order->price);
 	sprintf(text[5], "折扣：%.0lf折", (1-client->VIP * 0.03)*100 );
-	sprintf(text[6], "需支付：%.2lf折", (1 - client->VIP * 0.03)* order->price);
+	sprintf(text[6], "需支付：%.2lf折", (1 - client->VIP * 0.03) * order->price);
 	Popup_Window(250, 200, 300, 200, title, text, 7, 1);
-*/
-	char title[] = "确认当前日期吗？";
-	char text[2][50];
-	sprintf(text[0], "入住时间：");
-	sprintf(text[1], "退房时间：");
-	Popup_Window(250, 200, 300, 200, title, text, 2, 2);
-
 	cleardevice();
 
 	while (true)
@@ -679,8 +675,8 @@ void Complete_Order(POrder order, PClient client, Time start, Time end)
 
 void Message_Board(POrder order, PClient client)
 {
-	PText id = (PText)malloc(sizeof(Text));
-
+	PText message = (PText)malloc(sizeof(Text));
+	Init_text(message, 330, 500, 200, 230, 150);
 
 	while (true)
 	{

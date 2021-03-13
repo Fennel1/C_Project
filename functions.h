@@ -50,5 +50,6 @@ bool Checkpassword(char password[]);
 bool Checkrepassword(char password[], char repassword[]);
 int* Display_rooms_number(int* rooms, Time start, Time end);
 bool Judge_time(Time a, Time b);	//a在b之前返回true，a在b之后或ab相等都返回false
+POrder Add_Order(PClient client, Room_Type type, Time start, Time end);
 
 bool Change_File();

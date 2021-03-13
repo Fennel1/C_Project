@@ -177,3 +177,53 @@ bool Judge_time(Time a, Time b)
 	else if (a.day < b.day)return true;
 	return false;
 }
+
+
+POrder Add_Order(PClient client, Room_Type type, Time start, Time end)
+{
+	//链表头插法
+	POrder p_this_order = (Order*)malloc(sizeof(Order));
+
+	if (P_Head_Order->next == NULL) {
+		sprintf(p_this_order->order_id, "%d", 1);
+	}
+	else {
+		char* last_order_id = P_Head_Order->next->order_id;//获得前一个订单的id
+		strcpy(p_this_order->client_id, client->id);
+		//id相比之前的订单+1
+		int int_id = 0;
+		sscanf(last_order_id, "%d", &int_id);
+		int_id++;
+		sprintf(p_this_order->order_id, "%d", int_id);
+	}
+	p_this_order->next = P_Head_Order->next;
+	P_Head_Order->next = p_this_order;
+
+	
+	//遍历房间，找到可用房间，匹配room_id, price
+	PRoom p_now_room = P_Head_Room->next;
+	while (p_now_room != NULL)
+	{
+		if (p_now_room->Is_Use == 0 && p_now_room->type == type)
+		{
+			strcpy(p_this_order->room_id, p_now_room->id);
+			p_this_order->price = p_now_room->price;
+			break;
+		}
+		p_now_room = p_now_room->next;
+	}
+	//order其他的值
+	p_this_order->type = type;
+	p_this_order->start.year = start.year;
+	p_this_order->start.month = start.month;
+	p_this_order->start.day = start.day;
+	p_this_order->start.weekday = start.weekday;
+	p_this_order->start.hour = start.hour;
+	p_this_order->end.year = end.year;
+	p_this_order->end.month = end.month;
+	p_this_order->end.day = end.day;
+	p_this_order->end.weekday = end.weekday;
+	p_this_order->end.hour = end.hour;
+	//返回值
+	return p_this_order;
+}
