@@ -47,7 +47,7 @@ typedef struct order {
 	Room_Type type;
 	double price;
 	Time start, end;
-	PRemark remark;
+	Remark remark;
 	struct order *next;
 }Order, * POrder;
 

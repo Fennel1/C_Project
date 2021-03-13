@@ -77,28 +77,29 @@ PRoom Room_Init()
 	}
 	while (fscanf(r, "%s %d %d %lf %lf %d %d %d %d %d %d %d %d %d %d", temp_id, &temp_Is_Use, &temp_type, &temp_price, &temp_discount, &temp_start.year, &temp_start.month, &temp_start.day, &temp_start.weekday, &temp_start.hour, &temp_end.year, &temp_end.month, &temp_end.day, &temp_end.weekday, &temp_end.hour) != EOF)
 	{
-		P_Now_Room = (Room*)malloc(sizeof(Room));
+		P_Temp_Room = (Room*)malloc(sizeof(Room));
 		//把临时变量存储的值放进链表中
-		strcpy(P_Now_Room->id, temp_id);
-		P_Now_Room->Is_Use = temp_Is_Use;
-		P_Now_Room->type = temp_type;
-		P_Now_Room->price = temp_price;
-		P_Now_Room->discount = temp_discount;
-		P_Now_Room->start.year = temp_start.year;
-		P_Now_Room->start.month = temp_start.month;
-		P_Now_Room->start.day = temp_start.day;
-		P_Now_Room->start.weekday = temp_start.weekday;
-		P_Now_Room->start.hour = temp_start.hour;
-		P_Now_Room->end.year = temp_end.year;
-		P_Now_Room->end.month = temp_end.month;
-		P_Now_Room->end.day = temp_end.day;
-		P_Now_Room->end.weekday = temp_end.weekday;
-		P_Now_Room->end.hour = temp_end.hour;
+		strcpy(P_Temp_Room->id, temp_id);
+		P_Temp_Room->Is_Use = temp_Is_Use;
+		P_Temp_Room->type = temp_type;
+		P_Temp_Room->price = temp_price;
+		P_Temp_Room->discount = temp_discount;
+		P_Temp_Room->start.year = temp_start.year;
+		P_Temp_Room->start.month = temp_start.month;
+		P_Temp_Room->start.day = temp_start.day;
+		P_Temp_Room->start.weekday = temp_start.weekday;
+		P_Temp_Room->start.hour = temp_start.hour;
+		P_Temp_Room->end.year = temp_end.year;
+		P_Temp_Room->end.month = temp_end.month;
+		P_Temp_Room->end.day = temp_end.day;
+		P_Temp_Room->end.weekday = temp_end.weekday;
+		P_Temp_Room->end.hour = temp_end.hour;
 		//进入下一个节点
-		P_Temp_Room->next = P_Now_Room;
-		P_Temp_Room = P_Now_Room;
+		P_Temp_Room->next = NULL;
+		P_Now_Room->next = P_Temp_Room;
+		P_Now_Room = P_Temp_Room;
 	}
-	P_Temp_Room->next = NULL;
+	P_Now_Room->next = NULL;
 	return P_Head_Room;
 }
 

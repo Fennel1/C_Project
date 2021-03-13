@@ -102,7 +102,10 @@ void Run_ClientLoginMenu()			//用户登录界面
 		{
 			FlushBatchDraw();
 			cleardevice();
-			Run_ClientMainMenu(client);
+			PClient client = Login(id->text, password->text);
+			if (client != NULL) {
+				Run_ClientMainMenu(client);
+			}
 			return;
 		}
 
@@ -137,12 +140,14 @@ void Run_ClientRegisterMenu()			//用户注册界面
 
 	PText id = (PText)malloc(sizeof(Text));
 	PText password = (PText)malloc(sizeof(Text));
+	PText repassword = (PText)malloc(sizeof(Text));
 	PText name = (PText)malloc(sizeof(Text));
 	PText phone = (PText)malloc(sizeof(Text));
 	Init_text(id, 330, 500, 200, 230, 150);
 	Init_text(password, 330, 500, 275, 305, 150);
-	Init_text(name, 330, 500, 350, 380, 150);
-	Init_text(phone, 330, 500, 425, 455, 150);
+	Init_text(repassword, 330, 500, 350, 380, 150);
+	Init_text(name, 330, 500, 425, 455, 150);
+	Init_text(phone, 330, 500, 500, 530, 150);
 	bool Is_Input = false;
 	int choose = 0;
 	wchar_t key = 0;
@@ -172,7 +177,7 @@ void Run_ClientRegisterMenu()			//用户注册界面
 				if (key == 9) 
 				{
 					choose++;
-					if (choose == 5) {
+					if (choose == 6) {
 						choose = 1;
 					}
 				}
@@ -190,9 +195,12 @@ void Run_ClientRegisterMenu()			//用户注册界面
 						Append_Text(password, key);
 					}
 					else if (choose == 3) {
-						Append_Text(name, key);
+						Append_Text(repassword, key);
 					}
 					else if (choose == 4) {
+						Append_Text(name, key);
+					}
+					else if (choose == 5) {
 						Append_Text(phone, key);
 					}
 				}
@@ -203,6 +211,7 @@ void Run_ClientRegisterMenu()			//用户注册界面
 		setlinecolor(WHITE);
 		outtextxy(id->x1, id->y1 + (id->y2 - id->y1 - 19) / 2, id->text);
 		outtextxy(password->x1, password->y1 + (password->y2 - password->y1 - 19) / 2, password->text);
+		outtextxy(repassword->x1, repassword->y1 + (repassword->y2 - repassword->y1 - 19) / 2, repassword->text);
 		outtextxy(name->x1, name->y1 + (name->y2 - name->y1 - 19) / 2, name->text);
 		outtextxy(phone->x1, phone->y1 + (phone->y2 - phone->y1 - 19) / 2, phone->text);
 
@@ -213,9 +222,12 @@ void Run_ClientRegisterMenu()			//用户注册界面
 			Draw_Fps(password);
 		}
 		else if (Is_Input && choose == 3) {
-			Draw_Fps(name);
+			Draw_Fps(repassword);
 		}
 		else if (Is_Input && choose == 4) {
+			Draw_Fps(name);
+		}
+		else if (Is_Input && choose == 5) {
 			Draw_Fps(phone);
 		}
 
@@ -223,6 +235,7 @@ void Run_ClientRegisterMenu()			//用户注册界面
 		line(330, 300, 500, 300);
 		line(330, 375, 500, 375);
 		line(330, 450, 500, 450);
+		line(330, 525, 500, 525);
 
 		if (Button_Input(215, 200, "身份证号："))
 		{
@@ -236,19 +249,25 @@ void Run_ClientRegisterMenu()			//用户注册界面
 			Is_Input = true;
 		}
 
-		if (Button_Input(250, 350, "姓名："))
+		if (Button_Input(215, 350, "确认密码："))
 		{
 			choose = 3;
 			Is_Input = true;
 		}
 
-		if (Button_Input(250, 425, "电话："))
+		if (Button_Input(250, 425, "姓名："))
 		{
 			choose = 4;
 			Is_Input = true;
 		}
 
-		if (Button(400, 500, "注册"))
+		if (Button_Input(250, 500, "电话："))
+		{
+			choose = 5;
+			Is_Input = true;
+		}
+
+		if (Button(400, 550, "注册"))
 		{
 			FlushBatchDraw();
 			cleardevice();
@@ -286,7 +305,7 @@ void Run_ClientMainMenu(PClient client)			//用户个人界面
 		t.lfQuality = ANTIALIASED_QUALITY;
 		settextstyle(&t);
 		settextcolor(WHITE);
-		outtextxy(310, 70, client->name);
+		outtextxy(310, 70, "用户个人界面 ");
 
 		if (Button(350, 200, "我要住房"))
 		{
@@ -334,14 +353,14 @@ void Commit_Order(PClient client)		//用户申请住房界面
 
 	int year = 1900 + p->tm_year, month = 1 + p->tm_mon, day = p->tm_mday;
 
-	int choose = 0;
-
 	while (true)
 	{
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
 
 		cleardevice();
+
+		Draw_Calendar(year, month, client);
 
 		LOGFONT t;			//绘制文字
 		gettextstyle(&t);
@@ -388,9 +407,87 @@ void Commit_Order(PClient client)		//用户申请住房界面
 
 		if (Button(570, 150, ">>")) {
 			(year)++;
+		}		
+
+		if (Button(600, 500, "返回"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_ClientMainMenu(client);
+			return;
 		}
 
-		Draw_Calendar(year, month, choose);		
+		FlushBatchDraw();			// 执行未完成的绘制任务
+		Sleep(10);
+	}
+}
+
+void ReCommit_Order(PClient client, int s_year, int s_month, int s_day)
+{
+	time_t timep;			//获取系统时间
+	struct tm* p;
+	time(&timep);
+	p = gmtime(&timep);
+
+	int year = 1900 + p->tm_year, month = 1 + p->tm_mon, day = p->tm_mday;
+
+	int choose = 0;
+
+	while (true)
+	{
+		while (MouseHit())		// 鼠标消息获取
+			M_msg = GetMouseMsg();
+
+		cleardevice();
+
+		reDraw_Calendar(year, month, s_year, s_month, s_day, client);
+
+		LOGFONT t;			//绘制文字
+		gettextstyle(&t);
+		t.lfHeight = 75;
+		strcpy(t.lfFaceName, "微软雅黑 Light");
+		t.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&t);
+		settextcolor(WHITE);
+		outtextxy(200, 70, "请选择退房时间");
+
+		if (Button(240, 150, "<<")) {
+			(year)--;
+		}
+
+		if (Button(300, 150, "<")) {
+			if (month > 1) {
+				(month)--;
+			}
+			else {
+				(year)--;
+				month = 12;
+			}
+		}
+
+		char str[10];
+		sprintf(str, "%4d.%2d", year, month);
+		gettextstyle(&t);
+		t.lfHeight = 22;
+		strcpy(t.lfFaceName, "微软雅黑 Light");
+		t.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&t);
+		settextcolor(WHITE);
+		outtextxy(395, 155, str);
+
+		if (Button(520, 150, ">")) {
+			if (month < 12) {
+				(month)++;
+			}
+			else {
+				(year)++;
+				month = 1;
+			}
+		}
+
+		if (Button(570, 150, ">>")) {
+			(year)++;
+		}
 
 		if (Button(600, 500, "返回"))
 		{
@@ -420,8 +517,6 @@ void Delete_Order(PClient client)		//用户申请退房界面
 		settextstyle(&t);
 		settextcolor(WHITE);
 		outtextxy(310, 70, "用户申请退房界面");
-
-
 
 		FlushBatchDraw();			// 执行未完成的绘制任务
 		Sleep(10);
