@@ -28,7 +28,7 @@ void Draw_Fps(PText t);
 void Exit();
 
 PRoom Room_Init();		//目前只能读取房间id
-//PClient Client_Init();
+PClient Client_Init();
 //POrder Order_Init();
 void out_Room(Room* head);
 

@@ -74,8 +74,6 @@ PClient Register(char id[], char password[], char name[], char phone[])		//ÓÃ»§×
 	newtemp->pay = 0;
 	newtemp->head_order = NULL;
 	newtemp->next = NULL;
-	P_Now_Client->next = newtemp;
-	P_Now_Client = newtemp;
 	fprintf(fp, "%s %s %s %s %d %d %d %d\n", newtemp->id, newtemp->password, newtemp-> name, newtemp->phone,
 		newtemp->gender, newtemp->VIP, newtemp->num_bill, newtemp->pay);
 	fclose(fp);

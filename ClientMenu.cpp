@@ -255,10 +255,18 @@ void Run_ClientRegisterMenu()			//用户注册界面
 		{
 			FlushBatchDraw();
 			cleardevice();
-			PClient client = Register(id->text, password->text, name->text, phone->text);
-			if (client != NULL) {
-				Run_ClientMainMenu(client);
+			if (Checkid && Checkphone)
+			{
+				PClient client = Register(id->text, password->text, name->text, phone->text);
+				if (client != NULL) {
+					Run_ClientMainMenu(client);
+				}
 			}
+			else
+			{
+
+			}
+			
 			return;
 		}
 
