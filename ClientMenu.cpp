@@ -129,6 +129,11 @@ void Run_ClientLoginMenu()			//用户登录界面
 
 void Run_ClientRegisterMenu()			//用户注册界面
 {
+	PClient client = (PClient)malloc(sizeof(Client));
+	client->head_order = NULL;
+	client->VIP = 0;
+	client->num_bill = 0;
+	client->pay = 0;
 
 	PText id = (PText)malloc(sizeof(Text));
 	PText password = (PText)malloc(sizeof(Text));
@@ -142,6 +147,7 @@ void Run_ClientRegisterMenu()			//用户注册界面
 	Init_text(phone, 330, 500, 500, 530, 150);
 	bool Is_Input = false;
 	int choose = 0;
+	bool judge[5] = { false };
 	wchar_t key = 0;
 
 	while (true)
@@ -261,18 +267,28 @@ void Run_ClientRegisterMenu()			//用户注册界面
 
 		if (Button(400, 550, "注册"))
 		{
-			
-			PClient client = Register(id->text, password->text, name->text, phone->text);
-			if (client != NULL) 
+			FlushBatchDraw();
+			cleardevice();
+			if (Checkid(id->text))judge[0] = true;
+				
+			if (Checkpassword(password->text))judge[1] = true;
+				
+			if (Checkrepassword(password->text,repassword->text))judge[2] = true;
+				
+			if (Checkphone(phone->text))judge[3] = true;
+				
+			if (judge[0] == true && judge[1] == true && judge[2] == true && judge[3] == true)
 			{
-				FlushBatchDraw();
-				cleardevice();
-				Run_ClientMainMenu(client);
+				PClient client = Register(id->text, password->text, name->text, phone->text);
+				if (client != NULL)
+				{ 
+					Run_ClientMainMenu(client);
+				}
 			}
-			else {
-				Exit();
+			else 
+			{
+
 			}
-			
 			return;
 		}
 

@@ -79,7 +79,3 @@ typedef struct room {
 
 
 extern MOUSEMSG M_msg;				// Êó±êÏûÏ¢\
-<<<<<<< HEAD
-
-=======
->>>>>>> 7d9156758fbc4c2a843b36efb07bb633e32abab8

@@ -56,13 +56,31 @@ bool Checkphone(char phone[])		//¼ì²éµç»°
 	return true;
 }
 
+bool Checkpassword(char password[])		//¼ì²éÃÜÂë¸ñÊ½
+{
+	
+	for (int i = 0; i < strlen(password); i++)
+	{
+		if (password[i] < 21 || password[i]> 126)
+			return false;
+
+	}
+	
+	return true;
+}
+
+bool Checkrepassword(char password[],char repassword[])		//È·ÈÏÃÜÂë
+{
+	if (strcmp(password, repassword) == 0)
+		return false;
+	
+	return true;
+}
+
 PClient Register(char id[], char password[], char name[], char phone[])		//ÓÃ»§×¢²á
 {
-<<<<<<< HEAD
-	PClient temp = P_Head_Client;
-=======
+	/*
 	PClient temp = P_Head_Client->next;
->>>>>>> 7d9156758fbc4c2a843b36efb07bb633e32abab8
 	while (temp != NULL)
 	{
 		if (strlen(id) != 18)
@@ -85,21 +103,14 @@ PClient Register(char id[], char password[], char name[], char phone[])		//ÓÃ»§×
 
 		}
 		
-<<<<<<< HEAD
-		if (strcmp(temp->id, id) == 0)
-			return NULL;
-		if (strcmp(temp->phone, phone) == 0)
-			return NULL;
-=======
 		//if (strcmp(temp->id, id) == 0)
 			//return NULL;
 		//if (strcmp(temp->phone, phone) == 0)
 			//return NULL;
->>>>>>> 7d9156758fbc4c2a843b36efb07bb633e32abab8
 
 		temp = temp->next;
 	}
-	
+	*/
 	
 	FILE* fp;
 	fp = fopen("client.txt", "a");

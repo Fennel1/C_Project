@@ -59,13 +59,8 @@ PRoom Room_Init()
 	Time temp_start, temp_end;
 	//创建链表
 	P_Head_Room = (Room*)malloc(sizeof(Room));//头节点
-<<<<<<< HEAD
-	Room* P_Now_Room = P_Head_Room;
-	Room* P_Temp_Room = P_Head_Room;
-=======
 	P_Head_Room->next = NULL;
 	PRoom P_Now_Room = P_Head_Room;
->>>>>>> 7d9156758fbc4c2a843b36efb07bb633e32abab8
 	FILE* r = fopen("room.txt", "r");
 	if (r == NULL)
 	{
@@ -114,15 +109,9 @@ PClient Client_Init()
 	int temp_pay;
 	//创建链表
 	P_Head_Client = (Client*)malloc(sizeof(Client));//头节点
-<<<<<<< HEAD
-	Client* P_Now_Client = P_Head_Client;
-	Client* P_Temp_Client = (Client*)malloc(sizeof(Client));
-	P_Temp_Client = P_Head_Client;
-=======
 	P_Head_Client->next = NULL;
 	Client* P_Now_Client = P_Head_Client;
 	
->>>>>>> 7d9156758fbc4c2a843b36efb07bb633e32abab8
 	FILE* r = fopen("client.txt", "r");
 	if (r == NULL)
 	{
@@ -162,8 +151,6 @@ POrder Order_Init()
 	Remark temp_remark;
 	//创建链表
 	P_Head_Order = (Order*)malloc(sizeof(Order));//头节点
-<<<<<<< HEAD
-=======
 	P_Head_Order->next = NULL;
 	POrder P_Now_Order = P_Head_Order;
 	FILE* r = fopen("order.txt", "r");
@@ -213,7 +200,6 @@ POrder Client_Order_Init(PClient client)
 	Remark temp_remark;
 	//创建链表
 	P_Head_Order = (Order*)malloc(sizeof(Order));//头节点
->>>>>>> 7d9156758fbc4c2a843b36efb07bb633e32abab8
 	Order* P_Now_Order = P_Head_Order;
 	Order* P_Temp_Order = P_Head_Order;
 	FILE* r = fopen("order.txt", "r");
