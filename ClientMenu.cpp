@@ -103,6 +103,18 @@ void Run_ClientLoginMenu()			//用户登录界面
 			if (client != NULL) {
 				Run_ClientMainMenu(client);
 			}
+			else
+			{
+				char title[] = "登陆失败";
+				char text[1][50];
+				sprintf(text[0], "账户或密码错误");
+				if (Popup_Window(250, 200, 300, 200, title, text, 1, 1))
+				{
+					FlushBatchDraw();
+					cleardevice();
+					Run_ClientLoginMenu();
+				}
+			}
 			return;
 		}
 
@@ -147,6 +159,7 @@ void Run_ClientRegisterMenu()			//用户注册界面
 	Init_text(phone, 330, 500, 500, 530, 150);
 	bool Is_Input = false;
 	int choose = 0;
+	bool judge[5] = { false, false, false, false, false };
 	wchar_t key = 0;
 
 	while (true)
@@ -268,9 +281,36 @@ void Run_ClientRegisterMenu()			//用户注册界面
 		{
 			FlushBatchDraw();
 			cleardevice();
-			PClient client = Register(id->text, password->text, name->text, phone->text);
-			if (client != NULL) {
+			if (Checkid(id->text)) {
+				judge[0] = true;
+			}
+			if (Checkpassword(password->text)) {
+				judge[1] = true;
+			}
+			if (Checkrepassword(password->text, repassword->text)) {
+				judge[2] = true;
+			}
+			if (Checkphone(phone->text)) {
+				judge[3] = true;
+			}
+			if (judge[0] == true && judge[1] == true && judge[2] == true && judge[3] == true)
+			{
+				PClient client = Register(id->text, password->text, name->text, phone->text);
+				FlushBatchDraw();
+				cleardevice();
 				Run_ClientMainMenu(client);
+			}
+			else
+			{
+				char title[] = "注册失败";
+				char text[4][50];
+				int num = 0;
+				if (judge[0])	sprintf(text[num++], "身份证号格式错误");
+				if (judge[1])	sprintf(text[num++], "密码格式错误");
+				if (judge[2])	sprintf(text[num++], "两次密码输入不一致");
+				if (judge[3])	sprintf(text[num++], "电话号码格式错误");
+				Popup_Window(250, 200, 300, 200, title, text, num, 1);
+				Run_ClientRegisterMenu();
 			}
 			return;
 		}
@@ -500,14 +540,16 @@ void ReCommit_Order(PClient client, int s_year, int s_month, int s_day)
 }
 
 
-void Choose_room(PClient client, int *room_num)
+void Choose_room(PClient client, int *room_num, Time start, Time end)
 {
+	char text[20];
+	POrder order = NULL;
+
 	while (true)
 	{
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
 
-		cleardevice();
 
 		LOGFONT t;			//绘制文字
 		gettextstyle(&t);
@@ -516,31 +558,56 @@ void Choose_room(PClient client, int *room_num)
 		t.lfQuality = ANTIALIASED_QUALITY;
 		settextstyle(&t);
 		settextcolor(WHITE);
-		outtextxy(310, 70, "请选择房型");
+		outtextxy(265, 70, "请选择房型");
 
 		if (Button_Input(265, 200, "单人钟点房"))
 		{
 			FlushBatchDraw();
 			cleardevice();
+			Complete_Order(order, client, start, end);
 		}
+
+		gettextstyle(&t);
+		t.lfHeight = 35;
+		sprintf(text, "剩余：%d间", room_num[0]);
+		outtextxy(265, 250, text);
 
 		if (Button_Input(465, 200, "双人钟点房"))
 		{
 			FlushBatchDraw();
 			cleardevice();
+			Complete_Order(order, client, start, end);
 		}
+
+		gettextstyle(&t);
+		t.lfHeight = 35;
+		sprintf(text, "剩余：%d间", room_num[1]);
+		outtextxy(465, 250, text);
 
 		if (Button(265, 350, "单人短租房"))
 		{
 			FlushBatchDraw();
 			cleardevice();
+			Complete_Order(order, client, start, end);
+
 		}
+
+		gettextstyle(&t);
+		t.lfHeight = 35;
+		sprintf(text, "剩余：%d间", room_num[2]);
+		outtextxy(265, 400, text);
 
 		if (Button(465, 350, "双人短租房"))
 		{
 			FlushBatchDraw();
 			cleardevice();
+			Complete_Order(order, client, start, end);
 		}
+
+		gettextstyle(&t);
+		t.lfHeight = 35;
+		sprintf(text, "剩余：%d间", room_num[3]);
+		outtextxy(465, 400, text);
 
 		if (Button(600, 500, "返回"))
 		{
@@ -550,24 +617,93 @@ void Choose_room(PClient client, int *room_num)
 			return;
 		}
 
+		FlushBatchDraw();			// 执行未完成的绘制任务
+		Sleep(10);
+	}
+}
+
+void Complete_Order(POrder order, PClient client, Time start, Time end)
+{
+	/*
+	char title[] = "确认订单信息";
+	char text[7][50];
+	sprintf(text[0], "订单编号：%s", order->order_id);
+	sprintf(text[1], "房间编号：%s", order->room_id);
+	sprintf(text[2], "入住时间：%d年%d月%d日", start.hour, start.month, start.day);
+	sprintf(text[3], "退房时间：%d年%d月%d日", end.year, end.month, end.day);
+	sprintf(text[4], "价格：%.2lf", order->price);
+	sprintf(text[5], "折扣：%.0lf折", (1-client->VIP * 0.03)*100 );
+	sprintf(text[6], "需支付：%.2lf折", (1 - client->VIP * 0.03)* order->price);
+	Popup_Window(250, 200, 300, 200, title, text, 7, 1);
+*/
+	char title[] = "确认当前日期吗？";
+	char text[2][50];
+	sprintf(text[0], "入住时间：");
+	sprintf(text[1], "退房时间：");
+	Popup_Window(250, 200, 300, 200, title, text, 2, 2);
+
+	cleardevice();
+
+	while (true)
+	{
+		while (MouseHit())		// 鼠标消息获取
+			M_msg = GetMouseMsg();
+
+		cleardevice();
+
+		IMAGE img;
+		loadimage(&img, _T("pay.jpg"), 400, 400, true);
+		putimage(200, 70, &img);
+			
+
+		if (Button(475, 500, "完成支付"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Message_Board(order, client);
+			return;
+		}
+
+		if (Button(600, 500, "退出支付"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_ClientMainMenu(client);
+			return;
+		}
 
 		FlushBatchDraw();			// 执行未完成的绘制任务
 		Sleep(10);
 	}
 }
 
-void Complete_Order(POrder order, PClient client)
+void Message_Board(POrder order, PClient client)
 {
+	PText id = (PText)malloc(sizeof(Text));
+
+
 	while (true)
 	{
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
 
-		if (Button(600, 500, "返回"))
+		cleardevice();
+
+
+
+		if (Button(450, 500, "完成"))
 		{
 			FlushBatchDraw();
 			cleardevice();
-			Commit_Order(client);
+			Run_ClientMainMenu(client);
+			return;
+		}
+
+		if (Button(600, 500, "暂不评论"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_ClientMainMenu(client);
 			return;
 		}
 
@@ -600,6 +736,8 @@ void Delete_Order(PClient client)		//用户申请退房界面
 
 void Show_Order(PClient client)			//用户查看订单
 {
+	POrder order = client->head_order;
+
 	while (true)
 	{
 		while (MouseHit())		// 鼠标消息获取
@@ -607,13 +745,28 @@ void Show_Order(PClient client)			//用户查看订单
 
 		LOGFONT t;			//绘制文字
 		gettextstyle(&t);
-		t.lfHeight = 75;
+		t.lfHeight = 45;
 		strcpy(t.lfFaceName, "微软雅黑 Light");
 		t.lfQuality = ANTIALIASED_QUALITY;
 		settextstyle(&t);
 		settextcolor(WHITE);
-		outtextxy(310, 70, "用户查看订单界面");
 
+		if (client->head_order == NULL)
+		{
+			outtextxy(310, 70, "无历史订单");
+		}
+		else
+		{
+			
+		}
+
+		if (Button(600, 500, "返回"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_ClientMainMenu(client);
+			return;
+		}
 
 		FlushBatchDraw();			// 执行未完成的绘制任务
 		Sleep(10);

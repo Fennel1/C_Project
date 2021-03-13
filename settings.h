@@ -49,7 +49,8 @@ typedef struct order {
 	double price;
 	Time start, end;
 	Remark remark;
-	struct order *next;
+	struct order* pre;
+	struct order* next;
 }Order, * POrder;
 
 typedef struct client {
@@ -63,7 +64,6 @@ typedef struct client {
 	int pay;
 	POrder head_order;
 	struct client* next;
-
 }Client, * PClient;
 
 typedef struct room {
@@ -76,6 +76,3 @@ typedef struct room {
 	Time start, end;
 	struct room *next;
 }Room, * PRoom;
-
-
-extern MOUSEMSG M_msg;				// Êó±êÏûÏ¢\

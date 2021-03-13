@@ -130,6 +130,7 @@ PClient Client_Init()
 		P_Temp_Client->VIP = temp_VIP;
 		P_Temp_Client->num_bill = temp_num_bill;
 		P_Temp_Client->pay = temp_pay;
+		P_Temp_Client->head_order = NULL;
 		//进入下一个节点
 		P_Temp_Client->next = NULL;
 		P_Now_Client->next = P_Temp_Client;

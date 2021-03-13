@@ -25,8 +25,9 @@ void Run_ClientRegisterMenu();
 void Run_ClientMainMenu(PClient client);
 void Commit_Order(PClient client);
 void ReCommit_Order(PClient client, int s_year, int s_month, int s_day);
-void Choose_room(PClient client, int* room_num);
-void Complete_Order(POrder order, PClient client);
+void Choose_room(PClient client, int* room_num, Time start, Time end);
+void Complete_Order(POrder order, PClient client, Time start, Time end);
+void Message_Board(POrder order, PClient client);
 void Delete_Order(PClient client);
 void Show_Order(PClient client);
 void Draw_Fps(PText t);
@@ -45,6 +46,8 @@ PClient MissPassword(char id[], char password[], char name[], char phone[]);
 void SetNewPassword(PClient client, char password[]);
 bool Checkid(char id[]);
 bool Checkphone(char phone[]);
+bool Checkpassword(char password[]);
+bool Checkrepassword(char password[], char repassword[]);
 int* Display_rooms_number(int* rooms, Time start, Time end);
 bool Judge_time(Time a, Time b);	//a在b之前返回true，a在b之后或ab相等都返回false
 

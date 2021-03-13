@@ -56,39 +56,29 @@ bool Checkphone(char phone[])		//检查电话
 	return true;
 }
 
+bool Checkpassword(char password[])		//检查密码格式
+{
+
+	for (int i = 0; i < strlen(password); i++)
+	{
+		if (password[i] < 21 || password[i]> 126)
+			return false;
+
+	}
+
+	return true;
+}
+
+bool Checkrepassword(char password[], char repassword[])		//确认密码
+{
+	if (strcmp(password, repassword) == 0)
+		return false;
+
+	return true;
+}
+
 PClient Register(char id[], char password[], char name[], char phone[])		//用户注册
 {
-	PClient temp = P_Head_Client->next;
-	while (temp != NULL)
-	{
-		if (strlen(id) != 18)
-			return NULL;
-		if (strlen(phone)!=11)
-			return NULL;
-		if ((id[17] != 'X' || id[17] != 'x') && (id[17] < '0' || id[17]>'9'))
-			return NULL;
-		for (int i = 0; i < 17; i++)
-		{
-			if (id[i] < '0' || id[i]>'9')
-				return NULL;
-
-		}
-		
-		for (int i = 0; i < 11; i++)
-		{
-			if (phone[i] < '0' || phone[i]>'9')
-				return NULL;
-
-		}
-		
-		//if (strcmp(temp->id, id) == 0)
-			//return NULL;
-		//if (strcmp(temp->phone, phone) == 0)
-			//return NULL;
-
-		temp = temp->next;
-	}
-	
 	
 	FILE* fp;
 	fp = fopen("client.txt", "a");

@@ -199,7 +199,7 @@ void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PC
 							rooms_num = Display_rooms_number(num, start, end);
 							FlushBatchDraw();
 							cleardevice();
-							Choose_room(client, rooms_num);
+							Choose_room(client, rooms_num, start, end);
 						}
 						else
 						{
@@ -234,7 +234,7 @@ void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PC
 							rooms_num = Display_rooms_number(num, start, end);
 							FlushBatchDraw();
 							cleardevice();
-							Choose_room(client, rooms_num);
+							Choose_room(client, rooms_num, start, end);
 						}
 						else
 						{
