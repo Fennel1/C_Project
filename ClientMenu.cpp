@@ -4,13 +4,10 @@
 extern MOUSEMSG M_msg;				// 鼠标消息\
 
 extern PClient P_Head_Client;		//用户链表
-extern PClient P_Now_Client;
 
 extern POrder P_Head_Order;		//以时间排序的订单
-extern POrder P_Now_Order;
 
 extern PRoom P_Head_Room;
-extern PRoom P_Now_Room;
 
 
 void Run_ClientLoginMenu()			//用户登录界面
@@ -502,6 +499,84 @@ void ReCommit_Order(PClient client, int s_year, int s_month, int s_day)
 		Sleep(10);
 	}
 }
+
+
+void Choose_room(PClient client, int *room_num)
+{
+	while (true)
+	{
+		while (MouseHit())		// 鼠标消息获取
+			M_msg = GetMouseMsg();
+
+		cleardevice();
+
+		LOGFONT t;			//绘制文字
+		gettextstyle(&t);
+		t.lfHeight = 75;
+		strcpy(t.lfFaceName, "微软雅黑 Light");
+		t.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&t);
+		settextcolor(WHITE);
+		outtextxy(310, 70, "请选择房型");
+
+		if (Button_Input(265, 200, "单人钟点房"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+		}
+
+		if (Button_Input(465, 200, "双人钟点房"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+		}
+
+		if (Button(265, 350, "单人短租房"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+		}
+
+		if (Button(465, 350, "双人短租房"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+		}
+
+		if (Button(600, 500, "返回"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Commit_Order(client);
+			return;
+		}
+
+
+		FlushBatchDraw();			// 执行未完成的绘制任务
+		Sleep(10);
+	}
+}
+
+void Complete_Order(POrder order, PClient client)
+{
+	while (true)
+	{
+		while (MouseHit())		// 鼠标消息获取
+			M_msg = GetMouseMsg();
+
+		if (Button(600, 500, "返回"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Commit_Order(client);
+			return;
+		}
+
+		FlushBatchDraw();			// 执行未完成的绘制任务
+		Sleep(10);
+	}
+}
+
 
 void Delete_Order(PClient client)		//用户申请退房界面
 {

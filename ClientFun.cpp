@@ -58,7 +58,11 @@ bool Checkphone(char phone[])		//¼ì²éµç»°
 
 PClient Register(char id[], char password[], char name[], char phone[])		//ÓÃ»§×¢²á
 {
+<<<<<<< HEAD
 	PClient temp = P_Head_Client;
+=======
+	PClient temp = P_Head_Client->next;
+>>>>>>> 7d9156758fbc4c2a843b36efb07bb633e32abab8
 	while (temp != NULL)
 	{
 		if (strlen(id) != 18)
@@ -81,10 +85,17 @@ PClient Register(char id[], char password[], char name[], char phone[])		//ÓÃ»§×
 
 		}
 		
+<<<<<<< HEAD
 		if (strcmp(temp->id, id) == 0)
 			return NULL;
 		if (strcmp(temp->phone, phone) == 0)
 			return NULL;
+=======
+		//if (strcmp(temp->id, id) == 0)
+			//return NULL;
+		//if (strcmp(temp->phone, phone) == 0)
+			//return NULL;
+>>>>>>> 7d9156758fbc4c2a843b36efb07bb633e32abab8
 
 		temp = temp->next;
 	}
@@ -143,4 +154,47 @@ void SetNewPassword(PClient client, char password[])			//ÉèÖÃÐÂÃÜÂë
 	strcpy(temp->password, " ");
 	strcpy(temp->password, password);
 
+}
+
+int* Display_rooms_number(int* rooms, Time start, Time end)//·µ»ØËÄÖÖ¿Õ·¿¼äµÄ¸öÊý
+{
+	//½¨Á¢·¿¼äµÄÁ´±í
+	PRoom p_head_room = Room_Init();
+	PRoom p_now_room = p_head_room->next;
+	//±éÀú¶©µ¥£¬¸Ä±äis_useµÄÖµ
+	POrder p_head_order = Order_Init();
+	POrder p_now_order = p_head_order->next;
+	while (p_now_order != NULL)
+	{
+		//ÅÐ¶Ï£ºstart»òendÔÚÒÑÓÐ¶©µ¥ÆðÖ¹Ê±¼äÖ®ÄÚ£¬is_use¸ÄÎªtrue
+		if ((Judge_time(p_now_order->start, start) == 1 && Judge_time(start, p_now_order->end) == 1) || (Judge_time(p_now_order->start, end) == 1 && Judge_time(end, p_now_order->end) == 1))
+		{
+			while (p_now_room != NULL)
+			{
+				if (p_now_room->id == p_now_order->room_id)
+				{
+					p_now_room->Is_Use = 1;
+					break;
+				}
+			}
+		}
+	}
+	//±éÀú·¿¼ä£¬Èç¹ûis_useÎªfalse£¬¿Õ·¿¼äÊý+1
+	while (p_now_room != NULL)
+	{
+		if (p_now_room->type == 0 && p_now_room->Is_Use == 0)rooms[0]++;
+		else if (p_now_room->type == 1 && p_now_room->Is_Use == 0)rooms[1]++;
+		else if (p_now_room->type == 2 && p_now_room->Is_Use == 0)rooms[2]++;
+		else if (p_now_room->type == 3 && p_now_room->Is_Use == 0)rooms[3]++;
+		p_now_room = p_now_room->next;
+	}
+	return rooms;
+}
+
+bool Judge_time(Time a, Time b)
+{
+	if (a.year < b.year)return true;
+	else if (a.month < b.month)return true;
+	else if (a.day < b.day)return true;
+	return false;
 }

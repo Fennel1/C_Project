@@ -4,13 +4,10 @@
 extern MOUSEMSG M_msg;				// 鼠标消息\
 
 extern PClient P_Head_Client;		//用户链表
-extern PClient P_Now_Client;
 
 extern POrder P_Head_Order;		//以时间排序的订单
-extern POrder P_Now_Order;
 
 extern PRoom P_Head_Room;
-extern PRoom P_Now_Room;
 
 bool Button(int a, int b, const char str[])			//基本按钮模组
 {
@@ -195,7 +192,14 @@ void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PC
 						sprintf(text[1], "退房时间：%d年%d月%d日", year, month, days);
 						if (Popup_Window(250, 200, 300, 200, title, text, 2, 2))
 						{
-
+							Time start = { s_year, s_month, s_day, 0, 0 };
+							Time end = { year, month, day, 0, 0 };
+							int num[4] = { 0 };
+							int* rooms_num = num;
+							rooms_num = Display_rooms_number(num, start, end);
+							FlushBatchDraw();
+							cleardevice();
+							Choose_room(client, rooms_num);
 						}
 						else
 						{
@@ -223,7 +227,14 @@ void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PC
 						sprintf(text[1], "退房时间：%d年%d月%d日", year, month, days);
 						if (Popup_Window(250, 200, 300, 200, title, text, 2, 2))
 						{
-
+							Time start = { s_year, s_month, s_day, 0, 0 };
+							Time end = { year, month, day, 0, 0 };
+							int num[4] = {0};
+							int* rooms_num = num;
+							rooms_num = Display_rooms_number(num, start, end);
+							FlushBatchDraw();
+							cleardevice();
+							Choose_room(client, rooms_num);
 						}
 						else
 						{

@@ -25,6 +25,8 @@ void Run_ClientRegisterMenu();
 void Run_ClientMainMenu(PClient client);
 void Commit_Order(PClient client);
 void ReCommit_Order(PClient client, int s_year, int s_month, int s_day);
+void Choose_room(PClient client, int* room_num);
+void Complete_Order(POrder order, PClient client);
 void Delete_Order(PClient client);
 void Show_Order(PClient client);
 void Draw_Fps(PText t);
@@ -33,6 +35,11 @@ void Exit();
 PRoom Room_Init();		//目前只能读取房间id
 PClient Client_Init();
 POrder Order_Init();
+<<<<<<< HEAD
+=======
+POrder Client_Order_Init(PClient client);
+
+>>>>>>> 7d9156758fbc4c2a843b36efb07bb633e32abab8
 void out_Room(Room* head);
 
 
@@ -42,6 +49,13 @@ PClient Login(char id[], char password[]);
 PClient Register(char id[], char password[], char name[], char phone[]);
 PClient MissPassword(char id[], char password[], char name[], char phone[]);
 void SetNewPassword(PClient client, char password[]);
+<<<<<<< HEAD
 
+=======
+bool Checkid(char id[]);
+bool Checkphone(char phone[]);
+int* Display_rooms_number(int* rooms, Time start, Time end);
+bool Judge_time(Time a, Time b);	//a在b之前返回true，a在b之后或ab相等都返回false
+>>>>>>> 7d9156758fbc4c2a843b36efb07bb633e32abab8
 
 bool Change_File();
