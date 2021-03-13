@@ -15,6 +15,8 @@ extern PRoom P_Now_Room;
 
 bool Checkid(char id[])			//¼ì²éid
 {
+	if (id[18] != '\0')
+		return false;
 	if (id[17] != 'X' || id[17] < '0' || id[17]>'9')
 		return false;
 	for (int i = 0; i < 17; i++)
@@ -36,6 +38,8 @@ bool Checkid(char id[])			//¼ì²éid
 
 bool Checkphone(char phone[])		//¼ì²éµç»°
 {
+	if (phone[11] != '\0')
+		return false;
 	for (int i = 0; i < 11; i++)
 	{
 		if (phone[i] < '0' || phone[i]>'9')
@@ -54,7 +58,8 @@ bool Checkphone(char phone[])		//¼ì²éµç»°
 
 PClient Register(char id[], char password[], char name[], char phone[])		//ÓÃ»§×¢²á
 {
-	
+	FILE* fp;
+	fp = fopen("client.txt", "a");
 	PClient newtemp = (PClient)malloc(sizeof(Client));
 	strcpy(newtemp->id, id);
 	strcpy(newtemp->password, password);
@@ -65,13 +70,15 @@ PClient Register(char id[], char password[], char name[], char phone[])		//ÓÃ»§×
 		newtemp->gender = false;
 	else newtemp->gender = true;
 	newtemp->VIP = 0;
-	newtemp->head_order = NULL;
-	newtemp->next = NULL;
 	newtemp->num_bill = 0;
 	newtemp->pay = 0;
+	newtemp->head_order = NULL;
+	newtemp->next = NULL;
 	P_Now_Client->next = newtemp;
 	P_Now_Client = newtemp;
-
+	fprintf(fp, "%s %s %s %s %d %d %d %d\n", newtemp->id, newtemp->password, newtemp-> name, newtemp->phone,
+		newtemp->gender, newtemp->VIP, newtemp->num_bill, newtemp->pay);
+	fclose(fp);
 	return P_Now_Client;
 }
 

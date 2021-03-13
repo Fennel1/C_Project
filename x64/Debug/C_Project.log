@@ -1,0 +1,172 @@
+﻿  ClientFun.cpp
+  ClientMenu.cpp
+E:\Code\C_Project\ClientMenu.cpp(38,44): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\ClientMenu.cpp(38,11): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\ClientMenu.cpp(42,36): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(42,36): message : 尝试匹配参数列表“(int, int, const char [9])”时
+E:\Code\C_Project\ClientMenu.cpp(65,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\Code\C_Project\ClientMenu.cpp(68,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\Code\C_Project\ClientMenu.cpp(74,32): error C2665: “settextstyle”: 4 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(247,6): message : 可能是“void settextstyle(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(74,32): message : 尝试匹配参数列表“(int, int, const char [8])”时
+E:\Code\C_Project\ClientMenu.cpp(76,66): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(76,66): message : 尝试匹配参数列表“(int, int, char [30])”时
+E:\Code\C_Project\ClientMenu.cpp(77,96): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(77,96): message : 尝试匹配参数列表“(int, int, char [30])”时
+E:\Code\C_Project\ClientMenu.cpp(163,44): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\ClientMenu.cpp(163,11): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\ClientMenu.cpp(167,36): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(167,36): message : 尝试匹配参数列表“(int, int, const char [9])”时
+E:\Code\C_Project\ClientMenu.cpp(190,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\Code\C_Project\ClientMenu.cpp(193,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\Code\C_Project\ClientMenu.cpp(196,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\Code\C_Project\ClientMenu.cpp(199,26): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\Code\C_Project\ClientMenu.cpp(205,32): error C2665: “settextstyle”: 4 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(247,6): message : 可能是“void settextstyle(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(205,32): message : 尝试匹配参数列表“(int, int, const char [8])”时
+E:\Code\C_Project\ClientMenu.cpp(207,66): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(207,66): message : 尝试匹配参数列表“(int, int, char [30])”时
+E:\Code\C_Project\ClientMenu.cpp(208,96): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(208,96): message : 尝试匹配参数列表“(int, int, char [30])”时
+E:\Code\C_Project\ClientMenu.cpp(209,76): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(209,76): message : 尝试匹配参数列表“(int, int, char [30])”时
+E:\Code\C_Project\ClientMenu.cpp(210,81): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(210,81): message : 尝试匹配参数列表“(int, int, char [30])”时
+E:\Code\C_Project\ClientMenu.cpp(288,44): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\ClientMenu.cpp(288,11): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\ClientMenu.cpp(292,34): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(292,34): message : 尝试匹配参数列表“(int, int, char [30])”时
+E:\Code\C_Project\ClientMenu.cpp(352,44): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\ClientMenu.cpp(352,11): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\ClientMenu.cpp(356,45): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(356,45): message : 尝试匹配参数列表“(int, int, const char [15])”时
+E:\Code\C_Project\ClientMenu.cpp(376,44): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\ClientMenu.cpp(376,11): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\ClientMenu.cpp(380,26): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(380,26): message : 尝试匹配参数列表“(int, int, char [10])”时
+E:\Code\C_Project\ClientMenu.cpp(336,6): error C4996: 'gmtime': This function or variable may be unsafe. Consider using gmtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Code\C_Project\ClientMenu.cpp(373,3): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Code\C_Project\ClientMenu.cpp(421,44): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\ClientMenu.cpp(421,11): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\ClientMenu.cpp(425,48): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(425,48): message : 尝试匹配参数列表“(int, int, const char [17])”时
+E:\Code\C_Project\ClientMenu.cpp(444,44): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\ClientMenu.cpp(444,11): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\ClientMenu.cpp(448,48): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\ClientMenu.cpp(448,48): message : 尝试匹配参数列表“(int, int, const char [17])”时
+  InterfaceComponents.cpp
+E:\Code\C_Project\InterfaceComponents.cpp(9,60): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+E:\Code\C_Project\InterfaceComponents.cpp(17,61): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+E:\Code\C_Project\InterfaceComponents.cpp(29,43): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\InterfaceComponents.cpp(29,10): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\InterfaceComponents.cpp(33,25): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\InterfaceComponents.cpp(33,25): message : 尝试匹配参数列表“(int, int, const char [])”时
+E:\Code\C_Project\InterfaceComponents.cpp(66,43): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\InterfaceComponents.cpp(66,10): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\InterfaceComponents.cpp(71,38): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\InterfaceComponents.cpp(71,38): message : 尝试匹配参数列表“(int, int, char [5])”时
+E:\Code\C_Project\InterfaceComponents.cpp(74,38): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\InterfaceComponents.cpp(74,38): message : 尝试匹配参数列表“(int, int, char [5])”时
+E:\Code\C_Project\InterfaceComponents.cpp(85,60): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+E:\Code\C_Project\InterfaceComponents.cpp(93,61): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+E:\Code\C_Project\InterfaceComponents.cpp(105,43): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\InterfaceComponents.cpp(105,10): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\InterfaceComponents.cpp(109,25): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\InterfaceComponents.cpp(109,25): message : 尝试匹配参数列表“(int, int, const char [])”时
+  MainMenu.cpp
+E:\Code\C_Project\MainMenu.cpp(27,44): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\MainMenu.cpp(27,11): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\MainMenu.cpp(31,33): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\MainMenu.cpp(31,33): message : 尝试匹配参数列表“(int, int, const char [7])”时
+  AdminMenu.cpp
+E:\Code\C_Project\AdminMenu.cpp(35,44): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\AdminMenu.cpp(35,11): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\AdminMenu.cpp(39,45): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\AdminMenu.cpp(39,45): message : 尝试匹配参数列表“(int, int, const char [15])”时
+E:\Code\C_Project\AdminMenu.cpp(62,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\Code\C_Project\AdminMenu.cpp(65,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\Code\C_Project\AdminMenu.cpp(71,32): error C2665: “settextstyle”: 4 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(247,6): message : 可能是“void settextstyle(int,int,LPCTSTR)”
+E:\Code\C_Project\AdminMenu.cpp(71,32): message : 尝试匹配参数列表“(int, int, const char [8])”时
+E:\Code\C_Project\AdminMenu.cpp(73,66): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\AdminMenu.cpp(73,66): message : 尝试匹配参数列表“(int, int, char [30])”时
+E:\Code\C_Project\AdminMenu.cpp(74,96): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\AdminMenu.cpp(74,96): message : 尝试匹配参数列表“(int, int, char [30])”时
+E:\Code\C_Project\AdminMenu.cpp(129,44): error C2664: “char *strcpy(char *,const char *)”: 无法将参数 1 从“WCHAR [32]”转换为“char *”
+E:\Code\C_Project\AdminMenu.cpp(129,11): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+E:\Windows Kits\10\Include\10.0.19041.0\ucrt\string.h(130,1): message : 参见“strcpy”的声明
+E:\Code\C_Project\AdminMenu.cpp(133,39): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\AdminMenu.cpp(133,39): message : 尝试匹配参数列表“(int, int, const char [11])”时
+  string.cpp
+E:\Code\C_Project\string.cpp(49,31): error C2665: “settextstyle”: 4 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(247,6): message : 可能是“void settextstyle(int,int,LPCTSTR)”
+E:\Code\C_Project\string.cpp(49,31): message : 尝试匹配参数列表“(int, int, const char [8])”时
+E:\Code\C_Project\string.cpp(54,64): error C2665: “outtextxy”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(224,6): message : 可能是“void outtextxy(int,int,TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(223,6): message : 或    “void outtextxy(int,int,LPCTSTR)”
+E:\Code\C_Project\string.cpp(54,64): message : 尝试匹配参数列表“(int, int, char [30])”时
+E:\Code\C_Project\string.cpp(61,41): error C2665: “textwidth”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(226,5): message : 可能是“int textwidth(TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(225,5): message : 或    “int textwidth(LPCTSTR)”
+E:\Code\C_Project\string.cpp(61,41): message : 尝试匹配参数列表“(char [30])”时
+E:\Code\C_Project\string.cpp(77,41): error C2665: “textwidth”: 2 个重载中没有一个可以转换所有参数类型
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(226,5): message : 可能是“int textwidth(TCHAR)”
+E:\software\VisualStudio\VC\Auxiliary\VS\include\easyx.h(225,5): message : 或    “int textwidth(LPCTSTR)”
+E:\Code\C_Project\string.cpp(77,41): message : 尝试匹配参数列表“(char [30])”时
+  正在生成代码...
