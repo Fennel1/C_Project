@@ -1,14 +1,11 @@
 
 #include "functions.h"
 
-PClient P_Head_Client;		//用户链表
-PClient P_Now_Client;
+extern PClient P_Head_Client;		//用户链表
 
-POrder P_Head_Order;		//以时间排序的订单
-POrder P_Now_Order;
+extern POrder P_Head_Order;		//以时间排序的订单
 
-PRoom P_Head_Room;		//房间链表
-PRoom P_Now_Room;
+extern PRoom P_Head_Room;
 
 MOUSEMSG M_msg;
 
