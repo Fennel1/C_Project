@@ -3,14 +3,9 @@
 
 extern MOUSEMSG M_msg;				// 鼠标消息\
 
-extern PClient P_Head_Client;		//用户链表
-extern PClient P_Now_Client;
-
-extern POrder P_Head_Order;		//以时间排序的订单
-extern POrder P_Now_Order;
-
-extern PRoom P_Head_Room;
-extern PRoom P_Now_Room;
+PRoom P_Head_Room;
+PClient P_Head_Client;
+POrder P_Head_Order;
 
 void Init()			//程序初始化
 {
@@ -21,9 +16,9 @@ void Init()			//程序初始化
 
 	setbkmode(TRANSPARENT);			//设置背景为透明
 
-	P_Head_Room=Room_Init();
-	//Client_Init();
-	//Order_Init();
+	P_Head_Room = Room_Init();
+	P_Head_Client = Client_Init();
+	P_Head_Order = Order_Init();
 
 }
 
@@ -31,6 +26,7 @@ void Exit()			//退出程序
 {
 	EndBatchDraw();
 	closegraph();
+	exit(0);
 }
 
 void out_Room(Room* head)
@@ -62,7 +58,7 @@ PRoom Room_Init()
 	PClient temp_client;
 	Time temp_start, temp_end;
 	//创建链表
-	Room* P_Head_Room = (Room*)malloc(sizeof(Room));//头节点
+	P_Head_Room = (Room*)malloc(sizeof(Room));//头节点
 	Room* P_Now_Room = P_Head_Room;
 	Room* P_Temp_Room = P_Head_Room;
 	FILE* r = fopen("room.txt", "r");
@@ -111,10 +107,11 @@ PClient Client_Init()
 	int temp_num_bill;
 	int temp_pay;
 	//创建链表
-	Client* P_Head_Client = (Client*)malloc(sizeof(Client));//头节点
+	P_Head_Client = (Client*)malloc(sizeof(Client));//头节点
 	Client* P_Now_Client = P_Head_Client;
-	Client* P_Temp_Client = P_Head_Client;
-	FILE* r = fopen("order.txt", "r");
+	Client* P_Temp_Client = (Client*)malloc(sizeof(Client));
+	P_Temp_Client = P_Head_Client;
+	FILE* r = fopen("client.txt", "r");
 	if (r == NULL)
 	{
 		printf("打开文件失败");
@@ -134,6 +131,7 @@ PClient Client_Init()
 		P_Temp_Client->next = NULL;
 		P_Now_Client->next = P_Temp_Client;
 		P_Now_Client = P_Temp_Client;
+		P_Temp_Client = (Client*)malloc(sizeof(Client));
 	}
 	P_Now_Client = NULL;
 	return P_Head_Client;
@@ -150,7 +148,7 @@ POrder Order_Init()
 	Time temp_start, temp_end;
 	Remark temp_remark;
 	//创建链表
-	Order* P_Head_Order = (Order*)malloc(sizeof(Order));//头节点
+	P_Head_Order = (Order*)malloc(sizeof(Order));//头节点
 	Order* P_Now_Order = P_Head_Order;
 	Order* P_Temp_Order = P_Head_Order;
 	FILE* r = fopen("order.txt", "r");

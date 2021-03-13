@@ -80,11 +80,3 @@ typedef struct room {
 
 extern MOUSEMSG M_msg;				// 鼠标消息\
 
-extern PClient P_Head_Client;		//用户链表
-extern PClient P_Now_Client;
-
-extern POrder P_Head_Order;		//以时间排序的订单
-extern POrder P_Now_Order;
-
-extern PRoom P_Head_Room;
-extern PRoom P_Now_Room;

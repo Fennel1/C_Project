@@ -17,7 +17,7 @@ bool Checkid(char id[])			//¼ì²éid
 {
 	if (id[18] != '\0')
 		return false;
-	if (id[17] != 'X' || id[17] < '0' || id[17]>'9')
+	if ((id[17] != 'X'||id[17]!='x' )&&( id[17] < '0' || id[17]>'9'))
 		return false;
 	for (int i = 0; i < 17; i++)
 	{
@@ -58,6 +58,38 @@ bool Checkphone(char phone[])		//¼ì²éµç»°
 
 PClient Register(char id[], char password[], char name[], char phone[])		//ÓÃ»§×¢²á
 {
+	PClient temp = P_Head_Client;
+	while (temp != NULL)
+	{
+		if (strlen(id) != 18)
+			return NULL;
+		if (strlen(phone)!=11)
+			return NULL;
+		if ((id[17] != 'X' || id[17] != 'x') && (id[17] < '0' || id[17]>'9'))
+			return NULL;
+		for (int i = 0; i < 17; i++)
+		{
+			if (id[i] < '0' || id[i]>'9')
+				return NULL;
+
+		}
+		
+		for (int i = 0; i < 11; i++)
+		{
+			if (phone[i] < '0' || phone[i]>'9')
+				return NULL;
+
+		}
+		
+		if (strcmp(temp->id, id) == 0)
+			return NULL;
+		if (strcmp(temp->phone, phone) == 0)
+			return NULL;
+
+		temp = temp->next;
+	}
+	
+	
 	FILE* fp;
 	fp = fopen("client.txt", "a");
 	PClient newtemp = (PClient)malloc(sizeof(Client));
@@ -74,12 +106,10 @@ PClient Register(char id[], char password[], char name[], char phone[])		//ÓÃ»§×
 	newtemp->pay = 0;
 	newtemp->head_order = NULL;
 	newtemp->next = NULL;
-	P_Now_Client->next = newtemp;
-	P_Now_Client = newtemp;
 	fprintf(fp, "%s %s %s %s %d %d %d %d\n", newtemp->id, newtemp->password, newtemp-> name, newtemp->phone,
 		newtemp->gender, newtemp->VIP, newtemp->num_bill, newtemp->pay);
 	fclose(fp);
-	return P_Now_Client;
+	return newtemp;
 }
 
 PClient Login(char id[], char password[])		//ÓÃ»§µÇÂ¼
@@ -94,7 +124,7 @@ PClient Login(char id[], char password[])		//ÓÃ»§µÇÂ¼
 	return NULL;
 }
 
-PClient Misspw(char id[], char password[], char name[], char phone[])		//ÕÒ»ØÃÜÂë
+PClient MissPassword(char id[], char password[], char name[], char phone[])		//ÕÒ»ØÃÜÂë
 {
 	PClient temp = P_Head_Client->next;
 	while (temp != NULL)
@@ -107,7 +137,7 @@ PClient Misspw(char id[], char password[], char name[], char phone[])		//ÕÒ»ØÃÜÂ
 	return NULL;
 }
 
-void Setnpw(PClient client, char password[])			//ÉèÖÃÐÂÃÜÂë
+void SetNewPassword(PClient client, char password[])			//ÉèÖÃÐÂÃÜÂë
 {
 	PClient temp = client;
 	strcpy(temp->password, " ");
