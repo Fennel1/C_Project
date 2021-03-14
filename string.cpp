@@ -27,7 +27,7 @@ void Append_Text(PText t, char c)
 {
 	if (c != 8)
 	{
-		if (t->len < 29)
+		if (t->len < 99)
 		{
 			t->text[t->len] = c;
 			t->text[t->len + 1] = '\0';

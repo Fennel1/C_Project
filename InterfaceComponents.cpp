@@ -291,6 +291,70 @@ bool Button_Calendar(int a, int b, int day)			//日历模组
 	return false;
 }
 
+bool Button_Star(int a, int b, int *num, int n, int star)
+{
+	static int x, y;
+
+	x = M_msg.x;
+	y = M_msg.y;
+	if (star >= n)
+	{
+		LOGFONT t;			//绘制文字
+		gettextstyle(&t);
+		t.lfHeight = 45;
+		t.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&t);
+		settextcolor(WHITE);
+		outtextxy(a, b, "★");
+
+	}
+
+	if (*num > n)
+	{
+		LOGFONT t;			//绘制文字
+		gettextstyle(&t);
+		t.lfHeight = 45;
+		t.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&t);
+		settextcolor(WHITE);
+		outtextxy(a, b, "★");
+
+	}
+	else if (x > a - 15 && x < a + 30 && y > b && y < b + 30)		//判断高亮显示
+	{
+		LOGFONT t;			//绘制文字
+		gettextstyle(&t);
+		t.lfHeight = 45;
+		t.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&t);
+		settextcolor(WHITE);
+		outtextxy(a, b, "★");
+
+		*num = n;
+
+		if (M_msg.uMsg == WM_LBUTTONUP)		//检测鼠标点击
+		{
+			M_msg.uMsg = WM_MOUSEMOVE;
+			return true;
+		}
+	}
+	else
+	{
+		LOGFONT t;			//绘制文字
+		gettextstyle(&t);
+		t.lfHeight = 45;
+		t.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&t);
+		settextcolor(WHITE);
+		outtextxy(a, b, "☆");
+
+		if (*num == n) {
+			*num = 0;
+		}
+	}
+	return false;
+}
+
 int Popup_Window(int x, int y, int wight, int hight, char title[], char text[][50], int g_num, int var)
 {
 	setbkmode(TRANSPARENT);

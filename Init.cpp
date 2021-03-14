@@ -29,24 +29,6 @@ void Exit()			//退出程序
 	exit(0);
 }
 
-void out_Room(Room* head)
-{
-	Room* p = head->next;
-	FILE* w = fopen("room_data.txt", "w");
-	if (w == NULL)
-	{
-		printf("打开文件失败");
-		return;
-	}
-	while (p)
-	{
-		fprintf(w, "%s ", p->id);
-	}
-	fprintf(w, "\n");
-	fclose(w);
-	return;
-}
-
 PRoom Room_Init()
 {
 	//创建读入所需的临时变量
@@ -200,39 +182,105 @@ POrder Client_Order_Init(PClient client)
 	Time temp_start, temp_end;
 	Remark temp_remark;
 	//创建链表
-	P_Head_Order = (Order*)malloc(sizeof(Order));//头节点
-	Order* P_Now_Order = P_Head_Order;
-	Order* P_Temp_Order = P_Head_Order;
+	client->head_order = (Order*)malloc(sizeof(Order));//头节点
+	client->head_order->next = NULL;
+	Order* P_Now_Order = client->head_order;
 	FILE* r = fopen("order.txt", "r");
 	if (r == NULL)
 	{
 		printf("打开文件失败");
 		return NULL;
 	}
+	Order* P_Temp_Order = (Order*)malloc(sizeof(Order));
 	while (fscanf(r, "%s %s %s %d %lf %d %d %d %d %d %d %d %d %d %d %s %d", temp_client_id, temp_order_id, temp_room_id, &temp_type, &temp_price, &temp_start.year, &temp_start.month, &temp_start.day, &temp_start.weekday, &temp_start.hour, &temp_end.year, &temp_end.month, &temp_end.day, &temp_end.weekday, &temp_end.hour, temp_remark.message, &temp_remark.star) != EOF)
 	{
-		strcpy(P_Temp_Order->client_id, temp_client_id);
-		strcpy(P_Temp_Order->order_id, temp_order_id);
-		strcpy(P_Temp_Order->room_id, temp_room_id);
-		P_Temp_Order->type = temp_type;
-		P_Temp_Order->price = temp_price;
-		P_Temp_Order->start.year = temp_start.year;
-		P_Temp_Order->start.month = temp_start.month;
-		P_Temp_Order->start.day = temp_start.day;
-		P_Temp_Order->start.weekday = temp_start.weekday;
-		P_Temp_Order->start.hour = temp_start.hour;
-		P_Temp_Order->end.year = temp_end.year;
-		P_Temp_Order->end.month = temp_end.month;
-		P_Temp_Order->end.day = temp_end.day;
-		P_Temp_Order->end.weekday = temp_end.weekday;
-		P_Temp_Order->end.hour = temp_end.hour;
-		strcpy(P_Temp_Order->remark.message, temp_remark.message);
-		P_Temp_Order->remark.star = temp_remark.star;
-		//进入下一个节点
-		P_Temp_Order->next = NULL;
-		P_Now_Order->next = P_Temp_Order;
-		P_Now_Order = P_Temp_Order;
+		//判断id值是否相同
+		if (strcmp(temp_client_id, client->id) == 0)
+		{
+			strcpy(P_Temp_Order->client_id, temp_client_id);
+			strcpy(P_Temp_Order->order_id, temp_order_id);
+			strcpy(P_Temp_Order->room_id, temp_room_id);
+			P_Temp_Order->type = temp_type;
+			P_Temp_Order->price = temp_price;
+			P_Temp_Order->start.year = temp_start.year;
+			P_Temp_Order->start.month = temp_start.month;
+			P_Temp_Order->start.day = temp_start.day;
+			P_Temp_Order->start.weekday = temp_start.weekday;
+			P_Temp_Order->start.hour = temp_start.hour;
+			P_Temp_Order->end.year = temp_end.year;
+			P_Temp_Order->end.month = temp_end.month;
+			P_Temp_Order->end.day = temp_end.day;
+			P_Temp_Order->end.weekday = temp_end.weekday;
+			P_Temp_Order->end.hour = temp_end.hour;
+			strcpy(P_Temp_Order->remark.message, temp_remark.message);
+			P_Temp_Order->remark.star = temp_remark.star;
+			//进入下一个节点
+			P_Temp_Order->next = NULL;
+			P_Now_Order->next = P_Temp_Order;
+			P_Now_Order = P_Temp_Order;
+			P_Temp_Order = (Order*)malloc(sizeof(Order));
+		}
 	}
-	P_Now_Order->next = NULL;
-	return P_Head_Order;
+	return client->head_order;
+}
+
+void Change_File()//三条链表内的值覆盖文件
+{
+	Change_Room();
+	Change_Client();
+	Change_Order();
+}
+
+void Change_Room()
+{
+	PRoom p = P_Head_Room->next;
+	FILE* w = fopen("room.txt", "w");
+	if (w == NULL)
+	{
+		printf("打开文件失败");
+		return;
+	}
+	while (p)
+	{
+		fprintf(w, "%s %d %d %lf %lf %d %d %d %d %d %d %d %d %d %d\n", p->id, p->Is_Use, p->type, p->price, p->discount, p->start.year, p->start.month, p->start.day, p->start.weekday, p->start.hour, p->end.year, p->end.month, p->end.day, p->end.weekday, p->end.hour);
+		p = p->next;
+	}
+	fclose(w);
+	return;
+}
+
+void Change_Client()
+{
+	PClient p = P_Head_Client->next;
+	FILE* w = fopen("client.txt", "w");
+	if (w == NULL)
+	{
+		printf("打开文件失败");
+		return;
+	}
+	while (p)
+	{
+		fprintf(w, "%s %s %s %s %d %d %d %d\n", p->id, p->password, p->name, p->phone, p->gender, p->VIP, p->num_bill, p->pay);
+		p = p->next;
+	}
+	fclose(w);
+	return;
+}
+
+void Change_Order()
+{
+	POrder p = P_Head_Order->next;
+	FILE* w = fopen("order.txt", "w");
+	if (w == NULL)
+	{
+		printf("打开文件失败");
+		return;
+	}
+	while (p)
+	{
+		fprintf(w, "%s %s %s %d %lf %d %d %d %d %d %d %d %d %d %d %s %d\n", p->client_id, p->order_id, p->room_id, p->type, p->price, p->start.year, p->start.month, p->start.day, p->start.weekday, p->start.hour, p->end.year, p->end.month, p->end.day, p->end.weekday, p->end.hour, p->remark.message, p->remark.star);
+		p = p->next;
+	}
+	fclose(w);
+	return;
 }

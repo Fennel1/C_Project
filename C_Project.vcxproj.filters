@@ -52,13 +52,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="room.txt">
-      <Filter>资源文件</Filter>
-    </Text>
     <Text Include="client.txt">
       <Filter>资源文件</Filter>
     </Text>
     <Text Include="order.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="room.txt">
       <Filter>资源文件</Filter>
     </Text>
   </ItemGroup>

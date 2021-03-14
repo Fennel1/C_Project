@@ -186,6 +186,7 @@ POrder Add_Order(PClient client, Room_Type type, Time start, Time end)
 
 	if (P_Head_Order->next == NULL) {
 		sprintf(p_this_order->order_id, "%d", 1);
+		strcpy(p_this_order->client_id, client->id);
 	}
 	else {
 		char* last_order_id = P_Head_Order->next->order_id;//获得前一个订单的id
@@ -196,9 +197,6 @@ POrder Add_Order(PClient client, Room_Type type, Time start, Time end)
 		int_id++;
 		sprintf(p_this_order->order_id, "%d", int_id);
 	}
-	p_this_order->next = P_Head_Order->next;
-	P_Head_Order->next = p_this_order;
-
 	
 	//遍历房间，找到可用房间，匹配room_id, price
 	PRoom p_now_room = P_Head_Room->next;
@@ -224,6 +222,124 @@ POrder Add_Order(PClient client, Room_Type type, Time start, Time end)
 	p_this_order->end.day = end.day;
 	p_this_order->end.weekday = end.weekday;
 	p_this_order->end.hour = end.hour;
+	strcpy(p_this_order->remark.message, "");
+	p_this_order->remark.star = 0;
 	//返回值
 	return p_this_order;
+}
+
+void Add_In_Linklist(POrder p_this_order, PClient client)
+{
+	POrder p_temp_order = (Order*)malloc(sizeof(Order));
+	POrder p_now_order = P_Head_Order;
+	//将节点加入总订单中（尾插）
+	
+	if (p_now_order->next == NULL)
+	{
+		strcpy(p_temp_order->client_id, p_this_order->client_id);
+		strcpy(p_temp_order->order_id, p_this_order->order_id);
+		strcpy(p_temp_order->room_id, p_this_order->room_id);
+		p_temp_order->type = p_this_order->type;
+		p_temp_order->price = p_this_order->price;
+		p_temp_order->start.year = p_this_order->start.year;
+		p_temp_order->start.month = p_this_order->start.month;
+		p_temp_order->start.day = p_this_order->start.day;
+		p_temp_order->start.weekday = p_this_order->start.weekday;
+		p_temp_order->start.hour = p_this_order->start.hour;
+		p_temp_order->end.year = p_this_order->end.year;
+		p_temp_order->end.month = p_this_order->end.month;
+		p_temp_order->end.day = p_this_order->end.day;
+		p_temp_order->end.weekday = p_this_order->end.weekday;
+		p_temp_order->end.hour = p_this_order->end.hour;
+		strcpy(p_temp_order->remark.message, p_this_order->remark.message);
+		p_temp_order->remark.star = p_this_order->remark.star;
+		p_temp_order->next = NULL;
+		p_now_order->next = p_temp_order;
+	}
+	else
+	{
+		while (p_now_order->next != NULL)
+		{
+			p_now_order = p_now_order->next;
+		}
+		strcpy(p_temp_order->client_id, p_this_order->client_id);
+		strcpy(p_temp_order->order_id, p_this_order->order_id);
+		strcpy(p_temp_order->room_id, p_this_order->room_id);
+		p_temp_order->type = p_this_order->type;
+		p_temp_order->price = p_this_order->price;
+		p_temp_order->start.year = p_this_order->start.year;
+		p_temp_order->start.month = p_this_order->start.month;
+		p_temp_order->start.day = p_this_order->start.day;
+		p_temp_order->start.weekday = p_this_order->start.weekday;
+		p_temp_order->start.hour = p_this_order->start.hour;
+		p_temp_order->end.year = p_this_order->end.year;
+		p_temp_order->end.month = p_this_order->end.month;
+		p_temp_order->end.day = p_this_order->end.day;
+		p_temp_order->end.weekday = p_this_order->end.weekday;
+		p_temp_order->end.hour = p_this_order->end.hour;
+		strcpy(p_temp_order->remark.message, p_this_order->remark.message);
+		p_temp_order->remark.star = p_this_order->remark.star;
+		p_temp_order->next = NULL;
+		p_now_order->next = p_temp_order;
+	}
+	
+	//节点加入到用户订单链表中
+	
+	p_temp_order = (Order*)malloc(sizeof(Order));
+	p_now_order = client->head_order;
+	if (p_now_order->next == NULL)
+	{
+		strcpy(p_temp_order->client_id, p_this_order->client_id);
+		strcpy(p_temp_order->order_id, p_this_order->order_id);
+		strcpy(p_temp_order->room_id, p_this_order->room_id);
+		p_temp_order->type = p_this_order->type;
+		p_temp_order->price = p_this_order->price;
+		p_temp_order->start.year = p_this_order->start.year;
+		p_temp_order->start.month = p_this_order->start.month;
+		p_temp_order->start.day = p_this_order->start.day;
+		p_temp_order->start.weekday = p_this_order->start.weekday;
+		p_temp_order->start.hour = p_this_order->start.hour;
+		p_temp_order->end.year = p_this_order->end.year;
+		p_temp_order->end.month = p_this_order->end.month;
+		p_temp_order->end.day = p_this_order->end.day;
+		p_temp_order->end.weekday = p_this_order->end.weekday;
+		p_temp_order->end.hour = p_this_order->end.hour;
+		strcpy(p_temp_order->remark.message, p_this_order->remark.message);
+		p_temp_order->remark.star = p_this_order->remark.star;
+		p_temp_order->next = NULL;
+		p_now_order->next = p_temp_order;
+	}
+	else
+	{
+		while (p_now_order->next != NULL)
+		{
+			p_now_order = p_now_order->next;
+		}
+		strcpy(p_temp_order->client_id, p_this_order->client_id);
+		strcpy(p_temp_order->order_id, p_this_order->order_id);
+		strcpy(p_temp_order->room_id, p_this_order->room_id);
+		p_temp_order->type = p_this_order->type;
+		p_temp_order->price = p_this_order->price;
+		p_temp_order->start.year = p_this_order->start.year;
+		p_temp_order->start.month = p_this_order->start.month;
+		p_temp_order->start.day = p_this_order->start.day;
+		p_temp_order->start.weekday = p_this_order->start.weekday;
+		p_temp_order->start.hour = p_this_order->start.hour;
+		p_temp_order->end.year = p_this_order->end.year;
+		p_temp_order->end.month = p_this_order->end.month;
+		p_temp_order->end.day = p_this_order->end.day;
+		p_temp_order->end.weekday = p_this_order->end.weekday;
+		p_temp_order->end.hour = p_this_order->end.hour;
+		strcpy(p_temp_order->remark.message, p_this_order->remark.message);
+		p_temp_order->remark.star = p_this_order->remark.star;
+		p_temp_order->next = NULL;
+		p_now_order->next = p_temp_order;
+	}
+	
+}
+
+void Add_Remark_In_Order(POrder order, Remark remark)
+{
+	strcpy(order->remark.message, remark.message);
+	order->remark.star = remark.star;
 }

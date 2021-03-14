@@ -1,0 +1,944 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6011",
+          "message": {
+            "text": "取消对 NULL 指针“id”的引用。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                },
+                "region": {
+                  "startLine": 73,
+                  "startColumn": 3,
+                  "endLine": 73,
+                  "endColumn": 60
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?Run_ClientLoginMenu@@YAXXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 15,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 17,
+                            "startColumn": 8
+                          }
+                        },
+                        "message": {
+                          "text": "“id”可能为 NULL"
+                        }
+                      },
+                      "kinds": [
+                        "声明"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 18,
+                            "startColumn": 8
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 19,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "“id”是“Init_text”的输入/输出参数(在 e:\\vs\\vs_code\\c_project\\functions.h:15 处声明)"
+                        }
+                      },
+                      "kinds": [
+                        "声明"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 20,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 21,
+                            "startColumn": 7
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 22,
+                            "startColumn": 6
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 23,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 25,
+                            "startColumn": 9
+                          }
+                        },
+                        "message": {
+                          "text": "进入此循环(假定“1”)"
+                        }
+                      },
+                      "kinds": [
+                        "分支"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 27,
+                            "startColumn": 18
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此循环(假定“MouseHit()”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "分支"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 30,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 32,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 33,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 34,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 35,
+                            "startColumn": 9
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 36,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 37,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 38,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 39,
+                            "startColumn": 12
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 41,
+                            "startColumn": 7
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此分支(假定“Is_Input”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "分支"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 71,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 72,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 73,
+                            "startColumn": 12
+                          }
+                        },
+                        "message": {
+                          "text": "已取消对“id”的引用，但可能仍为 NULL"
+                        }
+                      },
+                      "kinds": [
+                        "使用情况"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "suppressions": []
+        },
+        {
+          "ruleId": "C6011",
+          "message": {
+            "text": "取消对 NULL 指针“password”的引用。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                },
+                "region": {
+                  "startLine": 74,
+                  "startColumn": 3,
+                  "endLine": 74,
+                  "endColumn": 90
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?Run_ClientLoginMenu@@YAXXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 15,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 17,
+                            "startColumn": 8
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 18,
+                            "startColumn": 8
+                          }
+                        },
+                        "message": {
+                          "text": "“password”可能为 NULL"
+                        }
+                      },
+                      "kinds": [
+                        "声明"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 19,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 20,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "“password”是“Init_text”的输入/输出参数(在 e:\\vs\\vs_code\\c_project\\functions.h:15 处声明)"
+                        }
+                      },
+                      "kinds": [
+                        "声明"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 21,
+                            "startColumn": 7
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 22,
+                            "startColumn": 6
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 23,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 25,
+                            "startColumn": 9
+                          }
+                        },
+                        "message": {
+                          "text": "进入此循环(假定“1”)"
+                        }
+                      },
+                      "kinds": [
+                        "分支"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 27,
+                            "startColumn": 18
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此循环(假定“MouseHit()”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "分支"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 30,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 32,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 33,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 34,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 35,
+                            "startColumn": 9
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 36,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 37,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 38,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 39,
+                            "startColumn": 12
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 41,
+                            "startColumn": 7
+                          }
+                        },
+                        "message": {
+                          "text": "跳过此分支(假定“Is_Input”为 false)"
+                        }
+                      },
+                      "kinds": [
+                        "分支"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 71,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 72,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 73,
+                            "startColumn": 12
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+                          },
+                          "region": {
+                            "startLine": 74,
+                            "startColumn": 12
+                          }
+                        },
+                        "message": {
+                          "text": "已取消对“password”的引用，但可能仍为 NULL"
+                        }
+                      },
+                      "kinds": [
+                        "使用情况"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "suppressions": []
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.28.29910.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "commandLine": "E:\\VS\\VS_IDE\\VC\\Tools\\MSVC\\14.28.29910\\bin\\HostX86\\x86\\c1xx.dll -ACf{1F7B090C-16DB-4822-966A-A93D26ED4681} -ACpmspft140.dll -Alint -D_PREFAST_ -D_AST_FE_ -Analyze -zm0x0039B1C0 -il C:\\Users\\dell\\AppData\\Local\\Temp\\_CL_c7f25f2aast -typedil -f ClientMenu.cpp -Ze -D_MSC_EXTENSIONS -Zp8 -Gs -pc \\:/ -D_MSC_VER=1928 -D_MSC_FULL_VER=192829910 -D_MSC_BUILD=0 -D_WIN32 -D_M_IX86=600 -D_M_IX86_FP=2 -GR -D_CPPRTTI -nologo -W 3 -diagnostics:column -D_GUARDOVERFLOW_CRT_ALLOCATORS=1 -Ot -DCODE_ANALYSIS -DWIN32 -D_DEBUG -D_CONSOLE -D_MBCS -EHs -D_CPPUNWIND -EHc -D__MSVC_RUNTIME_CHECKS -RTCs -RTCu -MDd -D_DEBUG -D_MT -D_DLL -GS -D_M_FP_PRECISE -permissive- -Zc:wchar_t -Zc:forScope -FoDebug\\ClientMenu.obj -FdDebug\\vc142.pdb -Gd -wd 4996 -analyze:projectdirectory E:\\VS\\VS_code\\C_Project -analyze:rulesetdirectory ;E:\\VS\\VS_IDE\\Team Tools\\Static Analysis Tools\\\\Rule Sets; -analyze:ruleset E:\\VS\\VS_IDE\\Team Tools\\Static Analysis Tools\\Rule Sets\\NativeRecommendedRules.ruleset -analyze:quiet -analyze:plugin E:\\VS\\VS_IDE\\VC\\Tools\\MSVC\\14.28.29910\\bin\\HostX86\\x86\\EspXEngine.dll -FC -errorreport:prompt -I E:\\VS\\VS_IDE\\VC\\Tools\\MSVC\\14.28.29910\\include -I E:\\VS\\VS_IDE\\VC\\Tools\\MSVC\\14.28.29910\\atlmfc\\include -I E:\\VS\\VS_IDE\\VC\\Auxiliary\\VS\\include -I E:\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -I E:\\Windows Kits\\10\\Include\\10.0.19041.0\\um -I E:\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -I E:\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -I E:\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -I E:\\VS\\VS_code\\C_Project\\Include\\um",
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///e:/vs/vs_code/c_project/string.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "acec2868b4e2fbc162ef28b85bedb880"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/vs/vs_code/c_project/functions.h"
+          },
+          "hashes": {
+            "md5": "f944740ec627e9fbcf1d947a161e9051"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/vs/vs_code/c_project/settings.h"
+          },
+          "hashes": {
+            "md5": "5541ee96222f75e513170d6462a5b740"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/vs/vs_ide/vc/auxiliary/vs/include/graphics.h"
+          },
+          "hashes": {
+            "md5": "0487867dd71eae478b7c9c2a25ab704e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/vs/vs_ide/vc/auxiliary/vs/include/easyx.h"
+          },
+          "hashes": {
+            "md5": "8618fbd97d4846832a9a9eb2cf2da786"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///E:/VS/VS_code/C_Project/AdminMenu.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "a22afbb863d40aeaa19bef25bdfbd127"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/vs/vs_code/c_project/mainmenu.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "a2ddbc5a56bc7981265d09f161d7b810"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/vs/vs_code/c_project/main.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "6703b82f2c12696dd139d18288af9508"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/vs/vs_code/c_project/interfacecomponents.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "md5": "6cce33b252f8185e7c5f9c2aeae57369"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///E:/VS/VS_code/C_Project/Init.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "16c229e958a636b86eadcb1f93d09b60"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///E:/VS/VS_code/C_Project/ClientMenu.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "6dc4077612cea7970c2f819a23a39687"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -9,6 +9,7 @@ bool Button_Calendar(int a, int b, int day);
 void Draw_Calendar(int year, int month, PClient client);
 void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PClient client);
 int Popup_Window(int x, int y, int wight, int hight, char title[], char text[][50], int g_num, int var);
+bool Button_Star(int a, int b, int* num, int n, int star);
 
 
 void Init_text(PText t, int x1, int x2, int y1, int y2, int fps);	//初始化文本
@@ -37,8 +38,10 @@ PRoom Room_Init();		//目前只能读取房间id
 PClient Client_Init();
 POrder Order_Init();
 POrder Client_Order_Init(PClient client);
-
-void out_Room(Room* head);
+void Change_File();//三条链表内的值覆盖文件
+void Change_Room();
+void Change_Client();
+void Change_Order();
 
 PClient Login(char id[], char password[]);
 PClient Register(char id[], char password[], char name[], char phone[]);
@@ -51,5 +54,5 @@ bool Checkrepassword(char password[], char repassword[]);
 int* Display_rooms_number(int* rooms, Time start, Time end);
 bool Judge_time(Time a, Time b);	//a在b之前返回true，a在b之后或ab相等都返回false
 POrder Add_Order(PClient client, Room_Type type, Time start, Time end);
-
-bool Change_File();
+void Add_In_Linklist(POrder p_this_order, PClient client);
+void Add_Remark_In_Order(POrder order, Remark remark);

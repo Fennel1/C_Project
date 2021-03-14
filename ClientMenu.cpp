@@ -53,6 +53,28 @@ void Run_ClientLoginMenu()			//用户登录界面
 				}
 				else if (key == 13)
 				{
+					if (choose == 2) 
+					{
+						PClient client = Login(id->text, password->text);
+						if (client != NULL) {
+							FlushBatchDraw();
+							cleardevice();
+							Client_Order_Init(client);
+							Run_ClientMainMenu(client);
+						}
+						else
+						{
+							char title[] = "登陆失败";
+							char text[1][50];
+							sprintf(text[0], "账户或密码错误");
+							if (Popup_Window(250, 200, 300, 200, title, text, 1, 1))
+							{
+								FlushBatchDraw();
+								cleardevice();
+								Run_ClientLoginMenu();
+							}
+						}
+					}
 					Is_Input = false;
 					key = 0;
 				}
@@ -97,10 +119,11 @@ void Run_ClientLoginMenu()			//用户登录界面
 
 		if (Button(250, 400, "登录"))
 		{
-			FlushBatchDraw();
-			cleardevice();
 			PClient client = Login(id->text, password->text);
 			if (client != NULL) {
+				FlushBatchDraw();
+				cleardevice();
+				Client_Order_Init(client);
 				Run_ClientMainMenu(client);
 			}
 			else
@@ -193,6 +216,44 @@ void Run_ClientRegisterMenu()			//用户注册界面
 				}
 				else if (key == 13)
 				{
+					if (choose == 5)
+					{
+						if (Checkid(id->text)) {
+							judge[0] = true;
+						}
+						if (Checkpassword(password->text)) {
+							judge[1] = true;
+						}
+						if (Checkrepassword(password->text, repassword->text)) {
+							judge[2] = true;
+						}
+						if (Checkphone(phone->text)) {
+							judge[3] = true;
+						}
+						if (judge[0] == true && judge[1] == true && judge[2] == true && judge[3] == true)
+						{
+							PClient client = Register(id->text, password->text, name->text, phone->text);
+							FlushBatchDraw();
+							cleardevice();
+							Client_Order_Init(client);
+							Run_ClientMainMenu(client);
+						}
+						else
+						{
+							char title[] = "注册失败";
+							char text[4][50];
+							int num = 0;
+							if (judge[0])	sprintf(text[num++], "身份证号格式错误");
+							if (judge[1])	sprintf(text[num++], "密码格式错误");
+							if (judge[2])	sprintf(text[num++], "两次密码输入不一致");
+							if (judge[3])	sprintf(text[num++], "电话号码格式错误");
+							if (Popup_Window(250, 200, 300, 200, title, text, num, 1)) {
+								FlushBatchDraw();
+								cleardevice();
+								Run_ClientRegisterMenu();
+							}
+						}
+					}
 					Is_Input = false;
 					key = 0;
 				}
@@ -279,8 +340,6 @@ void Run_ClientRegisterMenu()			//用户注册界面
 
 		if (Button(400, 550, "注册"))
 		{
-			FlushBatchDraw();
-			cleardevice();
 			if (Checkid(id->text)) {
 				judge[0] = true;
 			}
@@ -298,6 +357,7 @@ void Run_ClientRegisterMenu()			//用户注册界面
 				PClient client = Register(id->text, password->text, name->text, phone->text);
 				FlushBatchDraw();
 				cleardevice();
+				Client_Order_Init(client);
 				Run_ClientMainMenu(client);
 			}
 			else
@@ -309,8 +369,12 @@ void Run_ClientRegisterMenu()			//用户注册界面
 				if (judge[1])	sprintf(text[num++], "密码格式错误");
 				if (judge[2])	sprintf(text[num++], "两次密码输入不一致");
 				if (judge[3])	sprintf(text[num++], "电话号码格式错误");
-				Popup_Window(250, 200, 300, 200, title, text, num, 1);
-				Run_ClientRegisterMenu();
+				if (Popup_Window(250, 200, 300, 200, title, text, num, 1)) {
+					FlushBatchDraw();
+					cleardevice();
+					Run_ClientRegisterMenu();
+				}
+
 			}
 			return;
 		}
@@ -563,7 +627,6 @@ void Choose_room(PClient client, int *room_num, Time start, Time end)
 		if (Button_Input(265, 200, "单人钟点房"))
 		{
 			FlushBatchDraw();
-			cleardevice();
 			order = Add_Order(client, A1, start, end);
 			Complete_Order(order, client, start, end);
 		}
@@ -576,7 +639,6 @@ void Choose_room(PClient client, int *room_num, Time start, Time end)
 		if (Button_Input(465, 200, "双人钟点房"))
 		{
 			FlushBatchDraw();
-			cleardevice();
 			order = Add_Order(client, A2, start, end);
 			Complete_Order(order, client, start, end);
 		}
@@ -589,7 +651,6 @@ void Choose_room(PClient client, int *room_num, Time start, Time end)
 		if (Button(265, 350, "单人短租房"))
 		{
 			FlushBatchDraw();
-			cleardevice();
 			order = Add_Order(client, B1, start, end);
 			Complete_Order(order, client, start, end);
 
@@ -603,7 +664,6 @@ void Choose_room(PClient client, int *room_num, Time start, Time end)
 		if (Button(465, 350, "双人短租房"))
 		{
 			FlushBatchDraw();
-			cleardevice();
 			order = Add_Order(client, B2, start, end);
 			Complete_Order(order, client, start, end);
 		}
@@ -638,6 +698,7 @@ void Complete_Order(POrder order, PClient client, Time start, Time end)
 	sprintf(text[5], "折扣：%.0lf折", (1-client->VIP * 0.03)*100 );
 	sprintf(text[6], "需支付：%.2lf折", (1 - client->VIP * 0.03) * order->price);
 	Popup_Window(250, 200, 300, 200, title, text, 7, 1);
+
 	cleardevice();
 
 	while (true)
@@ -656,6 +717,8 @@ void Complete_Order(POrder order, PClient client, Time start, Time end)
 		{
 			FlushBatchDraw();
 			cleardevice();
+			Add_In_Linklist(order, client);
+			Change_File();
 			Message_Board(order, client);
 			return;
 		}
@@ -675,22 +738,126 @@ void Complete_Order(POrder order, PClient client, Time start, Time end)
 
 void Message_Board(POrder order, PClient client)
 {
+	Remark remark;
 	PText message = (PText)malloc(sizeof(Text));
-	Init_text(message, 330, 500, 200, 230, 150);
+	PText line1 = (PText)malloc(sizeof(Text));
+	PText line2 = (PText)malloc(sizeof(Text));
+	PText line3 = (PText)malloc(sizeof(Text));
+	PText line4 = (PText)malloc(sizeof(Text));
+	PText line5 = (PText)malloc(sizeof(Text));
+	PText line6 = (PText)malloc(sizeof(Text));
+	PText line7 = (PText)malloc(sizeof(Text));
+	Init_text(message, 0, 0, 0, 0, 150);
+	Init_text(line1, 200, 650, 160, 190, 150);
+	Init_text(line2, 200, 650, 200, 230, 150);
+	Init_text(line3, 200, 650, 240, 270, 150);
+	Init_text(line4, 200, 650, 280, 320, 150);
+	Init_text(line5, 200, 650, 320, 360, 150);
+	Init_text(line6, 200, 650, 360, 400, 150);
+	Init_text(line7, 200, 650, 400, 440, 150);
+	int choose = 1;
+	wchar_t key = 0;
+	int star = 0, num_star=0;
 
 	while (true)
 	{
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
 
+		key = Input_Text();
+
+		if (key != 0)
+		{
+			if (key == 13)
+			{
+				if (choose < 7) {
+					choose++;
+				}
+			}
+			else
+			{
+				if (choose == 1) {
+					Append_Text(line1, key);
+					Append_Text(message, key);
+				}
+				else if (choose == 2) {
+					Append_Text(line2, key);
+					Append_Text(message, key);
+				}
+				else if (choose == 3) {
+					Append_Text(line3, key);
+					Append_Text(message, key);
+				}
+				else if (choose == 4) {
+					Append_Text(line4, key);
+					Append_Text(message, key);
+				}
+				else if (choose == 5) {
+					Append_Text(line5, key);
+					Append_Text(message, key);
+				}
+				else if (choose == 6) {
+					Append_Text(line6, key);
+					Append_Text(message, key);
+				}
+				else if (choose == 7) {
+					Append_Text(line7, key);
+					Append_Text(message, key);
+				}
+			}
+		}
+
+		outtextxy(0, 0, message->text);
+		
 		cleardevice();
 
+		if (Button_Star(255, 75, &num_star, 1, star)){
+			star = 1;
+		}
+		if (Button_Star(335, 75, &num_star, 2, star)){
+			star = 2;
+		}
+		if (Button_Star(415, 75, &num_star, 3, star)){
+			star = 3;
+		}
+		if (Button_Star(495, 75, &num_star, 4, star)){
+			star = 4;
+		}
+		if (Button_Star(575, 75, &num_star, 5, star)){
+			star = 5;
+		}
 
+		
+
+		setfillcolor(RGB(100, 100, 100));
+		solidrectangle(175, 150, 675, 450);
+
+		settextstyle(20, 0, "Verdana");		//打印文本
+		setlinecolor(WHITE);
+		outtextxy(line1->x1, line1->y1 + (line1->y2 - line1->y1 - 19) / 2, line1->text);
+		outtextxy(line2->x1, line2->y1 + (line2->y2 - line2->y1 - 19) / 2, line2->text);
+		outtextxy(line3->x1, line3->y1 + (line3->y2 - line3->y1 - 19) / 2, line3->text);
+		outtextxy(line4->x1, line4->y1 + (line4->y2 - line4->y1 - 19) / 2, line4->text);
+		outtextxy(line5->x1, line5->y1 + (line5->y2 - line5->y1 - 19) / 2, line5->text);
+		outtextxy(line6->x1, line6->y1 + (line6->y2 - line6->y1 - 19) / 2, line6->text);
+		outtextxy(line7->x1, line7->y1 + (line7->y2 - line7->y1 - 19) / 2, line7->text);
+
+		if (choose == 1)		Draw_Fps(line1);
+		else if (choose == 2)	Draw_Fps(line2);
+		else if (choose == 3)	Draw_Fps(line3);
+		else if (choose == 4)	Draw_Fps(line4);
+		else if (choose == 5)	Draw_Fps(line5);
+		else if (choose == 6)	Draw_Fps(line6);
+		else if (choose == 7)	Draw_Fps(line7);
 
 		if (Button(450, 500, "完成"))
 		{
 			FlushBatchDraw();
 			cleardevice();
+			strcpy(remark.message, message->text);
+			remark.star = star;
+			Add_Remark_In_Order(order, remark);
+			Change_File();
 			Run_ClientMainMenu(client);
 			return;
 		}

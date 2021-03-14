@@ -23,7 +23,7 @@ enum Room_Type {
 
 typedef struct text {			//字符串类型
 	int x1, x2, y1, y2;
-	char text[30];
+	char text[100];
 	int len;
 	int fps;		//光标闪烁频率
 }Text, *PText;
