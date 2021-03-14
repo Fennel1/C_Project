@@ -692,7 +692,7 @@ void Complete_Order(POrder order, PClient client, Time start, Time end)
 	char text[7][50];
 	sprintf(text[0], "订单编号：%s", order->order_id);
 	sprintf(text[1], "房间编号：%s", order->room_id);
-	sprintf(text[2], "入住时间：%d年%d月%d日", start.hour, start.month, start.day);
+	sprintf(text[2], "入住时间：%d年%d月%d日", start.year, start.month, start.day);
 	sprintf(text[3], "退房时间：%d年%d月%d日", end.year, end.month, end.day);
 	sprintf(text[4], "价格：%.2lf", order->price);
 	sprintf(text[5], "折扣：%.0lf折", (1-client->VIP * 0.03)*100 );
@@ -717,8 +717,6 @@ void Complete_Order(POrder order, PClient client, Time start, Time end)
 		{
 			FlushBatchDraw();
 			cleardevice();
-			Add_In_Linklist(order, client);
-			Change_File();
 			Message_Board(order, client);
 			return;
 		}
@@ -854,9 +852,10 @@ void Message_Board(POrder order, PClient client)
 		{
 			FlushBatchDraw();
 			cleardevice();
-			strcpy(remark.message, message->text);
 			remark.star = star;
+			strcpy(remark.message, message->text);
 			Add_Remark_In_Order(order, remark);
+			Add_In_Linklist(order, client);
 			Change_File();
 			Run_ClientMainMenu(client);
 			return;
@@ -866,6 +865,10 @@ void Message_Board(POrder order, PClient client)
 		{
 			FlushBatchDraw();
 			cleardevice();
+			remark.star = 0;
+			strcpy(remark.message, " ");
+			Add_Remark_In_Order(order, remark);
+			Add_In_Linklist(order, client);
 			Run_ClientMainMenu(client);
 			return;
 		}

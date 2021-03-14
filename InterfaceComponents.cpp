@@ -193,7 +193,7 @@ void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PC
 						if (Popup_Window(250, 200, 300, 200, title, text, 2, 2))
 						{
 							Time start = { s_year, s_month, s_day, 0, 0 };
-							Time end = { year, month, day, 0, 0 };
+							Time end = { year, month, days, 0, 0 };
 							int num[4] = { 0 };
 							int* rooms_num = num;
 							rooms_num = Display_rooms_number(num, start, end);
@@ -228,7 +228,7 @@ void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PC
 						if (Popup_Window(250, 200, 300, 200, title, text, 2, 2))
 						{
 							Time start = { s_year, s_month, s_day, 0, 0 };
-							Time end = { year, month, day, 0, 0 };
+							Time end = { year, month, days, 0, 0 };
 							int num[4] = {0};
 							int* rooms_num = num;
 							rooms_num = Display_rooms_number(num, start, end);

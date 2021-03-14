@@ -138,11 +138,18 @@ void SetNewPassword(PClient client, char password[])			//ÉèÖÃÐÂÃÜÂë
 int* Display_rooms_number(int* rooms, Time start, Time end)//·µ»ØËÄÖÖ¿Õ·¿¼äµÄ¸öÊý
 {
 	//½¨Á¢·¿¼äµÄÁ´±í
-	PRoom p_head_room = Room_Init();
-	PRoom p_now_room = p_head_room->next;
+	PRoom p_now_room = P_Head_Room->next;
 	//±éÀú¶©µ¥£¬¸Ä±äis_useµÄÖµ
-	POrder p_head_order = Order_Init();
-	POrder p_now_order = p_head_order->next;
+	POrder p_now_order = P_Head_Order->next;
+
+	while (p_now_room != NULL)		//ÖØÖÃ
+	{
+		p_now_room->Is_Use = false;
+		p_now_room = p_now_room->next;
+	}
+
+	p_now_room = P_Head_Room->next;
+
 	while (p_now_order != NULL)
 	{
 		//ÅÐ¶Ï£ºstart»òendÔÚÒÑÓÐ¶©µ¥ÆðÖ¹Ê±¼äÖ®ÄÚ£¬is_use¸ÄÎªtrue
@@ -150,21 +157,25 @@ int* Display_rooms_number(int* rooms, Time start, Time end)//·µ»ØËÄÖÖ¿Õ·¿¼äµÄ¸öÊ
 		{
 			while (p_now_room != NULL)
 			{
-				if (p_now_room->id == p_now_order->room_id)
+				if (strcmp(p_now_room->id, p_now_order->room_id) == 0)
 				{
-					p_now_room->Is_Use = 1;
+					p_now_room->Is_Use = true;
 					break;
 				}
+				p_now_room = p_now_room->next;
 			}
 		}
+		p_now_order = p_now_order->next;
 	}
+
 	//±éÀú·¿¼ä£¬Èç¹ûis_useÎªfalse£¬¿Õ·¿¼äÊý+1
+	p_now_room = P_Head_Room->next;
 	while (p_now_room != NULL)
 	{
-		if (p_now_room->type == 0 && p_now_room->Is_Use == 0)rooms[0]++;
-		else if (p_now_room->type == 1 && p_now_room->Is_Use == 0)rooms[1]++;
-		else if (p_now_room->type == 2 && p_now_room->Is_Use == 0)rooms[2]++;
-		else if (p_now_room->type == 3 && p_now_room->Is_Use == 0)rooms[3]++;
+		if (p_now_room->type == A1 && p_now_room->Is_Use == false)	rooms[0]++;
+		else if (p_now_room->type == A2 && p_now_room->Is_Use == false)	rooms[1]++;
+		else if (p_now_room->type == B1 && p_now_room->Is_Use == false)	rooms[2]++;
+		else if (p_now_room->type == B2 && p_now_room->Is_Use == false)	rooms[3]++;
 		p_now_room = p_now_room->next;
 	}
 	return rooms;
@@ -202,7 +213,7 @@ POrder Add_Order(PClient client, Room_Type type, Time start, Time end)
 	PRoom p_now_room = P_Head_Room->next;
 	while (p_now_room != NULL)
 	{
-		if (p_now_room->Is_Use == 0 && p_now_room->type == type)
+		if (p_now_room->Is_Use == false && p_now_room->type == type)
 		{
 			strcpy(p_this_order->room_id, p_now_room->id);
 			p_this_order->price = p_now_room->price;
