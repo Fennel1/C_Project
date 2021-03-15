@@ -525,12 +525,8 @@ void Commit_Order(PClient client)		//用户申请住房界面
 
 void ReCommit_Order(PClient client, int s_year, int s_month, int s_day)
 {
-	time_t timep;			//获取系统时间
-	struct tm* p;
-	time(&timep);
-	p = gmtime(&timep);
 
-	int year = 1900 + p->tm_year, month = 1 + p->tm_mon, day = p->tm_mday;
+	int year = s_year, month = s_month, day = s_day;
 
 	int choose = 0;
 
@@ -541,7 +537,7 @@ void ReCommit_Order(PClient client, int s_year, int s_month, int s_day)
 
 		cleardevice();
 
-		reDraw_Calendar(year, month, s_year, s_month, s_day, client);
+		reDraw_Calendar(s_year, s_month, s_year, s_month, s_day, client);
 
 		LOGFONT t;			//绘制文字
 		gettextstyle(&t);
@@ -866,9 +862,10 @@ void Message_Board(POrder order, PClient client)
 			FlushBatchDraw();
 			cleardevice();
 			remark.star = 0;
-			strcpy(remark.message, " ");
+			strcpy(remark.message, "have no message");
 			Add_Remark_In_Order(order, remark);
 			Add_In_Linklist(order, client);
+			Change_File();
 			Run_ClientMainMenu(client);
 			return;
 		}
@@ -881,19 +878,98 @@ void Message_Board(POrder order, PClient client)
 
 void Delete_Order(PClient client)		//用户申请退房界面
 {
+	time_t timep;			//获取系统时间
+	struct tm* p;
+	time(&timep);
+	p = gmtime(&timep);
+
+	int year = 1900 + p->tm_year, month = 1 + p->tm_mon, day = p->tm_mday;
+
+	POrder order = client->head_order;
+	int page = 1;
+	int num_page;
+	if (client->num_bill % 5 == 0)	num_page = client->num_bill / 5;
+	else	num_page = client->num_bill / 5 + 1;
+
 	while (true)
 	{
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
 
-		LOGFONT t;			//绘制文字
-		gettextstyle(&t);
-		t.lfHeight = 75;
-		strcpy(t.lfFaceName, "微软雅黑 Light");
-		t.lfQuality = ANTIALIASED_QUALITY;
-		settextstyle(&t);
-		settextcolor(WHITE);
-		outtextxy(310, 70, "用户申请退房界面");
+		cleardevice();
+
+		if (client->head_order == NULL)
+		{
+			outtextxy(300, 70, "无历史订单");
+		}
+		else
+		{
+			POrder p_now_client_order = client->head_order->next;
+			for (int i = 1; i < page; i++) {
+				for (int j = 1; j <= 5; j++) {
+					if (p_now_client_order == NULL)	break;
+					p_now_client_order = p_now_client_order->next;
+				}
+			}
+
+			for (int i = 1; i <= 5; i++)
+			{
+				if (p_now_client_order == NULL)	break;
+				if (Button_Delete_Order(100, 75 + (i - 1) * 80, p_now_client_order))
+				{
+					char title[] = "是否确认删除订单";
+					char text[5][50];
+					sprintf(text[0], "订单编号：%s", p_now_client_order->order_id);
+					sprintf(text[1], "房间编号：%s", p_now_client_order->room_id);
+					sprintf(text[2], "入住时间：%d年%d月%d日", p_now_client_order->start.year, p_now_client_order->start.month, p_now_client_order->start.day);
+					sprintf(text[3], "退房时间：%d年%d月%d日", p_now_client_order->end.year, p_now_client_order->end.month, p_now_client_order->end.day);
+					sprintf(text[4], "实际支付：%.2lf折", (1 - client->VIP * 0.03) * p_now_client_order->price);
+					if (Popup_Window(250, 200, 300, 200, title, text, 5, 2))
+					{
+						if (Check_Time(p_now_client_order->start.year, p_now_client_order->start.month, p_now_client_order->start.day, p_now_client_order->end.year, p_now_client_order->end.month, p_now_client_order->end.day))
+						{
+							//链表中删除订单
+						}
+						else
+						{
+							char title[] = "订单删除失败";
+							char text[3][50];
+							sprintf(text[0], "订单入住时间：：%d年%d月%d日", p_now_client_order->start.year, p_now_client_order->start.month, p_now_client_order->start.day);
+							sprintf(text[1], "退房时间：%d年%d月%d日", year, month, day);
+							sprintf(text[3], "不可删除已入住的订单");
+							Popup_Window(250, 200, 300, 200, title, text, 3, 1);
+						}
+					}
+				}
+				p_now_client_order = p_now_client_order->next;
+			}
+		}
+
+		if (Button(200, 500, "上一页"))
+		{
+			if (page > 1) {
+				page--;
+			}
+		}
+
+		char text[10];
+		sprintf(text, "第%d页", page);
+		outtextxy(300, 500, text);
+
+		if (Button(400, 500, "下一页"))
+		{
+			if (page < num_page) {
+				page++;
+			}
+		}
+
+		if (Button(600, 500, "返回"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_ClientMainMenu(client);
+			return;
+		}
 
 		FlushBatchDraw();			// 执行未完成的绘制任务
 		Sleep(10);
@@ -903,27 +979,69 @@ void Delete_Order(PClient client)		//用户申请退房界面
 void Show_Order(PClient client)			//用户查看订单
 {
 	POrder order = client->head_order;
+	int page = 1;
+	int num_page;
+	if (client->num_bill % 5 == 0)	num_page = client->num_bill / 5;
+	else	num_page = client->num_bill / 5 + 1;
 
 	while (true)
 	{
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
 
-		LOGFONT t;			//绘制文字
-		gettextstyle(&t);
-		t.lfHeight = 45;
-		strcpy(t.lfFaceName, "微软雅黑 Light");
-		t.lfQuality = ANTIALIASED_QUALITY;
-		settextstyle(&t);
-		settextcolor(WHITE);
+		cleardevice();
 
 		if (client->head_order == NULL)
 		{
-			outtextxy(310, 70, "无历史订单");
+			outtextxy(300, 70, "无历史订单");
 		}
 		else
 		{
-			
+			POrder p_now_client_order = client->head_order->next;
+			for (int i = 1; i < page; i++) {
+				for (int j = 1; j <= 5; j++) {
+					if (p_now_client_order == NULL)	break;
+					p_now_client_order = p_now_client_order->next;
+				}
+			}
+
+			for (int i = 1; i <= 5; i++) 
+			{
+				if (p_now_client_order == NULL)	break;
+				if (Button_Order(125, 75 + (i - 1) * 80, p_now_client_order))
+				{
+					char title[] = "订单信息";
+					char text[7][50];
+					sprintf(text[0], "订单编号：%s", p_now_client_order->order_id);
+					sprintf(text[1], "房间编号：%s", p_now_client_order->room_id);
+					sprintf(text[2], "入住时间：%d年%d月%d日", p_now_client_order->start.year, p_now_client_order->start.month, p_now_client_order->start.day);
+					sprintf(text[3], "退房时间：%d年%d月%d日", p_now_client_order->end.year, p_now_client_order->end.month, p_now_client_order->end.day);
+					sprintf(text[4], "价格：%.2lf", p_now_client_order->price);
+					sprintf(text[5], "折扣：%.0lf折", (1 - client->VIP * 0.03) * 100);
+					sprintf(text[6], "实际支付：%.2lf折", (1 - client->VIP * 0.03) * p_now_client_order->price);
+					Popup_Window(250, 200, 300, 200, title, text, 7, 1);
+				}
+				
+				p_now_client_order = p_now_client_order->next;
+			}
+		}
+
+		if (Button(200, 500, "上一页"))
+		{
+			if (page > 1) {
+				page--;
+			}
+		}
+
+		char text[10];
+		sprintf(text, "第%d页", page);
+		outtextxy(300, 500, text);
+
+		if (Button(400, 500, "下一页"))
+		{
+			if (page < num_page) {
+				page++;
+			}
 		}
 
 		if (Button(600, 500, "返回"))

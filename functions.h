@@ -4,8 +4,11 @@
 
 void Init();	//初始化程序
 bool Button(int a, int b, const char str[]);		//绘制基本按钮
+bool Button_Order(int a, int b, POrder order);
+bool Button_Delete_Order(int a, int b, POrder order);
 bool Button_Input(int a, int b, const char str[]);	//绘制输入按钮
 bool Button_Calendar(int a, int b, int day);
+bool Check_Time(int s_year, int s_month, int s_day, int e_year, int e_month, int e_day);
 void Draw_Calendar(int year, int month, PClient client);
 void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PClient client);
 int Popup_Window(int x, int y, int wight, int hight, char title[], char text[][50], int g_num, int var);

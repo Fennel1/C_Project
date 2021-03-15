@@ -43,6 +43,89 @@ bool Button(int a, int b, const char str[])			//基本按钮模组
 	return false;
 }
 
+bool Button_Order(int a, int b, POrder order)			//基本按钮模组
+{
+	static int x, y;
+
+	char str1[100];
+	char str2[100];
+	sprintf(str1, "ID：%s                                           评价：%d★", order->order_id, order->remark.star);
+	sprintf(str2, "入住时间：%d年%2d月%2d日        退房时间：%d年%2d月%2d日", order->start.year, order->start.month, order->start.day, order->end.year, order->end.month, order->end.day);
+
+	setfillcolor(RGB(100, 100, 100));				//绘制边框
+	solidrectangle(a - 15, b, a + 600, b + 75);
+
+	x = M_msg.x;
+	y = M_msg.y;
+
+	if (x > a - 15 && (size_t)x < a + 600 && y > b && y < b + 75)		//判断高亮显示
+	{
+		setfillcolor(RGB(150, 150, 150));
+		solidrectangle(a - 15, b, a + 600, b + 75);
+
+		if (M_msg.uMsg == WM_LBUTTONUP)		//检测鼠标点击
+		{
+			M_msg.uMsg = WM_MOUSEMOVE;
+			return true;
+		}
+	}
+
+	LOGFONT t;			//绘制文字
+	gettextstyle(&t);
+	t.lfHeight = 25;
+	strcpy(t.lfFaceName, "微软雅黑 Light");
+	t.lfQuality = ANTIALIASED_QUALITY;
+	settextstyle(&t);
+	settextcolor(WHITE);
+	outtextxy(a, b + 3, str1);
+	outtextxy(a, b + 35, str2);
+
+	return false;
+}
+
+bool Button_Delete_Order(int a, int b, POrder order)			//基本按钮模组
+{
+	static int x, y;
+
+	char str1[100];
+	char str2[100];
+	char str3[100] = "删除";
+	sprintf(str1, "ID：%s                                           评价：%d★", order->order_id, order->remark.star);
+	sprintf(str2, "入住时间：%d年%2d月%2d日        退房时间：%d年%2d月%2d日", order->start.year, order->start.month, order->start.day, order->end.year, order->end.month, order->end.day);
+
+	setfillcolor(RGB(100, 100, 100));				//绘制边框
+	solidrectangle(a - 15, b, a + 550, b + 75);
+	solidrectangle(a + 555, b, a + 630, b + 75);
+
+	x = M_msg.x;
+	y = M_msg.y;
+
+	if (x > a + 555 && (size_t)x < a + 630 && y > b && y < b + 75)		//判断高亮显示
+	{
+		setfillcolor(RGB(150, 150, 150));
+		solidrectangle(a + 555, b, a + 630, b + 75);
+
+		if (M_msg.uMsg == WM_LBUTTONUP)		//检测鼠标点击
+		{
+			M_msg.uMsg = WM_MOUSEMOVE;
+			return true;
+		}
+	}
+
+	LOGFONT t;			//绘制文字
+	gettextstyle(&t);
+	t.lfHeight = 25;
+	strcpy(t.lfFaceName, "微软雅黑 Light");
+	t.lfQuality = ANTIALIASED_QUALITY;
+	settextstyle(&t);
+	settextcolor(WHITE);
+	outtextxy(a, b + 3, str1);
+	outtextxy(a, b + 35, str2);
+	outtextxy(a + 573, b + 25, str3);
+
+	return false;
+}
+
 bool Button_Input(int a, int b, const char str[])			//输入按钮模组
 {
 	static int x, y;
@@ -77,8 +160,23 @@ bool Button_Input(int a, int b, const char str[])			//输入按钮模组
 	return false;
 }
 
+bool Check_Time(int s_year, int s_month, int s_day, int e_year, int e_month, int e_day)
+{
+	if (s_year > e_year)	return false;
+	else if (s_year == e_year && s_month > e_month)	return false;
+	else if (s_year == e_year && s_month == e_month && s_day > e_day)	return false;
+	else	return true;
+}
+
 void Draw_Calendar(int year, int month, PClient client)
 {	
+	time_t timep;			//获取系统时间
+	struct tm* p;
+	time(&timep);
+	p = gmtime(&timep);
+
+	int now_year = 1900 + p->tm_year, now_month = 1 + p->tm_mon, now_day = p->tm_mday;
+
 	int LeapYear[] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	int NoLeapYear[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
@@ -119,7 +217,16 @@ void Draw_Calendar(int year, int month, PClient client)
 					{
 						FlushBatchDraw();
 						cleardevice();
-						ReCommit_Order(client, year, month, days);
+						if (Check_Time(now_year, now_month, now_day, year, month, days)) {
+							ReCommit_Order(client, year, month, days);
+						}
+						else {
+							char title[] = "提交错误";
+							char text[1][50];
+							sprintf(text[0], "入住时间应在%d年%d月%d日之后", now_year, now_month, now_day);
+							Popup_Window(250, 200, 300, 200, title, text, 1, 1);
+							Commit_Order(client);
+						}
 						return;
 					}
 				}
@@ -132,7 +239,16 @@ void Draw_Calendar(int year, int month, PClient client)
 					{
 						FlushBatchDraw();
 						cleardevice();
-						ReCommit_Order(client, year, month, days);
+						if (Check_Time(now_year, now_month, now_day, year, month, days)) {
+							ReCommit_Order(client, year, month, days);
+						}
+						else {
+							char title[] = "提交错误";
+							char text[1][50];
+							sprintf(text[0], "入住时间应在%d年%d月%d日之后", now_year, now_month, now_day);
+							Popup_Window(250, 200, 300, 200, title, text, 1, 1);
+							Commit_Order(client);
+						}
 						return;
 					}
 				}
@@ -143,6 +259,7 @@ void Draw_Calendar(int year, int month, PClient client)
 
 void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PClient client)
 {
+
 	int LeapYear[] = { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	int NoLeapYear[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
@@ -186,25 +303,34 @@ void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PC
 					}
 					if (Button_Calendar(x + day * 60, y + week * 60, days % (LeapYear[month] + 1)))
 					{
-						char title[] = "确认当前日期吗？";
-						char text[2][50];
-						sprintf(text[0], "入住时间：%d年%d月%d日", s_year, s_month, s_day);
-						sprintf(text[1], "退房时间：%d年%d月%d日", year, month, days);
-						if (Popup_Window(250, 200, 300, 200, title, text, 2, 2))
-						{
-							Time start = { s_year, s_month, s_day, 0, 0 };
-							Time end = { year, month, days, 0, 0 };
-							int num[4] = { 0 };
-							int* rooms_num = num;
-							rooms_num = Display_rooms_number(num, start, end);
-							FlushBatchDraw();
-							cleardevice();
-							Choose_room(client, rooms_num, start, end);
+						if (Check_Time(s_year, s_month, s_day, year, month, days)) {
+							char title[] = "确认当前日期吗？";
+							char text[2][50];
+							sprintf(text[0], "入住时间：%d年%d月%d日", s_year, s_month, s_day);
+							sprintf(text[1], "退房时间：%d年%d月%d日", year, month, days);
+							if (Popup_Window(250, 200, 300, 200, title, text, 2, 2))
+							{
+								Time start = { s_year, s_month, s_day, 0, 0 };
+								Time end = { year, month, days, 0, 0 };
+								int num[4] = { 0 };
+								int* rooms_num = num;
+								rooms_num = Display_rooms_number(num, start, end);
+								FlushBatchDraw();
+								cleardevice();
+								Choose_room(client, rooms_num, start, end);
+							}
+							else
+							{
+								FlushBatchDraw();
+								cleardevice();
+								Commit_Order(client);
+							}
 						}
-						else
-						{
-							FlushBatchDraw();
-							cleardevice();
+						else {
+							char title[] = "提交错误";
+							char text[1][50];
+							sprintf(text[0], "退房时间应在%d年%d月%d日之后", s_year, s_month, s_day);
+							Popup_Window(250, 200, 300, 200, title, text, 1, 1);
 							Commit_Order(client);
 						}
 					}
@@ -221,25 +347,34 @@ void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PC
 					}
 					if (Button_Calendar(x + day * 60, y + week * 60, days % (NoLeapYear[month] + 1)))
 					{
-						char title[] = "确认当前日期吗？";
-						char text[2][50];
-						sprintf(text[0], "入住时间：%d年%d月%d日", s_year, s_month, s_day);
-						sprintf(text[1], "退房时间：%d年%d月%d日", year, month, days);
-						if (Popup_Window(250, 200, 300, 200, title, text, 2, 2))
-						{
-							Time start = { s_year, s_month, s_day, 0, 0 };
-							Time end = { year, month, days, 0, 0 };
-							int num[4] = {0};
-							int* rooms_num = num;
-							rooms_num = Display_rooms_number(num, start, end);
-							FlushBatchDraw();
-							cleardevice();
-							Choose_room(client, rooms_num, start, end);
+						if (Check_Time(s_year, s_month, s_day, year, month, days)) {
+							char title[] = "确认当前日期吗？";
+							char text[2][50];
+							sprintf(text[0], "入住时间：%d年%d月%d日", s_year, s_month, s_day);
+							sprintf(text[1], "退房时间：%d年%d月%d日", year, month, days);
+							if (Popup_Window(250, 200, 300, 200, title, text, 2, 2))
+							{
+								Time start = { s_year, s_month, s_day, 0, 0 };
+								Time end = { year, month, days, 0, 0 };
+								int num[4] = { 0 };
+								int* rooms_num = num;
+								rooms_num = Display_rooms_number(num, start, end);
+								FlushBatchDraw();
+								cleardevice();
+								Choose_room(client, rooms_num, start, end);
+							}
+							else
+							{
+								FlushBatchDraw();
+								cleardevice();
+								Commit_Order(client);
+							}
 						}
-						else
-						{
-							FlushBatchDraw();
-							cleardevice();
+						else {
+							char title[] = "提交错误";
+							char text[1][50];
+							sprintf(text[0], " 退房时间应在%d年%d月%d日之后", s_year, s_month, s_day);
+							Popup_Window(250, 200, 300, 200, title, text, 1, 1);
 							Commit_Order(client);
 						}
 					}

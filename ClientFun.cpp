@@ -200,11 +200,14 @@ POrder Add_Order(PClient client, Room_Type type, Time start, Time end)
 		strcpy(p_this_order->client_id, client->id);
 	}
 	else {
-		char* last_order_id = P_Head_Order->next->order_id;//获得前一个订单的id
+		POrder p_now_order = P_Head_Order->next;
+		while (p_now_order->next != NULL) {
+			p_now_order = p_now_order->next;
+		}
 		strcpy(p_this_order->client_id, client->id);
 		//id相比之前的订单+1
 		int int_id = 0;
-		sscanf(last_order_id, "%d", &int_id);
+		sscanf(p_now_order->order_id, "%d", &int_id);
 		int_id++;
 		sprintf(p_this_order->order_id, "%d", int_id);
 	}
@@ -241,6 +244,9 @@ POrder Add_Order(PClient client, Room_Type type, Time start, Time end)
 
 void Add_In_Linklist(POrder p_this_order, PClient client)
 {
+	client->num_bill++;
+	client->pay += p_this_order->price;
+
 	POrder p_temp_order = (Order*)malloc(sizeof(Order));
 	POrder p_now_order = P_Head_Order;
 	//将节点加入总订单中（尾插）

@@ -6,6 +6,8 @@ E:\VS\VS_code\C_Project\ClientMenu.cpp(266,29): warning C4244: “参数”: 从
 E:\VS\VS_code\C_Project\ClientMenu.cpp(269,31): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
 E:\VS\VS_code\C_Project\ClientMenu.cpp(272,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
 E:\VS\VS_code\C_Project\ClientMenu.cpp(275,26): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(774,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\ClientMenu.cpp(775,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
 E:\VS\VS_code\C_Project\ClientMenu.cpp(778,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
 E:\VS\VS_code\C_Project\ClientMenu.cpp(779,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
 E:\VS\VS_code\C_Project\ClientMenu.cpp(782,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
@@ -18,6 +20,4 @@ E:\VS\VS_code\C_Project\ClientMenu.cpp(794,25): warning C4244: “参数”: 从
 E:\VS\VS_code\C_Project\ClientMenu.cpp(795,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
 E:\VS\VS_code\C_Project\ClientMenu.cpp(798,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
 E:\VS\VS_code\C_Project\ClientMenu.cpp(799,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(802,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(803,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
   C_Project.vcxproj -> E:\VS\VS_code\C_Project\Debug\C_Project.exe
