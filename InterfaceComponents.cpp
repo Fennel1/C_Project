@@ -43,6 +43,46 @@ bool Button(int a, int b, const char str[])			//基本按钮模组
 	return false;
 }
 
+bool Button(int a, int b, const char str[], bool choose)			//基本按钮模组
+{
+	static int x, y;
+
+	setfillcolor(RGB(100, 100, 100));				//绘制边框
+	solidrectangle(a - 15, b, a + 9 * strlen(str) + 20, b + 30);
+
+	x = M_msg.x;
+	y = M_msg.y;
+
+	if (choose == true)
+	{
+		setfillcolor(RGB(30, 30, 30));
+		solidrectangle(a - 15, b, a + 9 * strlen(str) + 20, b + 30);
+	}
+
+	if ((x > a - 15 && (size_t)x < a + 9 * strlen(str) + 20 && y > b && y < b + 30))		//判断高亮显示
+	{
+		setfillcolor(RGB(150, 150, 150));
+		solidrectangle(a - 15, b, a + 9 * strlen(str) + 20, b + 30);
+
+		if (M_msg.uMsg == WM_LBUTTONUP)		//检测鼠标点击
+		{
+			M_msg.uMsg = WM_MOUSEMOVE;
+			return true;
+		}
+	}
+
+	LOGFONT t;			//绘制文字
+	gettextstyle(&t);
+	t.lfHeight = 25;
+	strcpy(t.lfFaceName, "微软雅黑 Light");
+	t.lfQuality = ANTIALIASED_QUALITY;
+	settextstyle(&t);
+	settextcolor(WHITE);
+	outtextxy(a, b + 3, str);
+
+	return false;
+}
+
 bool Button_Order(int a, int b, POrder order)			//基本按钮模组
 {
 	static int x, y;

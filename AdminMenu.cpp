@@ -269,6 +269,9 @@ void Run_Show_Order()				//显示订单信息
 	POrder p_now_order = P_Head_Order->next;
 	int page = 1;
 	int num_page=0;
+	bool flag1 = false, flag2 = false;
+	bool choose1 = false, choose2 = false, choose3 = false, choose4 = false;
+
 
 	while (p_now_order != NULL) {			//计算页数
 		num_page++;
@@ -277,7 +280,7 @@ void Run_Show_Order()				//显示订单信息
 	if (num_page % 5 == 0)	num_page = num_page / 5;
 	else	num_page = num_page / 5 + 1;
 
-	POrder p_head_order = Sort_Order_Time_Ascending(P_Head_Order);
+	POrder p_head_order = NULL;
 
 	while (true)
 	{
@@ -286,10 +289,9 @@ void Run_Show_Order()				//显示订单信息
 
 		cleardevice();
 
-		/*
-		if (P_Head_Order->next == NULL)
+		if (p_head_order == NULL)
 		{
-			outtextxy(300, 70, "无历史订单");
+			outtextxy(340, 70, "无历史订单");
 		}
 		else
 		{
@@ -313,34 +315,58 @@ void Run_Show_Order()				//显示订单信息
 					sprintf(text[2], "用户身份证号：%s", p_now_order->client_id);
 					sprintf(text[3], "入住时间：%d年%d月%d日", p_now_order->start.year, p_now_order->start.month, p_now_order->start.day);
 					sprintf(text[4], "退房时间：%d年%d月%d日", p_now_order->end.year, p_now_order->end.month, p_now_order->end.day);
-					sprintf(text[1], "订单价格：%.2lf", p_now_order->price);
-					sprintf(text[5], "用户评价：%d★", p_now_order->remark.star);
+					sprintf(text[5], "订单价格：%.2lf", p_now_order->price);
+					sprintf(text[6], "用户评价：%d★", p_now_order->remark.star);
 					Popup_Window(250, 200, 300, 200, title, text, 7, 1);
 				}
 
 				p_now_order = p_now_order->next;
 			}
 		}
-		*/
 
-		if (Button(150, 30, "升序"))
+		if (Button(150, 30, "升序", choose1))
 		{
-			
+			flag1 = false;
+			choose1 = true;
+			choose2 = false;
 		}
 
-		if (Button(275, 30, "降序"))
+		if (Button(275, 30, "降序", choose2))
 		{
-			
+			flag1 = true;
+			choose2 = true;
+			choose1 = false;
 		}
 
-		if (Button(400, 30, "按时间排列"))
+		if (Button(400, 30, "按时间排列", choose3))
 		{
-
+			flag2 = false;
+			choose3 = true;
+			choose4 = false;
 		}
 
-		if (Button(570, 30, "按ID排列"))
+		if (Button(570, 30, "按ID排列", choose4))
 		{
+			flag2 = true;
+			choose4 = true;
+			choose3 = false;
+		}
 
+		if (Button(700, 30, "显示"))
+		{
+			p_head_order = NULL;
+			if (flag1 == false && flag2 == false) {
+				p_head_order = Sort_Order_Time_Ascending(P_Head_Order);
+			}
+			else if (flag1 == true && flag2 == false) {
+				p_head_order = Sort_Order_Time_Descending(P_Head_Order);
+			}
+			else if (flag1 == false && flag2 == true) {
+				p_head_order = Sort_Order_ID_Ascending(P_Head_Order);
+			}
+			else if (flag1 == true && flag2 == true) {
+				p_head_order = Sort_Order_ID_Descending(P_Head_Order);
+			}
 		}
 
 		if (Button(200, 500, "上一页"))

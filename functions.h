@@ -4,8 +4,9 @@
 
 //InterfaceComponents.cpp			//窗口显示组件
 bool Button(int a, int b, const char str[]);						//绘制基本按钮
+bool Button(int a, int b, const char str[], bool choose);			//绘制点击高亮按钮
 bool Button_Order(int a, int b, POrder order);						//绘制显示订单按钮
-bool Button_Room(int a, int b, PRoom room);
+bool Button_Room(int a, int b, PRoom room);							//绘制房间按钮
 bool Button_Delete_Order(int a, int b, POrder order);				//绘制删除订单按钮
 bool Button_Input(int a, int b, const char str[]);					//绘制文字输入按钮
 bool Button_Calendar(int a, int b, int day);						//绘制日历按钮
@@ -52,6 +53,7 @@ bool Judge_time(Time a, Time b);												//检查时间是否合法
 POrder Add_Order(PClient client, Room_Type type, Time start, Time end);			//新建订单
 void Add_In_Linklist(POrder p_this_order, PClient client);						//将订单加入链表
 void Add_Remark_In_Order(POrder order, Remark remark);							//将评论加入订单中
+void Delete_Node(POrder this_order, PClient client);							//从链表中删除订单
 
 
 //MainMenu.cpp						//主菜单界面
@@ -69,8 +71,19 @@ void Run_Search_Client();		//查找用户界面
 
 
 //AdminFun.cpp						//管理员函数
-POrder Sort_Order_Time_Ascending(POrder p_head_order);				//订单升序排序
-POrder Sort_Order_Time_Descending(POrder p_head_order);				//订单降序排序
+POrder Sort_Order_Time_Ascending(POrder p_head_order);					//订单时间升序排序
+POrder Sort_Order_Time_Descending(POrder p_head_order);					//订单时间降序排序
+POrder Sort_Order_ID_Descending(POrder p_head_order);					//订单ID降序排序
+POrder Sort_Order_ID_Ascending(POrder p_head_order);					//订单ID升序排序
+POrder Search_Order_By_Orderid(char id[]);								//订单ID查找
+POrder Search_Order_By_Clientid(char id[]);								//用户ID查找
+POrder Search_Order_By_Roomid(char id[]);								//房间ID查找
+POrder Search_Order_By_Starttime(Time start);							//开始时间查找
+POrder Search_Order_By_Endtime(Time end);								//结束时间查找
+POrder Search_Order_By_Time(Time start, Time end);						//开始结束时间查找
+POrder Search_Order_By_OrderidT(char id[], Time start, Time end);		//时间和订单ID查找
+POrder Search_Order_By_ClientidT(char id[], Time start, Time end);		//时间和用户ID查找
+POrder Search_Order_By_RoomidT(char id[], Time start, Time end);		//时间和房间ID查找
 
 
 //Init.cpp							//初始化
@@ -83,4 +96,7 @@ void Change_File();							//修改文件
 void Change_Room();							//修改房间文件
 void Change_Client();						//修改用户文件
 void Change_Order();						//修改订单文件
+void Destroy_Linklist(POrder head);			//释放订单链表空间
+void Destroy_Linklist(PClient head);		//释放用户链表空间
+void Destroy_Linklist(PRoom head);			//释放房间链表空间
 void Exit();								//退出程序

@@ -4,13 +4,10 @@
 extern MOUSEMSG M_msg;				// Êó±êÏûÏ¢\
 
 extern PClient P_Head_Client;		//ÓÃ»§Á´±í
-extern PClient P_Now_Client;
 
 extern POrder P_Head_Order;		//ÒÔÊ±¼äÅÅĞòµÄ¶©µ¥
-extern POrder P_Now_Order;
 
 extern PRoom P_Head_Room;
-extern PRoom P_Now_Room;
 
 
 bool Checkid(char id[])			//¼ì²éid
@@ -148,13 +145,12 @@ int* Display_rooms_number(int* rooms, Time start, Time end)//·µ»ØËÄÖÖ¿Õ·¿¼äµÄ¸öÊ
 		p_now_room = p_now_room->next;
 	}
 
-	p_now_room = P_Head_Room->next;
-
 	while (p_now_order != NULL)
 	{
 		//ÅĞ¶Ï£ºstart»òendÔÚÒÑÓĞ¶©µ¥ÆğÖ¹Ê±¼äÖ®ÄÚ£¬is_use¸ÄÎªtrue
 		if ((Judge_time(p_now_order->start, start) == 1 && Judge_time(start, p_now_order->end) == 1) || (Judge_time(p_now_order->start, end) == 1 && Judge_time(end, p_now_order->end) == 1))
 		{
+			p_now_room = P_Head_Room->next;
 			while (p_now_room != NULL)
 			{
 				if (strcmp(p_now_room->id, p_now_order->room_id) == 0)
@@ -183,10 +179,10 @@ int* Display_rooms_number(int* rooms, Time start, Time end)//·µ»ØËÄÖÖ¿Õ·¿¼äµÄ¸öÊ
 
 bool Judge_time(Time a, Time b)
 {
-	if (a.year < b.year)return true;
-	else if (a.month < b.month)return true;
-	else if (a.day < b.day)return true;
-	return false;
+	if (a.year > b.year)	return false;
+	else if (a.year == b.year && a.month > b.month)	return false;
+	else if (a.year == b.year && a.month == b.month && a.day > b.day)	return false;
+	else	return true;
 }
 
 
@@ -359,4 +355,75 @@ void Add_Remark_In_Order(POrder order, Remark remark)
 {
 	strcpy(order->remark.message, remark.message);
 	order->remark.star = remark.star;
+}
+
+void Delete_Node(POrder this_order, PClient client)//É¾³ı½Úµã
+{
+	//È¡µÃ¶©µ¥µÄidÖµ
+	char ID[10];
+	strcpy(ID, this_order->order_id);
+
+	//1.ÔÚÓÃ»§¶©µ¥ÖĞÉ¾³ı´Ë½Úµã
+
+	
+	POrder p_now = client->head_order->next;
+	POrder p2 = NULL;
+	if (p_now == NULL)//Á´±íÎª¿Õ
+	{
+		return;
+	}
+	//ÕÒµ½ĞèÒª±»É¾³ıµÄ½Úµã£¨idÖµÎ¨Ò»£©
+	while (p_now->next != NULL && strcmp(p_now->order_id, ID) != 0)
+	{
+		p2 = p_now;
+		p_now = p_now->next;
+	}
+	if (strcmp(p_now->order_id, ID) == 0)
+	{
+		if (client->head_order->next == p_now)
+		{
+			client->head_order->next = p_now->next;
+		}
+		else
+		{
+			p2->next = p_now->next;
+			free(p_now);
+		}
+	}
+	else//ÕÒ²»µ½Õâ¸ö½Úµã
+	{
+		return;
+	}
+	
+
+	//2.ÔÚ×Ü¶©µ¥Á´±íÖĞÉ¾³ı´Ë½Úµã
+	
+	p_now = P_Head_Order->next;
+	p2 = NULL;
+	if (p_now == NULL)
+	{
+		return;
+	}
+	while (p_now->next != NULL && strcmp(p_now->order_id, ID) != 0)
+	{
+		p2 = p_now;
+		p_now = p_now->next;
+	}
+	if (strcmp(p_now->order_id, ID) == 0)
+	{
+		if (P_Head_Order->next == p_now)
+		{
+			P_Head_Order->next = p_now->next;
+		}
+		else
+		{
+			p2->next = p_now->next;
+			free(p_now);
+		}
+	}
+	else
+	{
+		return;
+	}
+	
 }

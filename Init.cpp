@@ -181,6 +181,7 @@ POrder Client_Order_Init(PClient client)
 	double temp_price;
 	Time temp_start, temp_end;
 	Remark temp_remark;
+	int num_bill = 0;
 	//创建链表
 	client->head_order = (Order*)malloc(sizeof(Order));//头节点
 	client->head_order->next = NULL;
@@ -219,8 +220,10 @@ POrder Client_Order_Init(PClient client)
 			P_Now_Order->next = P_Temp_Order;
 			P_Now_Order = P_Temp_Order;
 			P_Temp_Order = (Order*)malloc(sizeof(Order));
+			num_bill++;
 		}
 	}
+	client->num_bill = num_bill;
 	return client->head_order;
 }
 
@@ -283,4 +286,37 @@ void Change_Order()
 	}
 	fclose(w);
 	return;
+}
+
+void Destroy_Linklist(POrder head)
+{
+	POrder p;
+	while (head->next)
+	{
+		p = head->next;
+		head->next = p->next;
+		free(p);
+	}
+}
+
+void Destroy_Linklist(PClient head)
+{
+	PClient p;
+	while (head->next)
+	{
+		p = head->next;
+		head->next = p->next;
+		free(p);
+	}
+}
+
+void Destroy_Linklist(PRoom head)
+{
+	PRoom p;
+	while (head->next)
+	{
+		p = head->next;
+		head->next = p->next;
+		free(p);
+	}
 }

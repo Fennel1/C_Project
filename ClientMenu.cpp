@@ -536,7 +536,7 @@ void ReCommit_Order(PClient client, int s_year, int s_month, int s_day)
 
 		cleardevice();
 
-		reDraw_Calendar(s_year, s_month, s_year, s_month, s_day, client);
+		reDraw_Calendar(year, month, s_year, s_month, s_day, client);
 
 		LOGFONT t;			//绘制文字
 		gettextstyle(&t);
@@ -861,7 +861,7 @@ void Message_Board(POrder order, PClient client)
 			FlushBatchDraw();
 			cleardevice();
 			remark.star = 0;
-			strcpy(remark.message, "have no message");
+			strcpy(remark.message, "havenomessage");
 			Add_Remark_In_Order(order, remark);
 			Add_In_Linklist(order, client);
 			Change_File();
@@ -923,11 +923,18 @@ void Delete_Order(PClient client)		//用户申请退房界面
 					sprintf(text[2], "入住时间：%d年%d月%d日", p_now_client_order->start.year, p_now_client_order->start.month, p_now_client_order->start.day);
 					sprintf(text[3], "退房时间：%d年%d月%d日", p_now_client_order->end.year, p_now_client_order->end.month, p_now_client_order->end.day);
 					sprintf(text[4], "实际支付：%.2lf折", (1 - client->VIP * 0.03) * p_now_client_order->price);
+					POrder temp = p_now_client_order->next;
 					if (Popup_Window(250, 200, 300, 200, title, text, 5, 2))
 					{
 						if (Check_Time(p_now_client_order->start.year, p_now_client_order->start.month, p_now_client_order->start.day, p_now_client_order->end.year, p_now_client_order->end.month, p_now_client_order->end.day))
 						{
-							//链表中删除订单
+							Delete_Node(p_now_client_order, client);
+							char title[] = "成功删除订单";
+							char text[1][50];
+							Popup_Window(250, 200, 300, 200, title, text, 0, 1);
+							p_now_client_order = temp;
+							client->num_bill--;
+							Change_File();
 						}
 						else
 						{
@@ -940,6 +947,7 @@ void Delete_Order(PClient client)		//用户申请退房界面
 						}
 					}
 				}
+				if (p_now_client_order == NULL)	break;
 				p_now_client_order = p_now_client_order->next;
 			}
 		}
