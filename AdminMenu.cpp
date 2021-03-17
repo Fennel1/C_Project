@@ -50,6 +50,12 @@ void Run_AdminLoginMenu()
 				}
 				else if (key == 13)
 				{
+					if (choose == 2)
+					{
+						FlushBatchDraw();
+						cleardevice();
+						Run_AdminMainMenu();
+					}
 					Is_Input = false;
 					key = 0;
 				}
@@ -127,7 +133,47 @@ void Run_AdminMainMenu()
 		t.lfQuality = ANTIALIASED_QUALITY;
 		settextstyle(&t);
 		settextcolor(WHITE);
-		outtextxy(310, 70, "管理员界面");
+		outtextxy(250, 50, "管理员界面");
+
+		if (Button(350, 150, "查看酒店概况"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_Hotel();
+			return;
+		}
+
+		if (Button(350, 225, "显示房间信息"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_Show_Room();
+			return;
+		}
+
+		if (Button(350, 300, "显示订单信息"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_Show_Order();
+			return;
+		}
+
+		if (Button(370, 375, "查找订单"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_Search_Order();
+			return;
+		}
+
+		if (Button(370, 450, "查找用户"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_Search_Client();
+			return;
+		}
 
 		if (Button(600, 500, "返回"))
 		{
@@ -140,4 +186,287 @@ void Run_AdminMainMenu()
 		FlushBatchDraw();			// 执行未完成的绘制任务
 		Sleep(10);
 	}
+}
+
+void Run_Hotel()					//查看酒店概况
+{
+	
+}
+
+void Run_Show_Room()				//显示房间信息
+{
+	PRoom p_now_room = P_Head_Room->next;
+	int page = 1;
+	int num_page = 0;
+
+	while (p_now_room != NULL) {			//计算页数
+		num_page++;
+		p_now_room = p_now_room->next;
+	}
+	if (num_page % 20 == 0)	num_page = num_page / 20;
+	else	num_page = num_page / 20 + 1;
+
+	PRoom p_head_order = P_Head_Room->next;
+
+	while (true)
+	{
+		while (MouseHit())		// 鼠标消息获取
+			M_msg = GetMouseMsg();
+
+		cleardevice();
+
+		p_now_room = p_head_order;
+		for (int i = 1; i < page; i++) {
+			for (int j = 1; j <= 20; j++) {
+				if (p_now_room == NULL)	break;
+				p_now_room = p_now_room->next;
+			}
+		}
+
+		for (int i = 1; i <= 5; i++)
+		{
+			for (int j = 1; j <= 4; j++)
+			{
+				if (p_now_room == NULL)	break;
+				Button_Room(125 + (i - 1) * 130, 60 + (j - 1) * 90, p_now_room);
+				p_now_room = p_now_room->next;
+			}	
+		}
+
+		if (Button(200, 500, "上一页"))
+		{
+			if (page > 1) {
+				page--;
+			}
+		}
+
+		char text[10];
+		sprintf(text, "第%d页", page);
+		outtextxy(300, 500, text);
+
+		if (Button(400, 500, "下一页"))
+		{
+			if (page < num_page) {
+				page++;
+			}
+		}
+
+		if (Button(600, 500, "返回"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_AdminMainMenu();
+			return;
+		}
+
+		FlushBatchDraw();			// 执行未完成的绘制任务
+		Sleep(10);
+	}
+}
+
+void Run_Show_Order()				//显示订单信息
+{
+	POrder p_now_order = P_Head_Order->next;
+	int page = 1;
+	int num_page=0;
+
+	while (p_now_order != NULL) {			//计算页数
+		num_page++;
+		p_now_order = p_now_order->next;
+	}
+	if (num_page % 5 == 0)	num_page = num_page / 5;
+	else	num_page = num_page / 5 + 1;
+
+	POrder p_head_order = Sort_Order_Time_Ascending(P_Head_Order);
+
+	while (true)
+	{
+		while (MouseHit())		// 鼠标消息获取
+			M_msg = GetMouseMsg();
+
+		cleardevice();
+
+		/*
+		if (P_Head_Order->next == NULL)
+		{
+			outtextxy(300, 70, "无历史订单");
+		}
+		else
+		{
+			p_now_order = p_head_order;
+			for (int i = 1; i < page; i++) {
+				for (int j = 1; j <= 5; j++) {
+					if (p_now_order == NULL)	break;
+					p_now_order = p_now_order->next;
+				}
+			}
+
+			for (int i = 1; i <= 5; i++)
+			{
+				if (p_now_order == NULL)	break;
+				if (Button_Order(125, 75 + (i - 1) * 80, p_now_order))
+				{
+					char title[] = "订单信息";
+					char text[7][50];
+					sprintf(text[0], "订单编号：%s", p_now_order->order_id);
+					sprintf(text[1], "房间编号：%s", p_now_order->room_id);
+					sprintf(text[2], "用户身份证号：%s", p_now_order->client_id);
+					sprintf(text[3], "入住时间：%d年%d月%d日", p_now_order->start.year, p_now_order->start.month, p_now_order->start.day);
+					sprintf(text[4], "退房时间：%d年%d月%d日", p_now_order->end.year, p_now_order->end.month, p_now_order->end.day);
+					sprintf(text[1], "订单价格：%.2lf", p_now_order->price);
+					sprintf(text[5], "用户评价：%d★", p_now_order->remark.star);
+					Popup_Window(250, 200, 300, 200, title, text, 7, 1);
+				}
+
+				p_now_order = p_now_order->next;
+			}
+		}
+		*/
+
+		if (Button(150, 30, "升序"))
+		{
+			
+		}
+
+		if (Button(275, 30, "降序"))
+		{
+			
+		}
+
+		if (Button(400, 30, "按时间排列"))
+		{
+
+		}
+
+		if (Button(570, 30, "按ID排列"))
+		{
+
+		}
+
+		if (Button(200, 500, "上一页"))
+		{
+			if (page > 1) {
+				page--;
+			}
+		}
+
+		char text[10];
+		sprintf(text, "第%d页", page);
+		outtextxy(300, 500, text);
+
+		if (Button(400, 500, "下一页"))
+		{
+			if (page < num_page) {
+				page++;
+			}
+		}
+
+		if (Button(600, 500, "返回"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_AdminMainMenu();
+			return;
+		}
+
+		FlushBatchDraw();			// 执行未完成的绘制任务
+		Sleep(10);
+	}
+}
+
+void Run_Search_Order()				//查找订单
+{
+	POrder p_now_order = P_Head_Order->next;
+	int page = 1;
+	int num_page = 0;
+
+	while (p_now_order != NULL) {			//计算页数
+		num_page++;
+		p_now_order = p_now_order->next;
+	}
+	if (num_page % 5 == 0)	num_page = num_page / 5;
+	else	num_page = num_page / 5 + 1;
+
+	POrder p_head_order = NULL;
+
+	while (true)
+	{
+		while (MouseHit())		// 鼠标消息获取
+			M_msg = GetMouseMsg();
+
+		cleardevice();
+
+		if (p_head_order == NULL)
+		{
+			outtextxy(300, 70, "查无订单");
+		}
+		else
+		{
+			p_now_order = p_head_order;
+			for (int i = 1; i < page; i++) {
+				for (int j = 1; j <= 5; j++) {
+					if (p_now_order == NULL)	break;
+					p_now_order = p_now_order->next;
+				}
+			}
+
+			for (int i = 1; i <= 5; i++)
+			{
+				if (p_now_order == NULL)	break;
+				if (Button_Order(125, 75 + (i - 1) * 80, p_now_order))
+				{
+					char title[] = "订单信息";
+					char text[7][50];
+					sprintf(text[0], "订单编号：%s", p_now_order->order_id);
+					sprintf(text[1], "房间编号：%s", p_now_order->room_id);
+					sprintf(text[2], "用户身份证号：%s", p_now_order->client_id);
+					sprintf(text[3], "入住时间：%d年%d月%d日", p_now_order->start.year, p_now_order->start.month, p_now_order->start.day);
+					sprintf(text[4], "退房时间：%d年%d月%d日", p_now_order->end.year, p_now_order->end.month, p_now_order->end.day);
+					sprintf(text[1], "订单价格：%.2lf", p_now_order->price);
+					sprintf(text[5], "用户评价：%d★", p_now_order->remark.star);
+					Popup_Window(250, 200, 300, 200, title, text, 7, 1);
+				}
+
+				p_now_order = p_now_order->next;
+			}
+		}
+
+		if (Button(650, 30, "查找"))
+		{
+		}
+
+		if (Button(200, 500, "上一页"))
+		{
+			if (page > 1) {
+				page--;
+			}
+		}
+
+		char text[10];
+		sprintf(text, "第%d页", page);
+		outtextxy(300, 500, text);
+
+		if (Button(400, 500, "下一页"))
+		{
+			if (page < num_page) {
+				page++;
+			}
+		}
+
+		if (Button(600, 500, "返回"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_AdminMainMenu();
+			return;
+		}
+
+		FlushBatchDraw();			// 执行未完成的绘制任务
+		Sleep(10);
+	}
+}
+
+void Run_Search_Client()			//查找用户
+{
+
 }

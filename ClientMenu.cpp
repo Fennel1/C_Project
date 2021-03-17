@@ -9,7 +9,6 @@ extern POrder P_Head_Order;		//以时间排序的订单
 
 extern PRoom P_Head_Room;
 
-
 void Run_ClientLoginMenu()			//用户登录界面
 {
 	PClient client = (PClient)malloc(sizeof(Client));
