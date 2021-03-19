@@ -83,7 +83,7 @@ bool Button(int a, int b, const char str[], bool choose)			//基本按钮模组
 	return false;
 }
 
-bool Button_Order(int a, int b, POrder order)			//基本按钮模组
+bool Button_Order(int a, int b, POrder order)			//订单模组
 {
 	static int x, y;
 
@@ -123,19 +123,64 @@ bool Button_Order(int a, int b, POrder order)			//基本按钮模组
 	return false;
 }
 
-bool Button_Room(int a, int b, PRoom room)			//基本按钮模组
+bool Button_Client(int a, int b, PClient client)			//用户模组
 {
 	static int x, y;
 
 	char str1[100];
 	char str2[100];
-	
+	if (client->gender == true) {
+		sprintf(str1, "身份证号：%s                                 %s先生", client->id, client->name);
+	}
+	else {
+		sprintf(str1, "身份证号：%s                                 %s女士", client->id, client->name);
+	}
+	sprintf(str2, "电话号码：%s                    VIP等级：%d", client->phone, client->VIP);
+
+	setfillcolor(RGB(100, 100, 100));				//绘制边框
+	solidrectangle(a - 15, b, a + 600, b + 75);
+
+	x = M_msg.x;
+	y = M_msg.y;
+
+	if (x > a - 15 && (size_t)x < a + 600 && y > b && y < b + 75)		//判断高亮显示
+	{
+		setfillcolor(RGB(150, 150, 150));
+		solidrectangle(a - 15, b, a + 600, b + 75);
+
+		if (M_msg.uMsg == WM_LBUTTONUP)		//检测鼠标点击
+		{
+			M_msg.uMsg = WM_MOUSEMOVE;
+			return true;
+		}
+	}
+
+	LOGFONT t;			//绘制文字
+	gettextstyle(&t);
+	t.lfHeight = 25;
+	strcpy(t.lfFaceName, "微软雅黑 Light");
+	t.lfQuality = ANTIALIASED_QUALITY;
+	settextstyle(&t);
+	settextcolor(WHITE);
+	outtextxy(a, b + 3, str1);
+	outtextxy(a, b + 35, str2);
+
+	return false;
+}
+
+bool Button_Room(int a, int b, PRoom room)			//基本按钮模组
+{
+	static int x, y;
+
+	char str1[100];
 
 	setfillcolor(RGB(100, 100, 100));				//绘制边框
 	solidrectangle(a - 15, b, a + 100, b + 75);
 
 	x = M_msg.x;
 	y = M_msg.y;
+
+	sprintf(str1, "%s", room->id);
 
 	if (x > a - 15 && (size_t)x < a + 100 && y > b && y < b + 75)		//判断高亮显示
 	{
@@ -156,8 +201,7 @@ bool Button_Room(int a, int b, PRoom room)			//基本按钮模组
 	t.lfQuality = ANTIALIASED_QUALITY;
 	settextstyle(&t);
 	settextcolor(WHITE);
-	//outtextxy(a, b + 3, str1);
-	//outtextxy(a, b + 35, str2);
+	outtextxy(a + 15, b + 25, str1);
 
 	return false;
 
@@ -614,6 +658,58 @@ int Popup_Window(int x, int y, int wight, int hight, char title[], char text[][5
 				return 1;
 
 			if (Button(x + wight - 50, y + hight - 37, "否"))
+				return 0;
+		}
+
+		FlushBatchDraw();
+	}
+	return 0;
+}
+
+int Popup_Window_Room(int x, int y, int wight, int hight, char title[], char text[][50], int g_num, int var)
+{
+	setbkmode(TRANSPARENT);
+
+	char c;
+
+	while (true)
+	{
+		if (_kbhit())									//键盘消息清空
+			c = _getch();
+
+		while (MouseHit())
+			M_msg = GetMouseMsg();						//鼠标消息获取
+
+		setfillcolor(RGB(25, 25, 25));
+		solidrectangle(x, y, x + wight, y + hight);		//绘制边框
+
+		LOGFONT f;
+		gettextstyle(&f);
+		f.lfHeight = 30;
+		strcpy(f.lfFaceName, "黑体");
+		f.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&f);
+		outtextxy(x + 20, y + 10, title);
+
+		for (int i = 0; i < g_num; i++)				//输出内容
+		{
+			f.lfHeight = 18;
+			f.lfQuality = ANTIALIASED_QUALITY;
+			settextstyle(&f);
+			outtextxy(x + 20, y + 45 + i * 20, text[i]);
+		}
+
+		if (var == 1)							//按钮放置
+		{
+			if (Button(x + wight - 70, y + hight - 37, "确定"))
+				return 1;
+		}
+		else if (var == 2)
+		{
+			if (Button(x + wight - 200, y + hight - 37, "删除该房间"))
+				return 1;
+
+			if (Button(x + wight - 70, y + hight - 37, "返回"))
 				return 0;
 		}
 

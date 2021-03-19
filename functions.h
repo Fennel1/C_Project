@@ -6,15 +6,17 @@
 bool Button(int a, int b, const char str[]);						//绘制基本按钮
 bool Button(int a, int b, const char str[], bool choose);			//绘制点击高亮按钮
 bool Button_Order(int a, int b, POrder order);						//绘制显示订单按钮
+bool Button_Client(int a, int b, PClient client);
 bool Button_Room(int a, int b, PRoom room);							//绘制房间按钮
 bool Button_Delete_Order(int a, int b, POrder order);				//绘制删除订单按钮
 bool Button_Input(int a, int b, const char str[]);					//绘制文字输入按钮
 bool Button_Calendar(int a, int b, int day);						//绘制日历按钮
 bool Button_Star(int a, int b, int* num, int n, int star);			//绘制评价星级按钮
-void Draw_Calendar(int year, int month, PClient client);													//绘制输入入住日期时的日历
-void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PClient client);				//绘制输入退房日期时的日历
-bool Check_Time(int s_year, int s_month, int s_day, int e_year, int e_month, int e_day);					//检查时间是否合法
-int Popup_Window(int x, int y, int wight, int hight, char title[], char text[][50], int g_num, int var);	//绘制弹窗
+void Draw_Calendar(int year, int month, PClient client);														//绘制输入入住日期时的日历
+void reDraw_Calendar(int year, int month, int s_year, int s_month, int s_day, PClient client);					//绘制输入退房日期时的日历
+bool Check_Time(int s_year, int s_month, int s_day, int e_year, int e_month, int e_day);						//检查时间是否合法
+int Popup_Window(int x, int y, int wight, int hight, char title[], char text[][50], int g_num, int var);		//绘制弹窗
+int Popup_Window_Room(int x, int y, int wight, int hight, char title[], char text[][50], int g_num, int var);	//绘制房间弹窗
 
 
 //String.cpp						//文字输入组件
@@ -84,6 +86,10 @@ POrder Search_Order_By_Time(Time start, Time end);						//开始结束时间查找
 POrder Search_Order_By_OrderidT(char id[], Time start, Time end);		//时间和订单ID查找
 POrder Search_Order_By_ClientidT(char id[], Time start, Time end);		//时间和用户ID查找
 POrder Search_Order_By_RoomidT(char id[], Time start, Time end);		//时间和房间ID查找
+bool Search_Check_Orderid(char id[]);
+bool Search_Check_Clientid(char id[]);
+bool Search_Check_Roomid(char id[]);
+bool Search_Check_Time(char time[]);
 
 
 //Init.cpp							//初始化
