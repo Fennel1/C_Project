@@ -11,40 +11,15 @@ extern PRoom P_Head_Room;
 
 POrder Sort_Order_Time_Ascending(POrder p_head_order)		//时间升序
 {
-	if (p_head_order == NULL || p_head_order->next == NULL)
-	{
-		return p_head_order;
-	}
-
-	POrder p_now_order = p_head_order->next;
+	/*POrder p_now_order = p_head_order->next;
 	POrder p_start_order = (Order*)malloc(sizeof(Order));
-	p_start_order->next = p_head_order;
-	POrder p_end_order = p_head_order;
-
 	while (p_now_order != NULL)
 	{
-		POrder p_temp_order = p_start_order->next;
-		POrder pre = p_start_order;
-		//找到插入的位置
-		while (p_temp_order != p_now_order && Judge_time(p_now_order->start, p_temp_order->start) == false)
-		{
-			p_temp_order = p_temp_order->next;
-			pre = pre->next;
-		}
-		if (p_temp_order == p_now_order)
-		{
-			p_end_order = p_now_order;
-		}
-		else
-		{
-			p_end_order->next = p_now_order->next;
-			p_now_order->next = p_temp_order;
-			pre->next = p_now_order;
-		}
-		p_now_order = p_end_order->next;
-	}
 
-	return p_start_order->next->next;
+		while()
+	}*/
+	
+	return NULL;
 }
 
 POrder Sort_Order_Time_Descending(POrder p_head_order)		//时间降序
@@ -81,6 +56,7 @@ POrder Sort_Order_Time_Descending(POrder p_head_order)		//时间降序
 		}
 		p_now_order = p_end_order->next;
 	}
+
 	return p_start_order->next->next;
 }
 
@@ -531,7 +507,7 @@ bool Search_Check_Orderid(char id[])
 
 bool Search_Check_Clientid(char id[])
 {
-	if (strcmp(id, "1") == 0)	return true;
+	if (strcmp(id, "11") == 0)	return true;
 	if (id[0] == '\0')	return true;
 	int idlen = strlen(id);
 	if (idlen != 18) {
@@ -590,4 +566,80 @@ bool Search_Check_Time(char time[])
 
 	}
 	return true;
+}
+
+PClient Search_Client_By_Clientid(char id[])
+{
+
+	PClient results_head = (PClient)malloc(sizeof(client));
+	PClient results_temp;
+	PClient results_now;
+	results_head->next = NULL;
+	results_now = results_temp = results_head;
+
+	PClient temp = P_Head_Client->next;
+	while (temp != NULL) {
+		if (strcmp(temp->id, id) == 0) {
+			results_temp = (PClient)malloc(sizeof(client));
+			strcpy(results_temp->id, temp->id);
+			strcpy(results_temp->password, temp->password);
+			strcpy(results_temp->name, temp->name);
+			strcpy(results_temp->phone, temp->phone);
+			results_temp->gender = temp->gender;
+			results_temp->VIP = temp->VIP;
+			results_temp->num_bill = temp->num_bill;
+			results_temp->pay = temp->pay;
+			results_temp->head_order = NULL;
+			results_temp->next = NULL;
+			results_now->next = results_temp;
+			results_now = results_temp;
+		}
+		temp = temp->next;
+	}
+	return results_head;
+}
+
+PClient Blur_Search_By_Name(char name[])
+{
+	PClient results_head = (PClient)malloc(sizeof(client));
+	PClient results_temp;
+	PClient results_now;
+	results_head->next = NULL;
+	results_now = results_temp = results_head;
+
+	PClient temp = P_Head_Client->next;
+	int len = strlen(temp->name);
+	int checklen = strlen(name);
+	char  key[100];
+
+	while (temp != NULL) {
+
+		int i = 0;
+		if (len < checklen) {
+			return NULL;
+		}
+		for (; ; i++) {
+			if (name[0] == temp->name[i]) {
+				break;
+			}
+		}
+		strncpy(key, temp->name + i + 1, checklen);
+		if (strcmp(key, name) == 0) {
+			results_temp = (PClient)malloc(sizeof(client));
+			strcpy(results_temp->id, temp->id);
+			strcpy(results_temp->password, temp->password);
+			strcpy(results_temp->name, temp->name);
+			strcpy(results_temp->phone, temp->phone);
+			results_temp->gender = temp->gender;
+			results_temp->VIP = temp->VIP;
+			results_temp->num_bill = temp->num_bill;
+			results_temp->pay = temp->pay;
+			results_temp->head_order = NULL;
+			results_temp->next = NULL;
+			results_now->next = results_temp;
+			results_now = results_temp;
+		}
+		temp = temp->next;
+	}
+	return results_head;
 }

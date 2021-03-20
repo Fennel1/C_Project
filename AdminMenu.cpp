@@ -190,7 +190,33 @@ void Run_AdminMainMenu()
 
 void Run_Hotel()					//查看酒店概况
 {
-	
+	time_t timep;			//获取系统时间
+	struct tm* p;
+	time(&timep);
+	p = gmtime(&timep);
+
+	int year = 1900 + p->tm_year, month = 1 + p->tm_mon, day = p->tm_mday;
+
+	while (true)
+	{
+		while (MouseHit())		// 鼠标消息获取
+			M_msg = GetMouseMsg();
+
+		cleardevice();
+
+		
+
+		if (Button(600, 500, "返回"))
+		{
+			FlushBatchDraw();
+			cleardevice();
+			Run_AdminMainMenu();
+			return;
+		}
+
+		FlushBatchDraw();			// 执行未完成的绘制任务
+		Sleep(10);
+	}
 }
 
 void Run_Show_Room()				//显示房间信息
@@ -414,18 +440,25 @@ void Run_Show_Order()				//显示订单信息
 		if (Button(700, 30, "显示"))
 		{
 			p_head_order = NULL;
+			Order_Init();
 			if (flag1 == false && flag2 == false) {
 				p_head_order = Sort_Order_Time_Ascending(P_Head_Order);
+				Change_File();
 			}
 			else if (flag1 == true && flag2 == false) {
 				p_head_order = Sort_Order_Time_Descending(P_Head_Order);
+				Change_File();
 			}
 			else if (flag1 == false && flag2 == true) {
 				p_head_order = Sort_Order_ID_Ascending(P_Head_Order);
+				Change_File();
 			}
 			else if (flag1 == true && flag2 == true) {
 				p_head_order = Sort_Order_ID_Descending(P_Head_Order);
+				Change_File();
 			}
+			p_head_order = p_head_order->next;
+			page = 1;
 		}
 
 		if (Button(200, 500, "上一页"))
@@ -486,8 +519,6 @@ void Run_Search_Order()				//查找订单
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
 
-		cleardevice();
-
 		if (Is_Input)			//键盘输入
 		{
 			key = Input_Text();
@@ -523,6 +554,8 @@ void Run_Search_Order()				//查找订单
 				}
 			}
 		}
+
+		cleardevice();
 
 		settextstyle(20, 0, "Verdana");		//打印文本
 		setlinecolor(WHITE);
@@ -724,7 +757,7 @@ void Run_Search_Order()				//查找订单
 		}
 
 		FlushBatchDraw();			// 执行未完成的绘制任务
-		Sleep(10);
+		Sleep(1);
 	}
 }
 
@@ -736,11 +769,10 @@ void Run_Search_Client()			//查找用户
 
 	PClient p_head_client = NULL;
 
-
 	PText client_id = (PText)malloc(sizeof(Text));
 	PText client_name = (PText)malloc(sizeof(Text));
-	Init_text(client_id, 166, 320, 35, 65, 150);
-	Init_text(client_name, 465, 610, 35, 65, 150);
+	Init_text(client_id, 166, 320, 35, 65, 650);
+	Init_text(client_name, 465, 610, 35, 65, 650);
 	bool Is_Input = false;
 	int choose = 0;
 	wchar_t key = 0;
@@ -749,8 +781,6 @@ void Run_Search_Client()			//查找用户
 	{
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
-
-		cleardevice();
 
 		if (Is_Input)			//键盘输入
 		{
@@ -782,6 +812,8 @@ void Run_Search_Client()			//查找用户
 			}
 		}
 
+		cleardevice();
+
 		settextstyle(20, 0, "Verdana");		//打印文本
 		setlinecolor(WHITE);
 		outtextxy(client_id->x1, client_id->y1 + (client_id->y2 - client_id->y1 - 19) / 2, client_id->text);
@@ -806,10 +838,10 @@ void Run_Search_Client()			//查找用户
 			}	
 
 			if (client_id->text[0] != '\0' && client_name->text[0] == '\0') {		//根据用户身份证号查找
-				//p_head_client = Search_Order_By_Starttime(s);
+				p_head_client = Search_Client_By_Clientid(client_id->text);
 			}
 			else if (client_id->text[0] == '\0' && client_name->text[0] != '\0') {		//根据用户姓名查找
-				//p_head_client = Search_Order_By_Endtime(e);
+				p_head_client = Blur_Search_By_Name(client_name->text);
 			}
 			else if (client_id->text[0] != '\0' && client_name->text[0] != '\0') {			//根据用户身份证号 & 姓名查找
 				//p_head_client = Search_Order_By_Clientid(client_id->text);
@@ -817,7 +849,7 @@ void Run_Search_Client()			//查找用户
 
 			if (p_head_client != NULL)
 			{
-				p_now_client = p_head_client;
+				p_now_client = p_head_client->next;
 				num_page = 0;
 
 				while (p_now_client != NULL) {			//计算页数
@@ -840,41 +872,41 @@ void Run_Search_Client()			//查找用户
 			Is_Input = true;
 		}
 
-		if (p_now_client == NULL)
+		if (p_head_client == NULL || p_head_client->next == NULL)
 		{
 			outtextxy(300, 125, "查无用户");
 		}
 		else
 		{
-			p_now_client = p_head_client;
+			p_now_client = p_head_client->next;
 			for (int i = 1; i < page; i++) {
 				for (int j = 1; j <= 3; j++) {
 					if (p_now_client == NULL)	break;
 					p_now_client = p_now_client->next;
 				}
+			}
 
-				for (int i = 1; i <= 3; i++)
+			for (int i = 1; i <= 3; i++)
+			{
+				if (p_now_client == NULL)	break;
+				if (Button_Client(125, 125 + (i - 1) * 80, p_now_client))
 				{
-					if (p_now_client == NULL)	break;
-					if (Button_Client(125, 125 + (i - 1) * 80, p_now_client))
-					{
-						char title[] = "用户信息";
-						char text[7][50];
-						if (p_now_client->gender == true) {
-							sprintf(text[0], "%s先生", p_now_client->name);
-						}
-						else {
-							sprintf(text[0], "%s女士", p_now_client->name);
-						}
-						sprintf(text[1], "身份证号：%s", p_now_client->id);
-						sprintf(text[2], "电话号码：%s", p_now_client->phone);
-						sprintf(text[3], "VIP等级：%d", p_now_client->VIP);
-						sprintf(text[4], "订单总数：%d", p_now_client->num_bill);
-						sprintf(text[5], "消费金额：%.2lf", p_now_client->pay);
-						Popup_Window(250, 200, 300, 200, title, text, 6, 1);
+					char title[] = "用户信息";
+					char text[7][50];
+					if (p_now_client->gender == true) {
+						sprintf(text[0], "%s先生", p_now_client->name);
 					}
-					p_now_client = p_now_client->next;
+					else {
+						sprintf(text[0], "%s女士", p_now_client->name);
+					}
+					sprintf(text[1], "身份证号：%s", p_now_client->id);
+					sprintf(text[2], "电话号码：%s", p_now_client->phone);
+					sprintf(text[3], "VIP等级：%d", p_now_client->VIP);
+					sprintf(text[4], "订单总数：%d", p_now_client->num_bill);
+					sprintf(text[5], "消费金额：%.2lf", p_now_client->pay);
+					Popup_Window(250, 200, 300, 200, title, text, 6, 1);
 				}
+				p_now_client = p_now_client->next;
 			}
 		}
 
@@ -905,7 +937,7 @@ void Run_Search_Client()			//查找用户
 		}
 
 		FlushBatchDraw();			// 执行未完成的绘制任务
-		Sleep(10);
+		Sleep(1);
 		
 	}
 }

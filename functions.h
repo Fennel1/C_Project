@@ -90,6 +90,8 @@ bool Search_Check_Orderid(char id[]);
 bool Search_Check_Clientid(char id[]);
 bool Search_Check_Roomid(char id[]);
 bool Search_Check_Time(char time[]);
+PClient Blur_Search_By_Name(char name[]);
+PClient Search_Client_By_Clientid(char id[]);
 
 
 //Init.cpp							//≥ı ºªØ
