@@ -91,7 +91,10 @@ bool Search_Check_Clientid(char id[]);
 bool Search_Check_Roomid(char id[]);
 bool Search_Check_Time(char time[]);
 PClient Blur_Search_By_Name(char name[]);
+POrder Blur_Search_By_Time(Time start, Time end);
 PClient Search_Client_By_Clientid(char id[]);
+void Delete_Room(PRoom room);
+bool Judge_Search_Time(int year, int month, int day, Time s, Time e);
 
 
 //Init.cpp							//≥ı ºªØ

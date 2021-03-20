@@ -197,14 +197,46 @@ void Run_Hotel()					//查看酒店概况
 
 	int year = 1900 + p->tm_year, month = 1 + p->tm_mon, day = p->tm_mday;
 
+	int num_order_year = 0, num_order_month = 0, num_order_day = 0;
+	double income_year = 0, income_month = 0, income_day = 0;
+	double ave_star = 0, sum_star = 0;
+	int num_star = 0;
+
+	POrder p_now_order = P_Head_Order->next;
+	while (p_now_order != NULL)
+	{
+		/*if (){
+			num_order_year++;
+			income_year += p_now_order->price;
+		}
+		else if () {
+			num_order_month++;
+			num_order_year++;
+			income_year += p_now_order->price;
+			income_month += p_now_order->price;
+		}
+		else if () {
+			num_order_month++;
+			num_order_year++;
+			num_order_day++;
+			income_year += p_now_order->price;
+			income_month += p_now_order->price;
+			income_day += p_now_order->price;
+		}*/
+		if (p_now_order->remark.star != 0) {
+			sum_star += p_now_order->remark.star;
+			num_star++;
+		}
+		p_now_order = p_now_order->next;
+	}
+	ave_star = sum_star / num_star;
+
 	while (true)
 	{
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
 
 		cleardevice();
-
-		
 
 		if (Button(600, 500, "返回"))
 		{
@@ -269,6 +301,7 @@ void Run_Show_Room()				//显示房间信息
 			for (int j = 1; j <= 4; j++)
 			{
 				if (p_now_room == NULL)	break;
+				PRoom temp = p_now_room->next;
 				if (Button_Room(125 + (i - 1) * 130, 60 + (j - 1) * 90, p_now_room))
 				{
 					char title[] = "房间信息";
@@ -290,13 +323,14 @@ void Run_Show_Room()				//显示房间信息
 							char text[1][50];
 							if (Popup_Window(250, 200, 300, 200, title, text, 0, 2))
 							{
-								//删除
+								Delete_Room(p_now_room);
+								p_now_room = temp;
+								Change_File();
 							}
 						}
 					}
-					
-
 				}
+				if (p_now_room == NULL)	break;
 				p_now_room = p_now_room->next;
 			}	
 		}
@@ -439,25 +473,30 @@ void Run_Show_Order()				//显示订单信息
 
 		if (Button(700, 30, "显示"))
 		{
-			p_head_order = NULL;
+			if (p_head_order != NULL) 
+			{
+				Destroy_Linklist(p_head_order);
+				p_head_order = NULL;
+			}
+			
 			Order_Init();
 			if (flag1 == false && flag2 == false) {
 				p_head_order = Sort_Order_Time_Ascending(P_Head_Order);
-				Change_File();
 			}
 			else if (flag1 == true && flag2 == false) {
 				p_head_order = Sort_Order_Time_Descending(P_Head_Order);
-				Change_File();
 			}
 			else if (flag1 == false && flag2 == true) {
 				p_head_order = Sort_Order_ID_Ascending(P_Head_Order);
-				Change_File();
 			}
 			else if (flag1 == true && flag2 == true) {
 				p_head_order = Sort_Order_ID_Descending(P_Head_Order);
-				Change_File();
 			}
-			p_head_order = p_head_order->next;
+
+			if (p_head_order != NULL && p_head_order->next != NULL) 
+			{
+				p_head_order = p_head_order->next;
+			}
 			page = 1;
 		}
 
@@ -505,10 +544,10 @@ void Run_Search_Order()				//查找订单
 	PText e_time = (PText)malloc(sizeof(Text));
 	PText client_id = (PText)malloc(sizeof(Text));
 	PText order_id = (PText)malloc(sizeof(Text));
-	Init_text(s_time, 166, 320, 35, 65, 150);
-	Init_text(e_time, 166, 320, 105, 135, 150);
-	Init_text(client_id, 450, 610, 35, 65, 150);
-	Init_text(order_id, 450, 610, 105, 135, 150);
+	Init_text(s_time, 166, 320, 35, 65, 650);
+	Init_text(e_time, 166, 320, 105, 135, 650);
+	Init_text(client_id, 450, 610, 35, 65, 650);
+	Init_text(order_id, 450, 610, 105, 135, 650);
 	bool Is_Input = false;
 	int choose = 0;
 	bool judge[4] = { true, true, true, true };
@@ -627,7 +666,7 @@ void Run_Search_Order()				//查找订单
 					sscanf(s_time->text, "%4d%2d%2d", &s.year, &s.month, &s.day);
 					sscanf(e_time->text, "%4d%2d%2d", &e.year, &e.month, &e.day);
 					s.weekday = s.hour = e.weekday = e.hour = 0;
-					p_head_order = Search_Order_By_Time(s, e);
+					p_head_order = Blur_Search_By_Time(s, e);
 				}
 				else if (s_time->text[0] != '\0' && e_time->text[0] != '\0' && client_id->text[0] == '\0' && order_id->text[0]!= '\0') {		//根据订单ID & 时间查找
 					Time s, e;

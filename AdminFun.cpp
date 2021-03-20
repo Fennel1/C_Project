@@ -11,127 +11,138 @@ extern PRoom P_Head_Room;
 
 POrder Sort_Order_Time_Ascending(POrder p_head_order)		//时间升序
 {
-	/*POrder p_now_order = p_head_order->next;
+	POrder p_now_order = p_head_order->next;
 	POrder p_start_order = (Order*)malloc(sizeof(Order));
+	p_start_order->next = NULL;
+	POrder p_new_now_order = p_start_order;
+	bool flag;
 	while (p_now_order != NULL)
 	{
-
-		while()
-	}*/
-	
-	return NULL;
+		flag = false;
+		POrder p_temp_order = (Order*)malloc(sizeof(Order));
+		*p_temp_order = *p_now_order;
+		p_temp_order->next = NULL;
+		p_new_now_order = p_start_order;
+		while (p_new_now_order->next != NULL)
+		{
+			if (Judge_time(p_now_order->start, p_new_now_order->next->start) == true)
+			{
+				flag = true;
+				p_temp_order->next = p_new_now_order->next;
+				p_new_now_order->next = p_temp_order;
+				break;
+			}
+			p_new_now_order = p_new_now_order->next;
+		}
+		if (flag == false) 
+		{
+			p_new_now_order->next = p_temp_order;
+		}
+		p_now_order = p_now_order->next;
+	}
+	return p_start_order;
 }
 
 POrder Sort_Order_Time_Descending(POrder p_head_order)		//时间降序
 {
-	if (p_head_order == NULL || p_head_order->next == NULL)
-	{
-		return p_head_order;
-	}
-
 	POrder p_now_order = p_head_order->next;
 	POrder p_start_order = (Order*)malloc(sizeof(Order));
-	p_start_order->next = p_head_order;
-	POrder p_end_order = p_head_order;
-
+	p_start_order->next = NULL;
+	POrder p_new_now_order = p_start_order;
+	bool flag;
 	while (p_now_order != NULL)
 	{
-		POrder p_temp_order = p_start_order->next;
-		POrder pre = p_start_order;
-		//找到插入的位置
-		while (p_temp_order != p_now_order && Judge_time(p_now_order->start, p_temp_order->start) == true)
+		flag = false;
+		POrder p_temp_order = (Order*)malloc(sizeof(Order));
+		*p_temp_order = *p_now_order;
+		p_temp_order->next = NULL;
+		p_new_now_order = p_start_order;
+		while (p_new_now_order->next != NULL)
 		{
-			p_temp_order = p_temp_order->next;
-			pre = pre->next;
+			if (Judge_time(p_now_order->start, p_new_now_order->next->start) == false)
+			{
+				flag = true;
+				p_temp_order->next = p_new_now_order->next;
+				p_new_now_order->next = p_temp_order;
+				break;
+			}
+			p_new_now_order = p_new_now_order->next;
 		}
-		if (p_temp_order == p_now_order)
+		if (flag == false)
 		{
-			p_end_order = p_now_order;
+			p_new_now_order->next = p_temp_order;
 		}
-		else
-		{
-			p_end_order->next = p_now_order->next;
-			p_now_order->next = p_temp_order;
-			pre->next = p_now_order;
-		}
-		p_now_order = p_end_order->next;
+		p_now_order = p_now_order->next;
 	}
-
-	return p_start_order->next->next;
+	return p_start_order;
 }
 
 POrder Sort_Order_ID_Ascending(POrder p_head_order)		//ID升序
 {
-	if (p_head_order == NULL || p_head_order->next == NULL)
-	{
-		return p_head_order;
-	}
-
 	POrder p_now_order = p_head_order->next;
 	POrder p_start_order = (Order*)malloc(sizeof(Order));
-	p_start_order->next = p_head_order;
-	POrder p_end_order = p_head_order;
-
+	p_start_order->next = NULL;
+	POrder p_new_now_order = p_start_order;
+	bool flag;
 	while (p_now_order != NULL)
 	{
-		POrder p_temp_order = p_start_order->next;
-		POrder pre = p_start_order;
-		//找到插入的位置
-		while (p_temp_order != p_now_order && strcmp(p_now_order->client_id, p_temp_order->client_id) > 0)
+		flag = false;
+		POrder p_temp_order = (Order*)malloc(sizeof(Order));
+		*p_temp_order = *p_now_order;
+		p_temp_order->next = NULL;
+		p_new_now_order = p_start_order;
+		while (p_new_now_order->next != NULL)
 		{
-			p_temp_order = p_temp_order->next;
-			pre = pre->next;
+			if (strcmp(p_now_order->client_id, p_temp_order->client_id) <= 0)
+			{
+				flag = true;
+				p_temp_order->next = p_new_now_order->next;
+				p_new_now_order->next = p_temp_order;
+				break;
+			}
+			p_new_now_order = p_new_now_order->next;
 		}
-		if (p_temp_order == p_now_order)
+		if (flag == false)
 		{
-			p_end_order = p_now_order;
+			p_new_now_order->next = p_temp_order;
 		}
-		else
-		{
-			p_end_order->next = p_now_order->next;
-			p_now_order->next = p_temp_order;
-			pre->next = p_now_order;
-		}
-		p_now_order = p_end_order->next;
+		p_now_order = p_now_order->next;
 	}
-	return p_start_order->next->next;
+	return p_start_order;
 }
 
 POrder Sort_Order_ID_Descending(POrder p_head_order)		//ID降序
 {
-	if (p_head_order == NULL || p_head_order->next == NULL)
-	{
-		return p_head_order;
-	}
-
 	POrder p_now_order = p_head_order->next;
 	POrder p_start_order = (Order*)malloc(sizeof(Order));
-	p_start_order->next = p_head_order;
-	POrder p_end_order = p_head_order;
-
+	p_start_order->next = NULL;
+	POrder p_new_now_order = p_start_order;
+	bool flag;
 	while (p_now_order != NULL)
 	{
-		POrder p_temp_order = p_start_order->next;
-		POrder pre = p_start_order;
-		//找到插入的位置
-		while (p_temp_order != p_now_order && strcmp(p_now_order->client_id, p_temp_order->client_id) < 0)
+		flag = false;
+		POrder p_temp_order = (Order*)malloc(sizeof(Order));
+		*p_temp_order = *p_now_order;
+		p_temp_order->next = NULL;
+		p_new_now_order = p_start_order;
+		while (p_new_now_order->next != NULL)
 		{
-			p_temp_order = p_temp_order->next;
-			pre = pre->next;
+			if (strcmp(p_now_order->client_id, p_temp_order->client_id) >= 0)
+			{
+				flag = true;
+				p_temp_order->next = p_new_now_order->next;
+				p_new_now_order->next = p_temp_order;
+				break;
+			}
+			p_new_now_order = p_new_now_order->next;
 		}
-		if (p_temp_order == p_now_order)
+		if (flag == false)
 		{
-			p_end_order = p_now_order;
+			p_new_now_order->next = p_temp_order;
 		}
-		else
-		{
-			p_end_order->next = p_now_order->next;
-			p_now_order->next = p_temp_order;
-			pre->next = p_now_order;
-		}
-		p_now_order = p_end_order->next;
+		p_now_order = p_now_order->next;
 	}
-	return p_start_order->next->next;
+	return p_start_order;
 }
 
 POrder Search_Order_By_Orderid(char id[])
@@ -615,31 +626,271 @@ PClient Blur_Search_By_Name(char name[])
 	while (temp != NULL) {
 
 		int i = 0;
-		if (len < checklen) {
-			return NULL;
-		}
-		for (; ; i++) {
+		for (; i < len; i++) {
 			if (name[0] == temp->name[i]) {
-				break;
+				strncpy(key, temp->name + i, checklen);
+				key[checklen] = '\0';
+				if (strcmp(key, name) == 0) {
+					results_temp = (PClient)malloc(sizeof(client));
+					strcpy(results_temp->id, temp->id);
+					strcpy(results_temp->password, temp->password);
+					strcpy(results_temp->name, temp->name);
+					strcpy(results_temp->phone, temp->phone);
+					results_temp->gender = temp->gender;
+					results_temp->VIP = temp->VIP;
+					results_temp->num_bill = temp->num_bill;
+					results_temp->pay = temp->pay;
+					results_temp->head_order = NULL;
+					results_temp->next = NULL;
+					results_now->next = results_temp;
+					results_now = results_temp;
+					break;
+				}
 			}
 		}
-		strncpy(key, temp->name + i + 1, checklen);
-		if (strcmp(key, name) == 0) {
-			results_temp = (PClient)malloc(sizeof(client));
-			strcpy(results_temp->id, temp->id);
-			strcpy(results_temp->password, temp->password);
-			strcpy(results_temp->name, temp->name);
-			strcpy(results_temp->phone, temp->phone);
-			results_temp->gender = temp->gender;
-			results_temp->VIP = temp->VIP;
-			results_temp->num_bill = temp->num_bill;
-			results_temp->pay = temp->pay;
-			results_temp->head_order = NULL;
+
+		temp = temp->next;
+	}
+	return results_head;
+}
+
+void Delete_Room(PRoom room)
+{
+	//获得房间id值
+	char id[10];
+	strcpy(id, room->id);
+	PRoom now = P_Head_Room->next;
+	PRoom last = NULL;
+	if (now == NULL)//链表为空
+	{
+		return;
+	}
+	while (now->next != NULL && strcmp(now->id, id) != 0)
+	{
+		last = now;
+		now = now->next;
+	}
+	if (strcmp(now->id, id) == 0)
+	{
+		if (P_Head_Room->next == now)
+		{
+			P_Head_Room->next = now->next;
+		}
+		else
+		{
+			last->next = now->next;
+			free(now);
+		}
+	}
+	else//找不到这个节点
+	{
+		return;
+	}
+}
+
+POrder Blur_Search_By_Time(Time start, Time end)
+{
+	POrder results_head = (POrder)malloc(sizeof(order));
+	POrder results_temp;
+	POrder results_now;
+	results_head->next = NULL;
+	results_now = results_temp = results_head;
+
+	POrder temp = P_Head_Order->next;
+	while (temp != NULL) {
+		if (Judge_Search_Time(temp->start.year, temp->start.month, temp->start.day, start, end)) {
+			results_temp = (POrder)malloc(sizeof(order));
+			strcpy(results_temp->client_id, temp->client_id);
+			strcpy(results_temp->order_id, temp->order_id);
+			strcpy(results_temp->room_id, temp->room_id);
+			results_temp->type = temp->type;
+			results_temp->price = temp->price;
+			results_temp->start.year = temp->start.year;
+			results_temp->start.month = temp->start.month;
+			results_temp->start.day = temp->start.day;
+			results_temp->start.weekday = temp->start.weekday;
+			results_temp->start.hour = temp->start.hour;
+			results_temp->end.year = temp->end.year;
+			results_temp->end.month = temp->end.month;
+			results_temp->end.day = temp->end.day;
+			results_temp->end.weekday = temp->end.weekday;
+			results_temp->end.hour = temp->end.hour;
+			strcpy(results_temp->remark.message, temp->remark.message);
+			results_temp->remark.star = temp->remark.star;
 			results_temp->next = NULL;
 			results_now->next = results_temp;
 			results_now = results_temp;
 		}
+
+
 		temp = temp->next;
 	}
 	return results_head;
+}
+
+bool Judge_Search_Time(int year, int month, int day, Time s, Time e)
+{
+	if (s.year == e.year && s.month == e.month) {
+		if (year == s.year && year == s.month && day >= s.day && day <= e.day) {
+			return true;
+		}
+		else return false;
+	}
+
+	if (s.year == e.year) {
+		if (year == s.year) {
+			if (month == s.month) {
+				if (day >= s.day) {
+					return true;
+				}
+				return false;
+			}
+			if (month > s.month) {
+				if (month < e.month) {
+					return true;
+				}
+				if (month == e.month) {
+					if (day <= e.day) {
+						return true;
+					}
+					return false;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	if (s.year < e.year) {
+		if (year == s.year) {
+			if (month >= s.month) {
+				if (day >= s.day) {
+					return true;
+				}
+			}
+			return false;
+		}
+		if (year > s.year) {
+			if (year < e.year) {
+				return true;
+			}
+			if (year == e.year) {
+				if (month < e.month) {
+					return true;
+				}
+				if (month == e.month) {
+					if (day <= e.day) {
+						return true;
+					}
+					return false;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+void Add_Room(Room_Type type)//建立房间时需定义价格，暂全定为100
+{
+	PRoom p_now_room = P_Head_Room;
+	P_Head_Room->type = A1;
+
+	//建立一个节点
+	PRoom p = (PRoom)malloc(sizeof(Room));
+
+	//与类型有关的元素
+	if (type == A1)
+	{
+		p->type = A1;
+		p->id[0] = 'A';
+		p->id[1] = '1';
+		p->price = 100;//需要改
+		p->id[3] = '1';
+	}
+	else if (type == A2)
+	{
+		p->type = A2;
+		p->id[0] = 'A';
+		p->id[1] = '2';
+		p->price = 100;//需要改
+		p->id[3] = '2';
+	}
+	else if (type == B1)
+	{
+		p->type = B1;
+		p->id[0] = 'B';
+		p->id[1] = '1';
+		p->price = 100;//需要改
+		p->id[3] = '3';
+	}
+	else if (type == B2)
+	{
+		p->type = B2;
+		p->id[0] = 'B';
+		p->id[1] = '2';
+		p->price = 100;//需要改
+		p->id[3] = '4';
+	}
+	//全部一致的元素
+	p->id[2] = '_';
+	p->Is_Use = 0;
+	p->discount = 1;
+	p->client = NULL;
+	p->start.year = 0;
+	p->start.month = 0;
+	p->start.day = 0;
+	p->start.weekday = 0;
+	p->start.hour = 0;
+	p->end.year = 0;
+	p->end.month = 0;
+	p->end.day = 0;
+	p->end.weekday = 0;
+	p->end.hour = 0;
+	p->next = NULL;
+	//(暂不确定此房间的id值)
+
+	//找到插入的位置(上面将head节点类型设置为A1，可以进行没有A1时的判断)
+	while (p_now_room != NULL)
+	{
+		if ((p_now_room->type <= type && p_now_room->next->type > type) || (p_now_room->type == B2 && p_now_room->next == NULL) || (p_now_room->type == A2 && p_now_room->next == NULL) || (p_now_room->type == B1 && p_now_room->next == NULL))
+		{
+			//链表的插入操作
+			PRoom temp = (PRoom)malloc(sizeof(Room));
+			temp = p_now_room->next;
+			p_now_room->next = p;
+			p->next = temp;
+			//确定id值
+			if (p_now_room->type != p->type)
+			{
+				p->id[4] = '0';
+				p->id[5] = '1';
+			}
+			else
+			{
+				if (p->id[5] != '9')
+				{
+					p->id[5] = p->id[5] + 1;
+				}
+				else
+				{
+					p->id[5] = 0;
+					p->id[4] = p->id[4] + 1;
+				}
+			}
+			break;
+		}
+		//进入下一个节点
+		p_now_room = p_now_room->next;
+	}
+
+
+	//如果没有房间
+	if (P_Head_Room->next == NULL)
+	{
+		P_Head_Room->next = p;
+		//确定id值
+		p->id[4] = '0';
+		p->id[5] = '1';
+	}
 }
