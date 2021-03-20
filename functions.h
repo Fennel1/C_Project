@@ -6,6 +6,7 @@
 bool Button(int a, int b, const char str[]);						//绘制基本按钮
 bool Button(int a, int b, const char str[], bool choose);			//绘制点击高亮按钮
 bool Button_Order(int a, int b, POrder order);						//绘制显示订单按钮
+bool Button_Remark(int a, int b, POrder order);
 bool Button_Client(int a, int b, PClient client);
 bool Button_Room(int a, int b, PRoom room);							//绘制房间按钮
 bool Button_Delete_Order(int a, int b, POrder order);				//绘制删除订单按钮
@@ -95,6 +96,7 @@ POrder Blur_Search_By_Time(Time start, Time end);
 PClient Search_Client_By_Clientid(char id[]);
 void Delete_Room(PRoom room);
 bool Judge_Search_Time(int year, int month, int day, Time s, Time e);
+void Add_Room(Room_Type type);
 
 
 //Init.cpp							//初始化

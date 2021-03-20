@@ -942,7 +942,7 @@ void Delete_Order(PClient client)		//用户申请退房界面
 							char text[3][50];
 							sprintf(text[0], "订单入住时间：：%d年%d月%d日", p_now_client_order->start.year, p_now_client_order->start.month, p_now_client_order->start.day);
 							sprintf(text[1], "退房时间：%d年%d月%d日", year, month, day);
-							sprintf(text[3], "不可删除已入住的订单");
+							sprintf(text[2], "不可删除已入住的订单");
 							Popup_Window(250, 200, 300, 200, title, text, 3, 1);
 						}
 					}

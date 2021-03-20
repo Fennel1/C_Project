@@ -196,33 +196,39 @@ void Run_Hotel()					//查看酒店概况
 	p = gmtime(&timep);
 
 	int year = 1900 + p->tm_year, month = 1 + p->tm_mon, day = p->tm_mday;
+	char t_time[50];
+	sprintf(t_time, "%d年 %d月 %d日", year, month, day);
 
-	int num_order_year = 0, num_order_month = 0, num_order_day = 0;
-	double income_year = 0, income_month = 0, income_day = 0;
+	int num_order_year = 0, num_order_month = 0, num_order_day = 0, num_order_pastyear = 0;
+	double income_year = 0, income_month = 0, income_day = 0, income_pastyear = 0;
 	double ave_star = 0, sum_star = 0;
 	int num_star = 0;
 
 	POrder p_now_order = P_Head_Order->next;
 	while (p_now_order != NULL)
 	{
-		/*if (){
-			num_order_year++;
-			income_year += p_now_order->price;
-		}
-		else if () {
-			num_order_month++;
-			num_order_year++;
-			income_year += p_now_order->price;
-			income_month += p_now_order->price;
-		}
-		else if () {
+		if (p_now_order->start.year == year && p_now_order->start.month == month && p_now_order->start.day == day){
 			num_order_month++;
 			num_order_year++;
 			num_order_day++;
 			income_year += p_now_order->price;
 			income_month += p_now_order->price;
 			income_day += p_now_order->price;
-		}*/
+		}
+		else if (p_now_order->start.year == year && p_now_order->start.month == month && p_now_order->start.day != day) {
+			num_order_month++;
+			num_order_year++;
+			income_year += p_now_order->price;
+			income_month += p_now_order->price;
+		}
+		else if (p_now_order->start.year == year && p_now_order->start.month != month && p_now_order->start.day != day) {
+			num_order_year++;
+			income_year += p_now_order->price;
+		}
+		else if (p_now_order->start.year == year - 1) {
+			num_order_pastyear++;
+			income_pastyear += p_now_order->price;
+		}
 		if (p_now_order->remark.star != 0) {
 			sum_star += p_now_order->remark.star;
 			num_star++;
@@ -231,6 +237,31 @@ void Run_Hotel()					//查看酒店概况
 	}
 	ave_star = sum_star / num_star;
 
+	char t_num_order_year[50], t_num_order_month[50], t_num_order_day[50], t_num_order_pastyear[50];
+	char t_income_year[50], t_income_month[50], t_income_day[50], t_income_pastyear[50];
+	char t_ave_star[50];
+	sprintf(t_num_order_year, "年客流量  %d", num_order_year);
+	sprintf(t_num_order_month, "月客流量  %d", num_order_month);
+	sprintf(t_num_order_day, "日客流量  %d", num_order_day);
+	sprintf(t_num_order_pastyear, "往年客流量  %d", num_order_pastyear);
+	sprintf(t_income_year, "年收入  %.2lf", income_year);
+	sprintf(t_income_month, "月收入  %.2lf", income_month);
+	sprintf(t_income_day, "日收入  %.2lf", income_day);
+	sprintf(t_income_pastyear, "往年年收入  %d", income_pastyear);
+	sprintf(t_ave_star, "平均评价星级  %.2lf", ave_star);
+	
+	int page = 1, num_page = 0, cnt = 0;
+	p_now_order = P_Head_Order->next;
+	while (p_now_order != NULL)
+	{
+		if (strcmp(p_now_order->remark.message, "havenomessage") != 0) {
+			cnt++;
+		}
+		p_now_order = p_now_order->next;
+	}
+	if (cnt % 3 == 0)		num_page = cnt % 3;
+	else	num_page = cnt % 3 + 1;
+
 	while (true)
 	{
 		while (MouseHit())		// 鼠标消息获取
@@ -238,7 +269,90 @@ void Run_Hotel()					//查看酒店概况
 
 		cleardevice();
 
-		if (Button(600, 500, "返回"))
+		setfillcolor(RGB(150, 150, 150));
+		solidrectangle(50, 30, 750, 245);
+
+		LOGFONT t;			//绘制文字
+		gettextstyle(&t);
+		t.lfHeight = 35;
+		t.lfWeight = 700;
+		strcpy(t.lfFaceName, "微软雅黑 Light");
+		t.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&t);
+		settextcolor(BLACK);
+		outtextxy(80, 40, t_time);
+
+		gettextstyle(&t);
+		t.lfHeight = 25;
+		t.lfWeight = 500;
+		settextstyle(&t);
+		outtextxy(70, 105, t_num_order_year);
+		outtextxy(70, 155, t_num_order_month);
+		outtextxy(70, 205, t_num_order_day);
+		outtextxy(225, 105, t_num_order_pastyear);
+		outtextxy(400, 105, t_income_year);
+		outtextxy(400, 155, t_income_month);
+		outtextxy(400, 205, t_income_day);
+		outtextxy(580, 105, t_income_pastyear);
+		outtextxy(400, 50, t_ave_star);
+
+		setlinestyle(PS_DASH);
+		setlinecolor(BLACK);
+		line(375, 45, 375, 240);
+		setlinestyle(PS_SOLID);
+		setlinecolor(WHITE);
+
+		p_now_order = P_Head_Order->next;
+		for (int i = 1; i < page; i++) {
+			for (int j = 1; j <= 3;) {
+				if (p_now_order == NULL)	break;
+				if (strcmp(p_now_order->remark.message, "havenomessage") != 0) {
+					j++;
+				}
+				p_now_order = p_now_order->next;
+			}
+		}
+
+		if (p_now_order != NULL)
+		{
+			for (int i = 1; i <= 3;)
+			{
+				if (p_now_order == NULL)	break;
+				if (strcmp(p_now_order->remark.message, "havenomessage") != 0)
+				{
+					if (Button_Remark(103, 275 + (i - 1) * 90, p_now_order))
+					{
+
+					}
+					i++;
+				}
+				p_now_order = p_now_order->next;
+			}
+		}
+
+		gettextstyle(&t);
+		t.lfHeight = 25;
+		t.lfWeight = 300;
+		settextstyle(&t);
+		if (Button(250, 550, "上一页"))
+		{
+			if (page > 1) {
+				page--;
+			}
+		}
+
+		char text[10];
+		sprintf(text, "第%d页", page);
+		outtextxy(350, 550, text);
+
+		if (Button(450, 550, "下一页"))
+		{
+			if (page < num_page) {
+				page++;
+			}
+		}
+
+		if (Button(730, 550, "返回"))
 		{
 			FlushBatchDraw();
 			cleardevice();
@@ -279,7 +393,7 @@ void Run_Show_Room()				//显示房间信息
 	if (num_page % 20 == 0)	num_page = num_page / 20;
 	else	num_page = num_page / 20 + 1;
 
-	PRoom p_head_order = P_Head_Room->next;
+	PRoom p_head_room = P_Head_Room->next;
 
 	while (true)
 	{
@@ -288,7 +402,7 @@ void Run_Show_Room()				//显示房间信息
 
 		cleardevice();
 
-		p_now_room = p_head_order;
+		p_now_room = p_head_room;
 		for (int i = 1; i < page; i++) {
 			for (int j = 1; j <= 20; j++) {
 				if (p_now_room == NULL)	break;
@@ -337,19 +451,19 @@ void Run_Show_Room()				//显示房间信息
 
 		if (Button(150, 435, "添加A1"))
 		{
-
+			Add_Room(A1);
 		}
 		if (Button(300, 435, "添加A2"))
 		{
-
+			Add_Room(A2);
 		}
 		if (Button(450, 435, "添加B1"))
 		{
-
+			Add_Room(B1);
 		}
 		if (Button(600, 435, "添加B2"))
 		{
-
+			Add_Room(B2);
 		}
 
 		if (Button(200, 500, "上一页"))

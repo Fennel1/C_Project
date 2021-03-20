@@ -1,4 +1,12 @@
-﻿  AdminFun.cpp
-  main.cpp
-  正在生成代码...
+﻿  AdminMenu.cpp
+E:\VS\VS_code\C_Project\AdminMenu.cpp(65,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\AdminMenu.cpp(68,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\AdminMenu.cpp(250,29): warning C4477: “sprintf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“double”
+E:\VS\VS_code\C_Project\AdminMenu.cpp(696,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\AdminMenu.cpp(699,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\AdminMenu.cpp(702,30): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\AdminMenu.cpp(705,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\AdminMenu.cpp(959,30): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\AdminMenu.cpp(962,32): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+E:\VS\VS_code\C_Project\AdminMenu.cpp(1059,23): warning C4477: “sprintf”: 格式字符串“%.2lf”需要类型“double”的参数，但可变参数 1 拥有了类型“int”
   C_Project.vcxproj -> E:\VS\VS_code\C_Project\Debug\C_Project.exe

@@ -123,6 +123,47 @@ bool Button_Order(int a, int b, POrder order)			//订单模组
 	return false;
 }
 
+bool Button_Remark(int a, int b, POrder order)			//订单模组
+{
+	static int x, y;
+
+	char str1[100];
+	char str2[100];
+	sprintf(str1, "评价：%d★", order->remark.star);
+	sprintf(str2, "留言：%-50s", order->remark.message);
+	
+
+	setfillcolor(RGB(100, 100, 100));				//绘制边框
+	solidrectangle(a - 15, b, a + 600, b + 75);
+
+	x = M_msg.x;
+	y = M_msg.y;
+
+	if (x > a - 15 && (size_t)x < a + 600 && y > b && y < b + 75)		//判断高亮显示
+	{
+		setfillcolor(RGB(150, 150, 150));
+		solidrectangle(a - 15, b, a + 600, b + 75);
+
+		if (M_msg.uMsg == WM_LBUTTONUP)		//检测鼠标点击
+		{
+			M_msg.uMsg = WM_MOUSEMOVE;
+			return true;
+		}
+	}
+
+	LOGFONT t;			//绘制文字
+	gettextstyle(&t);
+	t.lfHeight = 25;
+	strcpy(t.lfFaceName, "微软雅黑 Light");
+	t.lfQuality = ANTIALIASED_QUALITY;
+	settextstyle(&t);
+	settextcolor(WHITE);
+	outtextxy(a, b + 3, str1);
+	outtextxy(a, b + 35, str2);
+
+	return false;
+}
+
 bool Button_Client(int a, int b, PClient client)			//用户模组
 {
 	static int x, y;
