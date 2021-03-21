@@ -6,8 +6,8 @@
 bool Button(int a, int b, const char str[]);						//绘制基本按钮
 bool Button(int a, int b, const char str[], bool choose);			//绘制点击高亮按钮
 bool Button_Order(int a, int b, POrder order);						//绘制显示订单按钮
-bool Button_Remark(int a, int b, POrder order);
-bool Button_Client(int a, int b, PClient client);
+bool Button_Remark(int a, int b, POrder order);						//绘制评论按钮
+bool Button_Client(int a, int b, PClient client);					//绘制用户按钮
 bool Button_Room(int a, int b, PRoom room);							//绘制房间按钮
 bool Button_Delete_Order(int a, int b, POrder order);				//绘制删除订单按钮
 bool Button_Input(int a, int b, const char str[]);					//绘制文字输入按钮
@@ -57,7 +57,7 @@ POrder Add_Order(PClient client, Room_Type type, Time start, Time end);			//新建
 void Add_In_Linklist(POrder p_this_order, PClient client);						//将订单加入链表
 void Add_Remark_In_Order(POrder order, Remark remark);							//将评论加入订单中
 void Delete_Node(POrder this_order, PClient client);							//从链表中删除订单
-int Get_Days(Time start, Time end);
+int Get_Days(Time start, Time end);												//获取天数
 
 
 //MainMenu.cpp						//主菜单界面
@@ -75,30 +75,32 @@ void Run_Search_Client();		//查找用户界面
 
 
 //AdminFun.cpp						//管理员函数
+bool Admin_Login(char id[], char password[]);							//管理员登录
 POrder Sort_Order_Time_Ascending(POrder p_head_order);					//订单时间升序排序
 POrder Sort_Order_Time_Descending(POrder p_head_order);					//订单时间降序排序
 POrder Sort_Order_ID_Descending(POrder p_head_order);					//订单ID降序排序
 POrder Sort_Order_ID_Ascending(POrder p_head_order);					//订单ID升序排序
-POrder Search_Order_By_Orderid(char id[]);								//订单ID查找
-POrder Search_Order_By_Clientid(char id[]);								//用户ID查找
-POrder Search_Order_By_Roomid(char id[]);								//房间ID查找
-POrder Search_Order_By_Starttime(Time start);							//开始时间查找
-POrder Search_Order_By_Endtime(Time end);								//结束时间查找
-POrder Search_Order_By_Time(Time start, Time end);						//开始结束时间查找
-POrder Search_Order_By_OrderidT(char id[], Time start, Time end);		//时间和订单ID查找
-POrder Search_Order_By_ClientidT(char id[], Time start, Time end);		//时间和用户ID查找
+POrder Search_Order_By_Orderid(char id[]);								//订单ID查找订单
+POrder Search_Order_By_Clientid(char id[]);								//用户ID查找订单
+POrder Search_Order_By_Roomid(char id[]);								//房间ID查找订单
+POrder Search_Order_By_Starttime(Time start);							//开始时间查找订单
+POrder Search_Order_By_Endtime(Time end);								//结束时间查找订单
+POrder Search_Order_By_Time(Time start, Time end);						//开始结束时间查找订单
+POrder Search_Order_By_OrderidT(char id[], Time start, Time end);		//时间和订单ID查找订单
+POrder Search_Order_By_ClientidT(char id[], Time start, Time end);		//时间和用户ID查找订单
 POrder Search_Order_By_RoomidT(char id[], Time start, Time end);		//时间和房间ID查找
-bool Search_Check_Orderid(char id[]);
-bool Search_Check_Clientid(char id[]);
-bool Search_Check_Roomid(char id[]);
-bool Search_Check_Time(char time[]);
-PClient Blur_Search_By_Name(char name[]);
-POrder Blur_Search_By_Time(Time start, Time end);
-PClient Search_Client_By_Clientid(char id[]);
-void Delete_Room(PRoom room);
-bool Judge_Search_Time(int year, int month, int day, Time s, Time e);
-void Add_Room(Room_Type type);
-PClient Search_Client_By_ClientidN(char id[], char name[]);
+bool Search_Check_Orderid(char id[]);									//检测订单ID输入
+bool Search_Check_Clientid(char id[]);									//检测用户ID输入
+bool Search_Check_Roomid(char id[]);									//检测房间ID输入
+bool Search_Check_Time(char time[]);									//检测时间输入
+PClient Blur_Search_By_Name(char name[]);								//姓名模糊查找用户
+POrder Blur_Search_By_Time(Time start, Time end);						//时间模糊查找用户
+PClient Search_Client_By_ClientidN(char id[], char name[]);				//用户姓名用户ID查找用户
+PClient Search_Client_By_Clientid(char id[]);							//用户ID查找用户
+void Add_Room(Room_Type type);											//添加房间
+void Delete_Room(PRoom room);											//删除房间
+bool Judge_Search_Time(int year, int month, int day, Time s, Time e);	//检测时间是否在区间内
+
 
 
 //Init.cpp							//初始化

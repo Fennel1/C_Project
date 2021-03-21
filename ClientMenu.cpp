@@ -35,7 +35,7 @@ void Run_ClientLoginMenu()			//用户登录界面
 		t.lfQuality = ANTIALIASED_QUALITY;
 		settextstyle(&t);
 		settextcolor(WHITE);
-		outtextxy(280, 70, "用户界面");
+		outtextxy(250, 80, "用户界面");
 
 		if (Is_Input)			//键盘输入
 		{
@@ -101,8 +101,8 @@ void Run_ClientLoginMenu()			//用户登录界面
 			Draw_Fps(password);
 		}	
 		
-		line(330, 225, 500, 225);				//打印横线
-		line(330, 325, 500, 325);
+		line(330, 225, 550, 225);				//打印横线
+		line(330, 325, 550, 325);
 
 		if (Button_Input(215, 200, "身份证号："))
 		{
@@ -301,11 +301,11 @@ void Run_ClientRegisterMenu()			//用户注册界面
 			Draw_Fps(phone);
 		}
 
-		line(330, 225, 500, 225);				//打印横线
-		line(330, 300, 500, 300);
-		line(330, 375, 500, 375);
-		line(330, 450, 500, 450);
-		line(330, 525, 500, 525);
+		line(330, 225, 550, 225);				//打印横线
+		line(330, 300, 550, 300);
+		line(330, 375, 550, 375);
+		line(330, 450, 550, 450);
+		line(330, 525, 550, 525);
 
 		if (Button_Input(215, 200, "身份证号："))
 		{
@@ -393,10 +393,26 @@ void Run_ClientRegisterMenu()			//用户注册界面
 
 void Run_ClientMainMenu(PClient client)			//用户个人界面
 {
+	time_t timep;			//获取系统时间
+	struct tm* p;
+	time(&timep);
+	p = gmtime(&timep);
+
+	int year = 1900 + p->tm_year, month = 1 + p->tm_mon, day = p->tm_mday;
+	char t_time[50];
+	sprintf(t_time, "%d年 %d月 %d日", year, month, day);
+
+	char t_vip[50], t_num_bill[50], t_pay[50];
+	sprintf(t_vip, "VIP — %d★", client->VIP);
+	sprintf(t_num_bill, "总订单数 — %d", client->num_bill);
+	sprintf(t_pay, "总消费 — %.2lf", client->pay);
+
 	while (true)
 	{
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
+
+		cleardevice();
 
 		LOGFONT t;			//绘制文字
 		gettextstyle(&t);
@@ -405,9 +421,30 @@ void Run_ClientMainMenu(PClient client)			//用户个人界面
 		t.lfQuality = ANTIALIASED_QUALITY;
 		settextstyle(&t);
 		settextcolor(WHITE);
-		outtextxy(310, 70, "用户个人界面 ");
+		outtextxy(220, 50, "用户个人界面 ");
 
-		if (Button(350, 200, "我要住房"))
+		setfillcolor(RGB(150, 150, 150));
+		solidrectangle(70, 180, 400, 530);
+
+		gettextstyle(&t);
+		t.lfHeight = 45;
+		t.lfWeight = 700;
+		strcpy(t.lfFaceName, "微软雅黑 Light");
+		t.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&t);
+		settextcolor(BLACK);
+		outtextxy(115, 200, t_time);
+
+		gettextstyle(&t);
+		t.lfHeight = 35;
+		t.lfWeight = 500;
+		settextstyle(&t);
+
+		outtextxy(155, 275, t_vip);
+		outtextxy(135, 360, t_num_bill);
+		outtextxy(135, 470, t_pay);
+
+		if (Button(500, 200, "我要住房"))
 		{
 			FlushBatchDraw();
 			cleardevice();
@@ -415,7 +452,7 @@ void Run_ClientMainMenu(PClient client)			//用户个人界面
 			return;
 		}
 
-		if (Button(350, 300, "我要退房"))
+		if (Button(500, 300, "我要退房"))
 		{
 			FlushBatchDraw();
 			cleardevice();
@@ -423,7 +460,7 @@ void Run_ClientMainMenu(PClient client)			//用户个人界面
 			return;
 		}
 
-		if (Button(330, 400, "我要查看订单"))
+		if (Button(485, 400, "我要查看订单"))
 		{
 			FlushBatchDraw();
 			cleardevice();
@@ -431,7 +468,7 @@ void Run_ClientMainMenu(PClient client)			//用户个人界面
 			return;
 		}
 
-		if (Button(350, 500, "注销账户"))
+		if (Button(500, 500, "注销账户"))
 		{
 			FlushBatchDraw();
 			cleardevice();

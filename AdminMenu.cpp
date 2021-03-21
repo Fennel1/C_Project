@@ -52,9 +52,24 @@ void Run_AdminLoginMenu()
 				{
 					if (choose == 2)
 					{
-						FlushBatchDraw();
-						cleardevice();
-						Run_AdminMainMenu();
+						if (Admin_Login(id->text, password->text))
+						{
+							FlushBatchDraw();
+							cleardevice();
+							Run_AdminMainMenu();
+						}
+						else
+						{
+							char title[] = "µÇÂ½Ê§°Ü";
+							char text[1][50];
+							sprintf(text[0], "ÕË»§»òÃÜÂë´íÎó");
+							if (Popup_Window(250, 200, 300, 200, title, text, 1, 1))
+							{
+								FlushBatchDraw();
+								cleardevice();
+								Run_AdminLoginMenu();
+							}
+						}
 					}
 					Is_Input = false;
 					key = 0;
@@ -100,10 +115,24 @@ void Run_AdminLoginMenu()
 
 		if (Button(350, 400, "µÇÂ¼"))
 		{
-
-			FlushBatchDraw();
-			cleardevice();
-			Run_AdminMainMenu();
+			if (Admin_Login(id->text, password->text))
+			{
+				FlushBatchDraw();
+				cleardevice();
+				Run_AdminMainMenu();
+			}
+			else
+			{
+				char title[] = "µÇÂ½Ê§°Ü";
+				char text[1][50];
+				sprintf(text[0], "ÕË»§»òÃÜÂë´íÎó");
+				if (Popup_Window(250, 200, 300, 200, title, text, 1, 1))
+				{
+					FlushBatchDraw();
+					cleardevice();
+					Run_AdminLoginMenu();
+				}
+			}
 			return;
 		}
 

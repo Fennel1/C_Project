@@ -12,18 +12,19 @@ void Init_text(PText t, int x1, int x2, int y1, int y2, int fps)
 	t->fps = fps;
 }
 
-wchar_t Input_Text()
+wchar_t Input_Text()		//¼ì²â¼üÅÌÊäÈë
 {
 	wchar_t c = 0;
 
 	if (_kbhit())
 	{
 		c = _getch();
+		if (c == ' ')	c = 0;		//ÏÞÖÆ¿Õ¸ñ
 	}
 	return c;
 }
 
-void Append_Text(PText t, char c)
+void Append_Text(PText t, char c)		//ÐÞ¸Ä×Ö·û´®
 {
 	if (c != 8)
 	{
@@ -44,7 +45,7 @@ void Append_Text(PText t, char c)
 	}
 }
 
-void Draw_Text(PText t)
+void Draw_Text(PText t)					//»æÖÆ×Ö·û´®
 {
 	settextstyle(20, 0, "Verdana");
 
@@ -67,7 +68,7 @@ void Draw_Text(PText t)
 	}
 }
 
-void Draw_Fps(PText t)
+void Draw_Fps(PText t)					//´òÓ¡¹â±ê
 {
 	static int fps = 0;
 	fps++;
@@ -83,7 +84,7 @@ void Draw_Fps(PText t)
 	}
 }
 
-void Empty_Text(PText t)
+void Empty_Text(PText t)				//Çå¿Õ×Ö·û´®
 {
 	t->len = 0;
 	t->text[0] = '\0';

@@ -9,6 +9,14 @@ extern POrder P_Head_Order;			//以时间排序的订单
 
 extern PRoom P_Head_Room;
 
+bool Admin_Login(char id[], char password[])		//管理员登录
+{
+	if (strcmp(MANAGER_NAME, id) == 0 && strcmp(MANAGER_PASSWORD, password) == 0) {
+		return true;
+	}
+	return false;
+}
+
 POrder Sort_Order_Time_Ascending(POrder p_head_order)		//时间升序
 {
 	POrder p_now_order = p_head_order->next;

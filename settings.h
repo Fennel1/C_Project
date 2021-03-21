@@ -3,8 +3,8 @@
 #include <time.h>		// 时间作为随机生成种子
 #include <conio.h>		// 获取键盘信息用
 #include <graphics.h>	// 引用图形库头文件
-#include <cstring>
-#include <cstdio>
+#include <cstring>		// 字符串处理
+#include <cstdio>		
 
 const char MANAGER_NAME[20] = "root";         //管理员账户密码
 const char MANAGER_PASSWORD[20] = "1";
@@ -17,8 +17,8 @@ const int MONTH = 1;
 const int DAY = 1;
 const int WEEKDAY = 5;
 
-enum Room_Type {
-	A1, A2, B1, B2		//A为钟点房	B为短租房
+enum Room_Type {		//房间类型
+	A1, A2, B1, B2		//A1单人间  A2标准间  B1豪华间  B2商务间
 };
 
 typedef struct text {			//字符串类型
@@ -28,7 +28,7 @@ typedef struct text {			//字符串类型
 	int fps;		//光标闪烁频率
 }Text, *PText;
 
-typedef struct time {
+typedef struct time {			//时间
 	int year, month, day;
 	int weekday;
 	int hour;
@@ -36,12 +36,12 @@ typedef struct time {
 
 const Time START_DAY = {2021, 1, 1, 5, 0};
 
-typedef struct reamrk {
+typedef struct reamrk {			//用户评论星级
 	char message[500];
 	int star;
 }Remark, * PRemark;
 
-typedef struct order {
+typedef struct order {			//用户订单
 	char client_id[20];
 	char order_id[10];
 	char room_id[10];
@@ -53,20 +53,20 @@ typedef struct order {
 	struct order* next;
 }Order, * POrder;
 
-typedef struct client {
+typedef struct client {			//用户个人信息
 	char id[20];
 	char password[30];
 	char name[30];
 	char phone[15];
 	bool gender;		//true为男	false为女
-	int VIP;
+	int VIP;			// VIP 1~7
 	int num_bill;
 	double pay;
-	POrder head_order;
+	POrder head_order;	//用户订单头指针
 	struct client* next;
 }Client, * PClient;
 
-typedef struct room {
+typedef struct room {			//房间信息
 	char id[10];
 	bool Is_Use;
 	Room_Type type;
