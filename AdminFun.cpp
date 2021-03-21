@@ -728,6 +728,37 @@ POrder Blur_Search_By_Time(Time start, Time end)
 	return results_head;
 }
 
+PClient Search_Client_By_ClientidN(char id[], char name[])
+{
+
+	PClient results_head = (PClient)malloc(sizeof(client));
+	PClient results_temp;
+	PClient results_now;
+	results_head->next = NULL;
+	results_now = results_temp = results_head;
+
+	PClient temp = P_Head_Client->next;
+	while (temp != NULL) {
+		if (strcmp(temp->id, id) == 0 && strcmp(temp->name, name) == 0) {
+			results_temp = (PClient)malloc(sizeof(client));
+			strcpy(results_temp->id, temp->id);
+			strcpy(results_temp->password, temp->password);
+			strcpy(results_temp->name, temp->name);
+			strcpy(results_temp->phone, temp->phone);
+			results_temp->gender = temp->gender;
+			results_temp->VIP = temp->VIP;
+			results_temp->num_bill = temp->num_bill;
+			results_temp->pay = temp->pay;
+			results_temp->head_order = NULL;
+			results_temp->next = NULL;
+			results_now->next = results_temp;
+			results_now = results_temp;
+		}
+		temp = temp->next;
+	}
+	return results_head;
+}
+
 bool Judge_Search_Time(int year, int month, int day, Time s, Time e)
 {
 	if (s.year == e.year && s.month == e.month) {
@@ -799,13 +830,15 @@ void Add_Room(Room_Type type)//建立房间时需定义价格，暂全定为100
 	//建立一个节点
 	PRoom p = (PRoom)malloc(sizeof(Room));
 
+	PRoom p2 = p_now_room;
+
 	//与类型有关的元素
 	if (type == A1)
 	{
 		p->type = A1;
 		p->id[0] = 'A';
 		p->id[1] = '1';
-		p->price = 100;//需要改
+		p->price = 60;//需要改
 		p->id[3] = '1';
 	}
 	else if (type == A2)
@@ -813,7 +846,7 @@ void Add_Room(Room_Type type)//建立房间时需定义价格，暂全定为100
 		p->type = A2;
 		p->id[0] = 'A';
 		p->id[1] = '2';
-		p->price = 100;//需要改
+		p->price = 90;//需要改
 		p->id[3] = '2';
 	}
 	else if (type == B1)
@@ -821,7 +854,7 @@ void Add_Room(Room_Type type)//建立房间时需定义价格，暂全定为100
 		p->type = B1;
 		p->id[0] = 'B';
 		p->id[1] = '1';
-		p->price = 100;//需要改
+		p->price = 500;//需要改
 		p->id[3] = '3';
 	}
 	else if (type == B2)
@@ -829,11 +862,12 @@ void Add_Room(Room_Type type)//建立房间时需定义价格，暂全定为100
 		p->type = B2;
 		p->id[0] = 'B';
 		p->id[1] = '2';
-		p->price = 100;//需要改
+		p->price = 220;//需要改
 		p->id[3] = '4';
 	}
 	//全部一致的元素
 	p->id[2] = '_';
+	p->id[6] = '\0';
 	p->Is_Use = 0;
 	p->discount = 1;
 	p->client = NULL;
@@ -851,17 +885,28 @@ void Add_Room(Room_Type type)//建立房间时需定义价格，暂全定为100
 	//(暂不确定此房间的id值)
 
 	//找到插入的位置(上面将head节点类型设置为A1，可以进行没有A1时的判断)
-	while (p_now_room != NULL)
+	while (p2 != NULL)
 	{
-		if ((p_now_room->type <= type && p_now_room->next->type > type) || (p_now_room->type == B2 && p_now_room->next == NULL) || (p_now_room->type == A2 && p_now_room->next == NULL) || (p_now_room->type == B1 && p_now_room->next == NULL))
+		if ((p_now_room != NULL && p2->type <= type && p_now_room->type > type) || (p2->type == B2 && p2->next == NULL) || (p2->type == A2 && p2->next == NULL) || (p2->type == B1 && p2->next == NULL))
 		{
 			//链表的插入操作
 			PRoom temp = (PRoom)malloc(sizeof(Room));
-			temp = p_now_room->next;
-			p_now_room->next = p;
-			p->next = temp;
+			if ((p2->next == NULL && p2->type == B2) || (p2->type == A2 && p2->next == NULL) || (p2->type == B1 && p2->next == NULL))
+			{
+				p2->next = p;
+			}
+			else
+			{
+				p->next = p2->next;
+				p2->next = p;
+
+			}
+
+			p->id[4] = p2->id[4];
+			p->id[5] = p2->id[5];
+
 			//确定id值
-			if (p_now_room->type != p->type)
+			if (p2->type != p->type)
 			{
 				p->id[4] = '0';
 				p->id[5] = '1';
@@ -870,18 +915,26 @@ void Add_Room(Room_Type type)//建立房间时需定义价格，暂全定为100
 			{
 				if (p->id[5] != '9')
 				{
-					p->id[5] = p->id[5] + 1;
+					p->id[5] += 1;
 				}
 				else
 				{
-					p->id[5] = 0;
-					p->id[4] = p->id[4] + 1;
+					p->id[5] = '0';
+					p->id[4] += 1;
 				}
 			}
 			break;
 		}
 		//进入下一个节点
-		p_now_room = p_now_room->next;
+		if (p_now_room != NULL)
+		{
+			p2 = p_now_room;
+			p_now_room = p_now_room->next;
+		}
+		else
+		{
+			break;
+		}
 	}
 
 

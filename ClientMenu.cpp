@@ -364,10 +364,10 @@ void Run_ClientRegisterMenu()			//用户注册界面
 				char title[] = "注册失败";
 				char text[4][50];
 				int num = 0;
-				if (judge[0])	sprintf(text[num++], "身份证号格式错误");
-				if (judge[1])	sprintf(text[num++], "密码格式错误");
-				if (judge[2])	sprintf(text[num++], "两次密码输入不一致");
-				if (judge[3])	sprintf(text[num++], "电话号码格式错误");
+				if (!judge[0])	sprintf(text[num++], "身份证号格式错误");
+				if (!judge[1])	sprintf(text[num++], "密码格式错误");
+				if (!judge[2])	sprintf(text[num++], "两次密码输入不一致");
+				if (!judge[3])	sprintf(text[num++], "电话号码格式错误");
 				if (Popup_Window(250, 200, 300, 200, title, text, num, 1)) {
 					FlushBatchDraw();
 					cleardevice();
@@ -609,6 +609,7 @@ void Choose_room(PClient client, int *room_num, Time start, Time end)
 		while (MouseHit())		// 鼠标消息获取
 			M_msg = GetMouseMsg();
 
+		cleardevice();
 
 		LOGFONT t;			//绘制文字
 		gettextstyle(&t);
@@ -619,53 +620,97 @@ void Choose_room(PClient client, int *room_num, Time start, Time end)
 		settextcolor(WHITE);
 		outtextxy(265, 70, "请选择房型");
 
-		if (Button_Input(265, 200, "单人钟点房"))
+		if (Button(265, 200, "单人间"))
 		{
-			FlushBatchDraw();
-			order = Add_Order(client, A1, start, end);
-			Complete_Order(order, client, start, end);
+			if (room_num[0] > 0) {
+				cleardevice();
+				FlushBatchDraw();
+				order = Add_Order(client, A1, start, end);
+				Complete_Order(order, client, start, end);
+			}
+			else {
+				char title[] = "订房失败";
+				char text[1][50];
+				sprintf(text[0], "该房型已无空房");
+
+				Popup_Window(250, 200, 300, 200, title, text, 1, 1);
+				cleardevice();
+			}
 		}
 
 		gettextstyle(&t);
-		t.lfHeight = 35;
+		t.lfHeight = 25;
 		sprintf(text, "剩余：%d间", room_num[0]);
-		outtextxy(265, 250, text);
-
-		if (Button_Input(465, 200, "双人钟点房"))
+		settextstyle(&t);
+		outtextxy(255, 250, text);
+		if (Button(465, 200, "标准间") && room_num[1] > 0)
 		{
-			FlushBatchDraw();
-			order = Add_Order(client, A2, start, end);
-			Complete_Order(order, client, start, end);
+			if (room_num[1] > 0) {
+				cleardevice();
+				FlushBatchDraw();
+				order = Add_Order(client, A2, start, end);
+				Complete_Order(order, client, start, end);
+			}
+			else {
+				char title[] = "订房失败";
+				char text[1][50];
+				sprintf(text[0], "该房型已无空房");
+				Popup_Window(250, 200, 300, 200, title, text, 1, 1);
+				cleardevice();
+			}
 		}
 
 		gettextstyle(&t);
-		t.lfHeight = 35;
+		t.lfHeight = 25;
 		sprintf(text, "剩余：%d间", room_num[1]);
+		settextstyle(&t);
 		outtextxy(465, 250, text);
 
-		if (Button(265, 350, "单人短租房"))
+		if (Button(265, 350, "豪华间") && room_num[2] > 0)
 		{
-			FlushBatchDraw();
-			order = Add_Order(client, B1, start, end);
-			Complete_Order(order, client, start, end);
-
+			if (room_num[2] > 0) {
+				cleardevice();
+				FlushBatchDraw();
+				order = Add_Order(client, B1, start, end);
+				Complete_Order(order, client, start, end);
+			}
+			else {
+				char title[] = "订房失败";
+				char text[1][50];
+				sprintf(text[0], "该房型已无空房");
+				Popup_Window(250, 200, 300, 200, title, text, 1, 1);
+				cleardevice();
+			}
 		}
 
 		gettextstyle(&t);
-		t.lfHeight = 35;
+		t.lfHeight = 25;
 		sprintf(text, "剩余：%d间", room_num[2]);
-		outtextxy(265, 400, text);
+		settextstyle(&t);
+		outtextxy(255, 400, text);
 
-		if (Button(465, 350, "双人短租房"))
+		if (Button(465, 350, "商务间 ") && room_num[3] > 0)
 		{
-			FlushBatchDraw();
-			order = Add_Order(client, B2, start, end);
-			Complete_Order(order, client, start, end);
+			if (room_num[3] > 0) {
+				cleardevice();
+				FlushBatchDraw();
+				order = Add_Order(client, B2, start, end);
+				Complete_Order(order, client, start, end);
+			}
+			else {
+				char title[] = "订房失败";
+				char text[1][50];
+				sprintf(text[0], "该房型已无空房");
+
+				Popup_Window(250, 200, 300, 200, title, text, 1, 1);
+				cleardevice();
+			}
 		}
 
 		gettextstyle(&t);
-		t.lfHeight = 35;
+		t.lfHeight = 25;
 		sprintf(text, "剩余：%d间", room_num[3]);
+		settextstyle(&t);
 		outtextxy(465, 400, text);
 
 		if (Button(600, 500, "返回"))
@@ -689,10 +734,9 @@ void Complete_Order(POrder order, PClient client, Time start, Time end)
 	sprintf(text[1], "房间编号：%s", order->room_id);
 	sprintf(text[2], "入住时间：%d年%d月%d日", start.year, start.month, start.day);
 	sprintf(text[3], "退房时间：%d年%d月%d日", end.year, end.month, end.day);
-	sprintf(text[4], "价格：%.2lf", order->price);
-	sprintf(text[5], "折扣：%.0lf折", (1-client->VIP * 0.03)*100 );
-	sprintf(text[6], "需支付：%.2lf折", (1 - client->VIP * 0.03) * order->price);
-	Popup_Window(250, 200, 300, 200, title, text, 7, 1);
+	sprintf(text[4], "VIP折扣：%.1lf折", (1-client->VIP * 0.03) * 10 );
+	sprintf(text[5], "需支付：%.2lf", order->price);
+	Popup_Window(250, 200, 300, 200, title, text, 6, 1);
 
 	cleardevice();
 
@@ -922,7 +966,7 @@ void Delete_Order(PClient client)		//用户申请退房界面
 					sprintf(text[1], "房间编号：%s", p_now_client_order->room_id);
 					sprintf(text[2], "入住时间：%d年%d月%d日", p_now_client_order->start.year, p_now_client_order->start.month, p_now_client_order->start.day);
 					sprintf(text[3], "退房时间：%d年%d月%d日", p_now_client_order->end.year, p_now_client_order->end.month, p_now_client_order->end.day);
-					sprintf(text[4], "实际支付：%.2lf折", (1 - client->VIP * 0.03) * p_now_client_order->price);
+					sprintf(text[4], "实际支付：%.2lf折", p_now_client_order->price);
 					POrder temp = p_now_client_order->next;
 					if (Popup_Window(250, 200, 300, 200, title, text, 5, 2))
 					{
@@ -1023,10 +1067,9 @@ void Show_Order(PClient client)			//用户查看订单
 					sprintf(text[1], "房间编号：%s", p_now_client_order->room_id);
 					sprintf(text[2], "入住时间：%d年%d月%d日", p_now_client_order->start.year, p_now_client_order->start.month, p_now_client_order->start.day);
 					sprintf(text[3], "退房时间：%d年%d月%d日", p_now_client_order->end.year, p_now_client_order->end.month, p_now_client_order->end.day);
-					sprintf(text[4], "价格：%.2lf", p_now_client_order->price);
-					sprintf(text[5], "折扣：%.0lf折", (1 - client->VIP * 0.03) * 100);
-					sprintf(text[6], "实际支付：%.2lf折", (1 - client->VIP * 0.03) * p_now_client_order->price);
-					Popup_Window(250, 200, 300, 200, title, text, 7, 1);
+					sprintf(text[4], "VIP折扣：%.1lf折", (1 - client->VIP * 0.03) * 10);
+					sprintf(text[5], "实际支付：%.2lf", p_now_client_order->price);
+					Popup_Window(250, 200, 300, 200, title, text, 6, 1);
 				}
 				
 				p_now_client_order = p_now_client_order->next;

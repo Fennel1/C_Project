@@ -61,7 +61,7 @@ typedef struct client {
 	bool gender;		//trueÎªÄĞ	falseÎªÅ®
 	int VIP;
 	int num_bill;
-	int pay;
+	double pay;
 	POrder head_order;
 	struct client* next;
 }Client, * PClient;

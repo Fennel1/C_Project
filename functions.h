@@ -57,6 +57,7 @@ POrder Add_Order(PClient client, Room_Type type, Time start, Time end);			//新建
 void Add_In_Linklist(POrder p_this_order, PClient client);						//将订单加入链表
 void Add_Remark_In_Order(POrder order, Remark remark);							//将评论加入订单中
 void Delete_Node(POrder this_order, PClient client);							//从链表中删除订单
+int Get_Days(Time start, Time end);
 
 
 //MainMenu.cpp						//主菜单界面
@@ -97,6 +98,7 @@ PClient Search_Client_By_Clientid(char id[]);
 void Delete_Room(PRoom room);
 bool Judge_Search_Time(int year, int month, int day, Time s, Time e);
 void Add_Room(Room_Type type);
+PClient Search_Client_By_ClientidN(char id[], char name[]);
 
 
 //Init.cpp							//初始化

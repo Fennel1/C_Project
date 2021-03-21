@@ -100,6 +100,7 @@ void Run_AdminLoginMenu()
 
 		if (Button(350, 400, "登录"))
 		{
+
 			FlushBatchDraw();
 			cleardevice();
 			Run_AdminMainMenu();
@@ -449,21 +450,25 @@ void Run_Show_Room()				//显示房间信息
 			}	
 		}
 
-		if (Button(150, 435, "添加A1"))
+		if (Button(150, 435, "添加单人间"))
 		{
 			Add_Room(A1);
+			Change_File();
 		}
-		if (Button(300, 435, "添加A2"))
+		if (Button(300, 435, "添加标准间"))
 		{
 			Add_Room(A2);
+			Change_File();
 		}
-		if (Button(450, 435, "添加B1"))
+		if (Button(450, 435, "添加豪华间"))
 		{
 			Add_Room(B1);
+			Change_File();
 		}
-		if (Button(600, 435, "添加B2"))
+		if (Button(600, 435, "添加商务间"))
 		{
 			Add_Room(B2);
+			Change_File();
 		}
 
 		if (Button(200, 500, "上一页"))
@@ -997,7 +1002,7 @@ void Run_Search_Client()			//查找用户
 				p_head_client = Blur_Search_By_Name(client_name->text);
 			}
 			else if (client_id->text[0] != '\0' && client_name->text[0] != '\0') {			//根据用户身份证号 & 姓名查找
-				//p_head_client = Search_Order_By_Clientid(client_id->text);
+				p_head_client = Search_Client_By_ClientidN(client_id->text, client_name->text);
 			}
 
 			if (p_head_client != NULL)

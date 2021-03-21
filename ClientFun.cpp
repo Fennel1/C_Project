@@ -60,18 +60,16 @@ bool Checkpassword(char password[])		//检查密码格式
 	{
 		if (password[i] < 21 || password[i]> 126)
 			return false;
-
 	}
-
 	return true;
 }
 
 bool Checkrepassword(char password[], char repassword[])		//确认密码
 {
 	if (strcmp(password, repassword) == 0)
-		return false;
+		return true;
 
-	return true;
+	return false;
 }
 
 PClient Register(char id[], char password[], char name[], char phone[])		//用户注册
@@ -234,6 +232,9 @@ POrder Add_Order(PClient client, Room_Type type, Time start, Time end)
 	p_this_order->end.hour = end.hour;
 	strcpy(p_this_order->remark.message, "");
 	p_this_order->remark.star = 0;
+	if (p_now_room != NULL) {
+		p_this_order->price = p_now_room->price * Get_Days(start, end) * (1 - client->VIP * 0.03);
+	}
 	//返回值
 	return p_this_order;
 }
@@ -242,6 +243,15 @@ void Add_In_Linklist(POrder p_this_order, PClient client)
 {
 	client->num_bill++;
 	client->pay += p_this_order->price;
+	if (client->pay <= 100)		client->VIP = 0;
+	else  if (client->pay > 100 && client->pay <= 1000)	client->VIP = 1;
+	else  if (client->pay > 1000 && client->pay <= 5000)	client->VIP = 2;
+	else  if (client->pay > 5000 && client->pay <= 20000)	client->VIP = 3;
+	else  if (client->pay > 20000 && client->pay <= 50000)	client->VIP = 4;
+	else  if (client->pay > 50000 && client->pay <= 100000)	client->VIP = 5;
+	else  if (client->pay > 100000 && client->pay <= 1000000)	client->VIP = 6;
+	else  client->pay = 7;
+
 
 	POrder p_temp_order = (Order*)malloc(sizeof(Order));
 	POrder p_now_order = P_Head_Order;
@@ -425,5 +435,66 @@ void Delete_Node(POrder this_order, PClient client)//删除节点
 	{
 		return;
 	}
-	
+}
+
+int Get_Days(Time start, Time end)
+{
+	int start_year = start.year;
+	int start_month = start.month;
+	int start_day = start.day;
+	int end_year = end.year;
+	int end_month = end.month;
+	int end_day = end.day;
+	//定义月份包含的天数一维数组
+	int day[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	int i;                  //定义循环变量
+	double sum_day = 0;     //定义总的天数，并初始化为0
+	int count_lyear = 0;    //定义总的闰年数，并初始化为0
+	int count_cyear = 0;    //定义总的平年数，并初始化为0
+	int count_sday = 0;     //定义开始年的天数，并初始化为0
+	int count_eday = 0;     //定义结束年的天数，并初始化为0
+
+	for (i = start_year + 1; i < end_year; i++)  //记录整的闰年数和平年数
+	{
+		if (((i % 4) == 0 && (i % 100) != 0) || (i % 400) == 0)
+		{
+			count_lyear++;  //闰年总数增加
+		}
+		else {
+			count_cyear++;  //平年总数增加
+		}
+	}
+	if (start_year == end_year)  //当两年分相同时
+	{
+		//判断是不是闰年，是闰年则将day[1]初始化为29，否则为28
+		day[1] = (((start_year % 4) == 0 && (start_year % 100) != 0) || (start_year % 400) == 0) ? 29 : 28;
+		for (i = start_month; i < end_month; i++)    //循环记录开始月份到结束月份的天数
+		{
+			sum_day += day[start_month - 1];
+		}
+		sum_day = sum_day - start_day + end_day;    //计算总天数，减去开始月的天数，加上最后一个月的天数
+	}
+	else {
+		while (start_month <= 12)    //循环记录开始年的天数
+		{
+			day[1] = (((start_year % 4) == 0 && (start_year % 100) != 0) || (start_year % 400) == 0) ? 29 : 28;
+			count_sday += day[start_month - 1];
+			start_month++;
+		}
+		count_sday -= start_day;    //减去开始月份包含的天数
+
+		int month = 1;              //定义结束年份起始的月份，初始化为1
+
+		while (month < end_month)    //循环记录结束年份中结束月份之前的天数
+		{
+			day[1] = (((end_year % 4) == 0 && (end_year % 100) != 0) || (end_year % 400) == 0) ? 29 : 28;
+			count_eday += day[month - 1];
+			month++;
+		}
+		count_eday += end_day;      //加上结束月份包含的天数
+		//计算总天数
+		sum_day += (count_lyear * 366) + (count_cyear * 365) + count_sday + count_eday;
+	}
+
+	return sum_day +  1;
 }
