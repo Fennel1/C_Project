@@ -88,7 +88,7 @@ PClient Client_Init()
 	int temp_gender;
 	int temp_VIP;
 	int temp_num_bill;
-	int temp_pay;
+	double temp_pay;
 	//创建链表
 	P_Head_Client = (Client*)malloc(sizeof(Client));//头节点
 	P_Head_Client->next = NULL;
@@ -102,7 +102,7 @@ PClient Client_Init()
 	}
 
 	Client* P_Temp_Client = (Client*)malloc(sizeof(Client));
-	while (fscanf(r, "%s %s %s %s %d %d %d %d", temp_id, temp_password, temp_name, temp_phone,&temp_gender,&temp_VIP,&temp_num_bill,&temp_pay) != EOF)
+	while (fscanf(r, "%s %s %s %s %d %d %d %lf", temp_id, temp_password, temp_name, temp_phone,&temp_gender,&temp_VIP,&temp_num_bill,&temp_pay) != EOF)
 	{
 		strcpy(P_Temp_Client->id, temp_id);
 		strcpy(P_Temp_Client->password, temp_password);
@@ -263,7 +263,7 @@ void Change_Client()
 	}
 	while (p)
 	{
-		fprintf(w, "%s %s %s %s %d %d %d %d\n", p->id, p->password, p->name, p->phone, p->gender, p->VIP, p->num_bill, p->pay);
+		fprintf(w, "%s %s %s %s %d %d %d %lf\n", p->id, p->password, p->name, p->phone, p->gender, p->VIP, p->num_bill, p->pay);
 		p = p->next;
 	}
 	fclose(w);

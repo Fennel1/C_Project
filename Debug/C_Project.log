@@ -1,23 +1,3 @@
-﻿  ClientMenu.cpp
-E:\VS\VS_code\C_Project\ClientMenu.cpp(83,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(86,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(262,23): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(265,29): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(268,31): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(271,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(274,26): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(854,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(855,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(858,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(859,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(862,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(863,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(866,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(867,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(870,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(871,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(874,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(875,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(878,25): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
-E:\VS\VS_code\C_Project\ClientMenu.cpp(879,27): warning C4244: “参数”: 从“wchar_t”转换到“char”，可能丢失数据
+﻿  Init.cpp
+E:\VS\VS_code\C_Project\Init.cpp(40,10): warning C4101: “temp_client”: 未引用的局部变量
   C_Project.vcxproj -> E:\VS\VS_code\C_Project\Debug\C_Project.exe

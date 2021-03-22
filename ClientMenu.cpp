@@ -1003,7 +1003,7 @@ void Delete_Order(PClient client)		//用户申请退房界面
 					sprintf(text[1], "房间编号：%s", p_now_client_order->room_id);
 					sprintf(text[2], "入住时间：%d年%d月%d日", p_now_client_order->start.year, p_now_client_order->start.month, p_now_client_order->start.day);
 					sprintf(text[3], "退房时间：%d年%d月%d日", p_now_client_order->end.year, p_now_client_order->end.month, p_now_client_order->end.day);
-					sprintf(text[4], "实际支付：%.2lf折", p_now_client_order->price);
+					sprintf(text[4], "实际支付：%.2lf", p_now_client_order->price);
 					POrder temp = p_now_client_order->next;
 					if (Popup_Window(250, 200, 300, 200, title, text, 5, 2))
 					{
@@ -1015,6 +1015,7 @@ void Delete_Order(PClient client)		//用户申请退房界面
 							Popup_Window(250, 200, 300, 200, title, text, 0, 1);
 							p_now_client_order = temp;
 							client->num_bill--;
+							client->pay -= p_now_client_order->price;
 							Change_File();
 						}
 						else
